@@ -1,0 +1,14 @@
+.DS_Store
+__pycache__/
+*.pyc
+.vercel/
+.env
+.env.*
+outbox/
+keeping5-preview/
+dist/
+src/images/*.png
+content/brand/
+content/drafts/
+content/templates/
+content/topics/

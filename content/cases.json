@@ -1,0 +1,56 @@
+[
+  {
+    "title": "街舞机构夏季校服",
+    "category": "街舞机构 / 少儿舞蹈",
+    "image": "/images/cases/studio-uniform.jpg",
+    "summary": "适合日常训练、招生展示、校区统一和暑期活动。",
+    "craft": "230g 纯棉 T 恤、速干训练服、成人童装混码、长期补货",
+    "scenario": "连锁校区、少儿街舞机构、暑期集训、机构统一校服",
+    "href": "/clothing-customization"
+  },
+  {
+    "title": "Battle 赛事联名款",
+    "category": "赛事活动 / 舞者 IP",
+    "image": "/images/cases/event-kit.jpg",
+    "summary": "适合比赛、汇演、周年庆和赛事官方周边。",
+    "craft": "选手 T 恤、工作人员服、冠军纪念款、联名吊牌、限量包装",
+    "scenario": "Battle、Jam、Showcase、周年庆、赛事官方纪念款",
+    "href": "/t-shirt-customization"
+  },
+  {
+    "title": "潮牌小单试水",
+    "category": "舞者个人品牌 / 街头品牌",
+    "image": "/images/cases/brand-collection.jpg",
+    "summary": "适合先做小批量样品，再根据销售反馈复盘。",
+    "craft": "来图打样、版型确认、吊牌领标、包装袋、分批补货",
+    "scenario": "舞者个人品牌、街头品牌、机构周边、IP 联名",
+    "href": "/oem-odm"
+  },
+  {
+    "title": "老师团队工作服",
+    "category": "门店老师 / 前台团队",
+    "image": "/images/cases/teacher-workwear.jpg",
+    "summary": "适合让门店接待、公开课和活动现场更专业。",
+    "craft": "Polo、门店 T 恤、胸标刺绣、岗位颜色区分、分校区发货",
+    "scenario": "老师团队、前台顾问、公开课、门店接待、活动工作人员",
+    "href": "/workwear-customization"
+  },
+  {
+    "title": "秋冬卫衣套装",
+    "category": "机构校服 / 团队装备",
+    "image": "/images/cases/hoodie-series.jpg",
+    "summary": "适合秋冬主推、老师服、毕业季和纪念款。",
+    "craft": "高克重卫衣、连帽款、拉链外套、袖标、背后大图案",
+    "scenario": "秋冬校服、老师团队服、毕业季、冠军纪念款",
+    "href": "/hoodie-customization"
+  },
+  {
+    "title": "机构周边套装",
+    "category": "机构品牌 / 赛事 IP",
+    "image": "/images/cases/merch-set.jpg",
+    "summary": "适合把机构从普通校服延展为完整品牌周边。",
+    "craft": "帽子、毛巾、袜子、包袋、礼盒、地胶和基础服装组合",
+    "scenario": "机构周边、赛事周边、会员礼盒、周年庆礼品",
+    "href": "/services"
+  }
+]
