@@ -55,7 +55,12 @@ python3 -m http.server 4173
 - HTTPS/HSTS 和基础安全响应头
 - `sitemap.xml` 与 `llms.txt` 的内容类型
 
-注意：代码配置只能在请求到达 Vercel 后生效。当前检测到裸域 `zmasterpro.com` 解析到了 `198.18.3.127`，这个地址不是 Vercel 正常入口。需要在域名 DNS 面板里把裸域接入 Vercel 项目，并以 Vercel 仪表盘提示的 A 记录为准；`www` 保持 CNAME 到 Vercel。
+DNS 需要在域名服务商面板里保持：
+
+- 裸域 `zmasterpro.com`：`A` 记录，主机记录 `@`，记录值 `76.76.21.21`
+- `www.zmasterpro.com`：`CNAME` 记录，记录值 `cname.vercel-dns.com`
+
+代码里的跳转配置只有在请求到达 Vercel 后才会生效。以后如果更换部署平台，以新平台仪表盘提示的 DNS 记录为准。
 
 ## 搜索提交建议
 
