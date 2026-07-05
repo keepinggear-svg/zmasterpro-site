@@ -775,6 +775,66 @@ h3 {
   display: none;
 }
 
+.floating-contact {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 45;
+  width: min(250px, calc(100vw - 36px));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  background: rgba(5, 6, 8, 0.9);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  backdrop-filter: blur(18px);
+}
+
+.floating-kicker {
+  display: inline-flex;
+  margin-bottom: 8px;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 950;
+}
+
+.floating-contact strong {
+  display: block;
+  color: var(--white);
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.floating-contact p {
+  margin: 8px 0 12px;
+  color: #d8dee3;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.floating-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.floating-actions a {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--green);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.floating-actions a:last-child {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--white);
+}
+
 .cta {
   border-top: 1px solid var(--line);
   background:
@@ -966,6 +1026,10 @@ h3 {
 
   .quote-card strong {
     font-size: 25px;
+  }
+
+  .floating-contact {
+    display: none;
   }
 
   .mobile-quickbar {

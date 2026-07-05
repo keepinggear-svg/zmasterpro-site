@@ -12,14 +12,39 @@ SRC = ROOT / "src"
 CONTENT = ROOT / "content"
 DIST = ROOT / "dist"
 BASE_URL = "https://www.zmasterpro.com"
+ASSET_VERSION = "20260705-floating"
 BRAND = "支先森制造"
 BRAND_ALT = "ZMaster Pro"
-CONTACT = {
+DEFAULT_CONTACT = {
     "wechat": "zmaster2012",
     "phone": "13340018003",
     "email": "mrz.design@qq.com",
     "city": "江西南昌",
 }
+DEFAULT_FLOATING_CONTACT = {
+    "kicker": "QUICK QUOTE",
+    "title": "定制咨询",
+    "body": "街舞校服、赛事服、潮牌小单先发需求，我们帮你拆报价路径。",
+    "primaryLabel": "发需求",
+    "secondaryLabel": "打电话",
+}
+
+
+def load_site_settings() -> dict:
+    settings_path = CONTENT / "site.json"
+    data = {}
+    if settings_path.exists():
+        data = json.loads(settings_path.read_text(encoding="utf-8"))
+    contact = DEFAULT_CONTACT.copy()
+    contact.update(data.get("contact", {}))
+    floating = DEFAULT_FLOATING_CONTACT.copy()
+    floating.update(data.get("floatingContact", {}))
+    return {"contact": contact, "floatingContact": floating}
+
+
+SITE_SETTINGS = load_site_settings()
+CONTACT = SITE_SETTINGS["contact"]
+FLOATING_CONTACT = SITE_SETTINGS["floatingContact"]
 
 KEYWORDS = [
     "支先森制造",
@@ -342,7 +367,7 @@ def layout(page: dict, main: str, extra_ld: list[dict] | None = None) -> str:
   <meta name="twitter:title" content="{h(title)}">
   <meta name="twitter:description" content="{h(desc)}">
   <meta name="twitter:image" content="{BASE_URL}/images/hero-production.jpg">
-  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="/assets/styles.css?v={ASSET_VERSION}">
   {json_ld_tags(ld_items)}
 </head>
 <body>
@@ -359,6 +384,7 @@ def layout(page: dict, main: str, extra_ld: list[dict] | None = None) -> str:
   {main}
   {cta_html()}
   {footer_html()}
+  {floating_contact_html()}
   <div class="mobile-quickbar" aria-label="快速联系">
     <a href="/contact">微信报价</a>
     <a href="tel:{CONTACT["phone"]}">电话咨询</a>
@@ -399,6 +425,18 @@ def cta_html() -> str:
     <a class="button" href="/contact">发需求给支先森</a>
   </div>
 </section>"""
+
+
+def floating_contact_html() -> str:
+    return f"""<aside class="floating-contact" aria-label="快速报价浮窗">
+  <span class="floating-kicker">{h(FLOATING_CONTACT["kicker"])}</span>
+  <strong>{h(FLOATING_CONTACT["title"])}</strong>
+  <p>{h(FLOATING_CONTACT["body"])}<br>微信 {h(CONTACT["wechat"])}<br>电话 {h(CONTACT["phone"])}</p>
+  <div class="floating-actions">
+    <a href="/contact">{h(FLOATING_CONTACT["primaryLabel"])}</a>
+    <a href="tel:{CONTACT["phone"]}">{h(FLOATING_CONTACT["secondaryLabel"])}</a>
+  </div>
+</aside>"""
 
 
 def footer_html() -> str:
