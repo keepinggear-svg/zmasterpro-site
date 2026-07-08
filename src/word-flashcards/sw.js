@@ -1,4 +1,4 @@
-const CACHE_NAME = "word-flashcards-pwa-v2";
+const CACHE_NAME = "word-flashcards-pwa-v3";
 const APP_SHELL = [
   "./",
   "./index.html",
