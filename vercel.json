@@ -2,7 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "trailingSlash": false,
-  "buildCommand": "python3 scripts/build_site.py",
+  "buildCommand": "python3 scripts/build_site.py && python3 scripts/copy_flashcards.py",
   "outputDirectory": "dist",
   "redirects": [
     {
