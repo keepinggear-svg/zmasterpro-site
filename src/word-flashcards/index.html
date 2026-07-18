@@ -10,11 +10,18 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="词语星球">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <script>
+    if (window.location.pathname === "/word-flashcards") {
+      const appBase = document.createElement("base");
+      appBase.href = "/word-flashcards/";
+      document.head.append(appBase);
+    }
+  </script>
   <title>词语星球 - 宠物听写</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-  <link rel="stylesheet" href="kid-game.css?v=24">
-  <link rel="stylesheet" href="word-packs.css?v=24">
+  <link rel="stylesheet" href="kid-game.css?v=25">
+  <link rel="stylesheet" href="word-packs.css?v=25">
   <style>
     :root {
       --bg: #f5f7f8;
@@ -2602,8 +2609,8 @@
       });
     }
   </script>
-  <script src="word-packs.js?v=24"></script>
-  <script src="kid-game.js?v=24"></script>
-  <script src="pwa-install.js?v=24"></script>
+  <script src="word-packs.js?v=25"></script>
+  <script src="kid-game.js?v=25"></script>
+  <script src="pwa-install.js?v=25"></script>
 </body>
 </html>
