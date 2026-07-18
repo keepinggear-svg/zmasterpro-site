@@ -11,7 +11,7 @@
   <title>词语星球 - 宠物听写</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-  <link rel="stylesheet" href="kid-game.css?v=9">
+  <link rel="stylesheet" href="kid-game.css?v=12">
   <style>
     :root {
       --bg: #f5f7f8;
@@ -882,7 +882,7 @@
         <span class="kid-brand-mark" aria-hidden="true">W</span>
         <span>
           <strong>词语星球</strong>
-          <small id="kidGreeting">和小伙伴一起完成今天的挑战</small>
+          <small id="kidGreeting">今天也轻轻松松学一点</small>
         </span>
       </button>
       <div class="kid-wallet" aria-label="我的奖励">
@@ -913,7 +913,7 @@
             <div class="pet-speech" id="petSpeech">先给我取个名字吧！</div>
             <div class="room-lock" id="roomLock">
               <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
-              <strong>完成今日任务后解锁小屋</strong>
+              <strong>学完今天这组，就能一起玩</strong>
               <span id="roomLockText">还差 10 个单词</span>
             </div>
           </div>
@@ -921,7 +921,7 @@
           <div class="daily-mission">
             <div class="mission-heading">
               <div>
-                <span class="mission-eyebrow">TODAY'S MISSION</span>
+              <span class="mission-eyebrow">今天的小目标</span>
                 <h1>今日听写</h1>
               </div>
               <span class="mission-date" id="missionDate"></span>
@@ -929,8 +929,8 @@
             <div class="mission-progress" aria-label="今日进度">
               <div class="progress-ring" id="progressRing"><strong id="missionDone">0</strong><span id="missionTotal">/ 10</span></div>
               <div class="progress-copy">
-                <strong id="missionTitle">准备好了吗？</strong>
-                <p id="missionSummary">写对才能过关，过程会自动记录。</p>
+                <strong id="missionTitle">10 个词，约 5 分钟</strong>
+                <p id="missionSummary">每次只学一个，慢慢来也可以。</p>
                 <div class="progress-track"><span id="missionProgressBar"></span></div>
               </div>
             </div>
@@ -994,6 +994,10 @@
               <button class="answer-check" id="submitDictationButton" type="button">检查拼写</button>
               <button class="answer-help" id="revealDictationButton" type="button">我不会，看看答案</button>
             </div>
+            <button class="swipe-next" id="swipeNextButton" type="button" hidden>
+              <span>做对啦，向左滑到下一张</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+            </button>
           </div>
         </div>
       </section>
@@ -1236,16 +1240,16 @@
   <div class="kid-modal" id="petPickerModal" hidden>
     <section class="kid-modal-panel pet-picker-panel" role="dialog" aria-modal="true" aria-labelledby="petPickerTitle">
       <header class="kid-modal-heading">
-        <div><span>FIRST THINGS FIRST</span><h2 id="petPickerTitle">选一个最想陪你的伙伴</h2><p>以后随时可以更换，已经买到的东西都会保留。</p></div>
+        <div><span>嗨，新朋友！</span><h2 id="petPickerTitle">滑一滑，选一位学习伙伴</h2><p>看看谁最合眼缘，再给它取一个专属名字。</p></div>
         <button class="round-tool" id="closePetPickerButton" type="button" aria-label="关闭角色选择" hidden>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
         </button>
       </header>
       <div class="pet-picker-grid" id="petPickerGrid"></div>
       <div class="pet-name-row">
-        <label for="petNameInput">给它取个名字</label>
+        <label for="petNameInput">它叫什么名字？</label>
         <input id="petNameInput" type="text" maxlength="8" placeholder="比如：团团">
-        <button id="confirmPetButton" type="button" disabled>就选它</button>
+        <button id="confirmPetButton" type="button" disabled>一起出发</button>
       </div>
     </section>
   </div>
@@ -2387,6 +2391,6 @@
       });
     }
   </script>
-  <script src="kid-game.js?v=9"></script>
+  <script src="kid-game.js?v=12"></script>
 </body>
 </html>

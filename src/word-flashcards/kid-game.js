@@ -82,6 +82,8 @@
     speakWordButton: $("speakWordButton"),
     submitDictationButton: $("submitDictationButton"),
     revealDictationButton: $("revealDictationButton"),
+    swipeNextButton: $("swipeNextButton"),
+    dictationBoard: document.querySelector(".dictation-board"),
     revealedAnswer: $("revealedAnswer"),
     revealedWord: $("revealedWord"),
     shopPet: $("shopPetImage"),
@@ -151,6 +153,8 @@
   let isAdvancing = false;
   let travelTimer = null;
   let toastTimer = null;
+  let swipeStartX = null;
+  let swipeOffsetX = 0;
 
   function getWordBank() {
     if (typeof words !== "undefined" && Array.isArray(words)) {
@@ -334,7 +338,7 @@
   function showToast(message, isError = false) {
     window.clearTimeout(toastTimer);
     dom.toast.textContent = message;
-    dom.toast.style.background = isError ? "#a94036" : "#24313d";
+    dom.toast.style.background = isError ? "#e66a57" : "#4d86b8";
     dom.toast.classList.add("is-visible");
     toastTimer = window.setTimeout(() => dom.toast.classList.remove("is-visible"), 2300);
   }
@@ -408,7 +412,7 @@
     });
     const name = state.petName || pet.name;
     dom.greeting.textContent = `${name} 正等着和你一起完成挑战`;
-    dom.petSpeech.textContent = state.daily && state.daily.finished ? `${name}：今天可以一起玩啦！` : `${name}：先完成听写，我在这里等你。`;
+    dom.petSpeech.textContent = state.daily && state.daily.finished ? `${name}：今天可以一起玩啦！` : `${name}：我陪你学完，再一起去玩！`;
   }
 
   function renderHome() {
@@ -427,16 +431,16 @@
 
     if (state.daily.finished) {
       dom.missionTitle.textContent = "今天已经认真完成";
-      dom.missionSummary.textContent = `完成 ${total} 个词，错误和看答案都已写入记录。`;
+      dom.missionSummary.textContent = `${total} 个词都收进口袋啦，去找伙伴玩吧。`;
       dom.startMissionText.textContent = "去小屋找伙伴玩";
     } else if (done > 0) {
-      dom.missionTitle.textContent = "继续刚才的听写";
-      dom.missionSummary.textContent = `已经完成 ${done} 个，还剩 ${total - done} 个，进度不会丢。`;
+      dom.missionTitle.textContent = `还剩 ${total - done} 个，很快就完成`;
+      dom.missionSummary.textContent = `已经学会 ${done} 个，进度会一直替你保存。`;
       dom.startMissionText.textContent = `继续第 ${done + 1} 个词`;
     } else {
-      dom.missionTitle.textContent = "准备好了吗？";
-      dom.missionSummary.textContent = "写错或看答案都会记录，重新拼对才能过关。";
-      dom.startMissionText.textContent = `开始今天的 ${total} 个词`;
+      dom.missionTitle.textContent = `${total} 个词，约 ${Math.max(3, Math.ceil(total / 2))} 分钟`;
+      dom.missionSummary.textContent = "一次只学一个，写错也不用着急。";
+      dom.startMissionText.textContent = "开始学习";
     }
 
     dom.homeTravelHint.textContent = state.travel ? "小伙伴正在旅行，回来会带明信片" : "用小饼干换一张明信片";
@@ -472,6 +476,12 @@
     dom.revealedWord.textContent = "";
     dom.submitDictationButton.disabled = false;
     dom.revealDictationButton.disabled = false;
+    dom.speakWordButton.disabled = false;
+    dom.swipeNextButton.hidden = true;
+    dom.dictationBoard.classList.remove("is-swipe-ready", "is-leaving");
+    dom.dictationBoard.style.removeProperty("--swipe-x");
+    swipeStartX = null;
+    swipeOffsetX = 0;
     isAdvancing = false;
   }
 
@@ -542,6 +552,7 @@
     isAdvancing = true;
     dom.submitDictationButton.disabled = true;
     dom.revealDictationButton.disabled = true;
+    dom.speakWordButton.disabled = true;
     dom.dictationInput.classList.remove("is-wrong");
     dom.dictationInput.classList.add("is-right");
     const attempt = state.daily.activeAttempt;
@@ -575,9 +586,18 @@
     dom.dictationFeedback.textContent = record.firstTry ? "一次写对！积分装进口袋啦。" : "重新写对了，这才算真正完成。";
     dom.dictationFeedback.className = "dictation-feedback is-right";
     dom.dictationPetText.textContent = cookieAwarded ? "十次听写完成！还得到一块小饼干。" : "认真写对了，继续保持！";
+    dom.swipeNextButton.hidden = false;
+    dom.dictationBoard.classList.add("is-swipe-ready");
+    dom.sessionProgressBar.style.width = `${Math.round((state.daily.current / state.daily.wordIds.length) * 100)}%`;
+    dom.sessionProgressText.textContent = `已完成 ${state.daily.current} / ${state.daily.wordIds.length}`;
+    dom.sessionScore.textContent = `★ ${state.daily.pointsEarned}`;
     playTone("right");
     animatePocket();
+  }
 
+  function advanceFromCompletedCard() {
+    if (!isAdvancing) return;
+    dom.dictationBoard.classList.add("is-leaving");
     window.setTimeout(() => {
       if (state.daily.current >= state.daily.wordIds.length) {
         finishMission();
@@ -587,7 +607,32 @@
           dom.dictationInput.focus();
         }
       }
-    }, 850);
+    }, 260);
+  }
+
+  function beginCardSwipe(event) {
+    if (!isAdvancing || !dom.dictationBoard.classList.contains("is-swipe-ready")) return;
+    swipeStartX = event.clientX;
+    swipeOffsetX = 0;
+    dom.dictationBoard.setPointerCapture?.(event.pointerId);
+  }
+
+  function moveCardSwipe(event) {
+    if (swipeStartX === null) return;
+    swipeOffsetX = Math.min(0, event.clientX - swipeStartX);
+    dom.dictationBoard.style.setProperty("--swipe-x", `${swipeOffsetX}px`);
+  }
+
+  function endCardSwipe() {
+    if (swipeStartX === null) return;
+    const shouldAdvance = swipeOffsetX < -70;
+    swipeStartX = null;
+    if (shouldAdvance) {
+      advanceFromCompletedCard();
+    } else {
+      swipeOffsetX = 0;
+      dom.dictationBoard.style.setProperty("--swipe-x", "0px");
+    }
   }
 
   function revealDictationAnswer() {
@@ -988,6 +1033,11 @@
     });
     dom.submitDictationButton.addEventListener("click", submitDictation);
     dom.revealDictationButton.addEventListener("click", revealDictationAnswer);
+    dom.swipeNextButton.addEventListener("click", advanceFromCompletedCard);
+    dom.dictationBoard.addEventListener("pointerdown", beginCardSwipe);
+    dom.dictationBoard.addEventListener("pointermove", moveCardSwipe);
+    dom.dictationBoard.addEventListener("pointerup", endCardSwipe);
+    dom.dictationBoard.addEventListener("pointercancel", endCardSwipe);
     dom.speakWordButton.addEventListener("click", speakCurrentWord);
     dom.dictationInput.addEventListener("keydown", (event) => {
       if (event.key === "Enter") submitDictation();
