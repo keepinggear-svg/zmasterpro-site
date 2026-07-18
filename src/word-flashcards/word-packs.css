@@ -3,9 +3,9 @@
   min-height: 66px;
   margin-top: 10px;
   padding: 10px 12px;
-  border: 1px solid #b9ddd5;
+  border: 1px solid #efb29b;
   border-radius: 8px;
-  background: #eef9f6;
+  background: #fff5e9;
   color: #1a3c39;
   display: grid;
   grid-template-columns: 40px minmax(0, 1fr) 20px;
@@ -16,8 +16,8 @@
 }
 
 .home-import-entry:hover {
-  border-color: #2e8b72;
-  background: #e4f5f0;
+  border-color: #e8624f;
+  background: #ffeddf;
 }
 
 .home-import-entry:focus-visible,
@@ -34,7 +34,7 @@
   border-radius: 8px;
   display: grid;
   place-items: center;
-  background: #2e8b72;
+  background: #e8624f;
   color: #fff;
 }
 
@@ -58,7 +58,7 @@
 }
 
 .home-import-entry small {
-  color: #55736d;
+  color: #745f55;
   font-size: 12px;
   line-height: 1.35;
 }
@@ -109,10 +109,10 @@
   width: 100%;
   min-height: 44px;
   margin-top: 10px;
-  border: 1px solid #2e8b72;
+  border: 0;
   border-radius: 8px;
-  background: #eff9f5;
-  color: #226b59;
+  background: #e8624f;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -264,7 +264,7 @@
 .photo-scan-preview {
   margin-top: 14px;
   display: grid;
-  grid-template-columns: 180px minmax(0, 1fr) auto;
+  grid-template-columns: minmax(280px, 1.25fr) minmax(210px, 0.75fr);
   align-items: center;
   gap: 14px;
   padding: 12px;
@@ -273,19 +273,85 @@
   background: #fff;
 }
 
+.scan-image-editor {
+  grid-row: 1 / span 2;
+  min-width: 0;
+}
+
 .scan-image-wrap {
   position: relative;
-  width: 180px;
-  height: 116px;
+  width: 100%;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   border-radius: 6px;
-  background: #e9efed;
+  background: #25322f;
+  cursor: crosshair;
+  touch-action: none;
+  user-select: none;
 }
 
 .scan-image-wrap img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.photo-crop-box {
+  position: absolute;
+  z-index: 2;
+  border: 2px solid #ffcf4a;
+  background: rgba(255, 207, 74, 0.08);
+  box-shadow: 0 0 0 999px rgba(18, 27, 25, 0.42);
+  pointer-events: none;
+}
+
+.photo-crop-box::before,
+.photo-crop-box::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: #ffffff;
+  pointer-events: none;
+}
+
+.photo-crop-box::before {
+  top: -3px;
+  left: -3px;
+  border-top: 3px solid #ffffff;
+  border-left: 3px solid #ffffff;
+}
+
+.photo-crop-box::after {
+  right: -3px;
+  bottom: -3px;
+  border-right: 3px solid #ffffff;
+  border-bottom: 3px solid #ffffff;
+}
+
+.photo-crop-tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 8px;
+  color: #526964;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.photo-crop-tools button {
+  flex: 0 0 auto;
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid #9fc8bd;
+  border-radius: 6px;
+  background: #f3faf8;
+  color: #2d6e5d;
+  font-weight: 800;
+  cursor: pointer;
 }
 
 .scan-line {
@@ -316,6 +382,13 @@
   color: #526964;
   font-size: 13px;
   font-weight: 700;
+}
+
+.scan-progress small {
+  color: #75847f;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 .scan-progress div {
@@ -436,6 +509,28 @@
   margin-top: 10px;
   display: grid;
   gap: 6px;
+}
+
+.uncertain-review-group {
+  margin-top: 4px;
+  border: 1px solid #d6dfdc;
+  border-radius: 8px;
+  background: #f4f7f6;
+}
+
+.uncertain-review-group summary {
+  min-height: 44px;
+  padding: 12px 14px;
+  color: #5e716c;
+  font-size: 12px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.uncertain-review-list {
+  display: grid;
+  gap: 6px;
+  padding: 0 7px 7px;
 }
 
 .import-review-row {
@@ -607,12 +702,7 @@
   }
 
   .photo-scan-preview {
-    grid-template-columns: 140px minmax(0, 1fr);
-  }
-
-  .scan-image-wrap {
-    width: 140px;
-    height: 100px;
+    grid-template-columns: minmax(230px, 1fr) minmax(190px, 0.8fr);
   }
 
   .scan-photo-button {
@@ -675,13 +765,11 @@
   }
 
   .photo-scan-preview {
-    grid-template-columns: 96px minmax(0, 1fr);
+    grid-template-columns: 1fr;
+    align-items: stretch;
   }
 
-  .scan-image-wrap {
-    width: 96px;
-    height: 92px;
-  }
+  .scan-image-editor { grid-row: auto; }
 
   .manual-word-row {
     grid-template-columns: 1fr;

@@ -5,14 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="有真实听写记录、宠物装扮、旅行和明信片奖励的儿童单词记忆工具。">
   <meta name="theme-color" content="#2e8b72">
+  <meta name="application-name" content="词语星球">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="词语星球">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>词语星球 - 宠物听写</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-  <link rel="stylesheet" href="kid-game.css?v=22">
-  <link rel="stylesheet" href="word-packs.css?v=22">
+  <link rel="stylesheet" href="kid-game.css?v=24">
+  <link rel="stylesheet" href="word-packs.css?v=24">
   <style>
     :root {
       --bg: #f5f7f8;
@@ -895,6 +897,9 @@
           <span class="wallet-icon" aria-hidden="true">●</span>
           <span><strong id="kidCookies">0</strong><small>饼干</small></span>
         </div>
+        <button class="round-tool install-tool" id="installAppButton" type="button" title="安装到手机" aria-label="把词语星球添加到手机桌面">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 20h14"></path></svg>
+        </button>
         <button class="round-tool" id="parentButton" type="button" title="家长区" aria-label="打开家长区">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path><path d="M4.9 19a8 8 0 0 1 14.2 0"></path></svg>
         </button>
@@ -954,7 +959,7 @@
               <span class="home-import-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><path d="M4 7h3l1.5-2h7L17 7h3v12H4Z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>
               </span>
-              <span><strong>导入本周词语</strong><small>拍教材词汇页，或粘贴老师发来的词表</small></span>
+              <span><strong>添加孩子这次要学的词</strong><small>拍照、粘贴或手动输入，保存前可以逐个检查</small></span>
               <svg class="home-import-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
             </button>
           </div>
@@ -1110,6 +1115,7 @@
     <nav class="kid-nav" aria-label="主要功能">
       <button class="is-active" type="button" data-nav="home"><span aria-hidden="true">⌂</span><strong>今日</strong></button>
       <button type="button" data-nav="pet"><span aria-hidden="true">♡</span><strong>小屋</strong></button>
+      <button class="kid-nav-import" id="navImportWordsButton" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></span><strong>加词</strong></button>
       <button type="button" data-nav="travel"><span aria-hidden="true">✈</span><strong>旅行</strong></button>
       <button type="button" data-nav="growth"><span aria-hidden="true">▣</span><strong>足迹</strong></button>
     </nav>
@@ -1317,6 +1323,47 @@
     </section>
   </div>
 
+  <div class="kid-modal install-guide-modal" id="installGuideModal" hidden>
+    <section class="kid-modal-panel install-guide-panel" role="dialog" aria-modal="true" aria-labelledby="installGuideTitle">
+      <header class="kid-modal-heading">
+        <div><span>ADD TO HOME SCREEN</span><h2 id="installGuideTitle">把词语星球放到手机桌面</h2><p>以后点图标就能打开，学习记录仍保存在这台手机上。</p></div>
+        <button class="round-tool" id="closeInstallGuideButton" type="button" aria-label="关闭安装说明">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        </button>
+      </header>
+      <div class="install-guide-body">
+        <button class="native-install-button" id="nativeInstallButton" type="button" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 20h14"></path></svg>
+          直接安装到手机
+        </button>
+        <div class="install-device-tabs" role="tablist" aria-label="选择手机">
+          <button class="is-active" type="button" data-install-tab="android">安卓手机</button>
+          <button type="button" data-install-tab="ios">苹果手机</button>
+        </div>
+        <section class="install-guide-section is-active" data-install-panel="android">
+          <ol class="install-steps">
+            <li><strong>请用手机自带浏览器打开本页</strong><span>微信、QQ 等应用内浏览器通常不能添加到桌面。</span></li>
+            <li><strong>打开浏览器菜单</strong><span>找到“添加到桌面”“添加至桌面”或“桌面快捷方式”。</span></li>
+            <li><strong>确认添加</strong><span>桌面出现“词语星球”图标后，就可以像 App 一样打开。</span></li>
+          </ol>
+          <div class="browser-paths" aria-label="常见浏览器操作路径">
+            <div><strong>华为浏览器</strong><span>右下角菜单 ∷ → 添加至 → 桌面</span></div>
+            <div><strong>小米浏览器</strong><span>菜单 → 添加到桌面／桌面快捷方式</span></div>
+            <div><strong>OPPO 浏览器</strong><span>菜单或工具箱 → 添加到桌面</span></div>
+          </div>
+          <p class="install-note">不同系统版本的名称可能略有不同；若只生成网页快捷方式，也能从桌面进入并继续使用本机记录。</p>
+        </section>
+        <section class="install-guide-section" data-install-panel="ios" hidden>
+          <ol class="install-steps">
+            <li><strong>用 Safari 打开本页</strong><span>点击底部或顶部的“分享”按钮。</span></li>
+            <li><strong>选择“添加到主屏幕”</strong><span>确认名称后点右上角“添加”。</span></li>
+            <li><strong>从桌面打开</strong><span>会以独立窗口运行，学习记录仍在这台设备上。</span></li>
+          </ol>
+        </section>
+      </div>
+    </section>
+  </div>
+
   <div class="kid-modal" id="parentModal" hidden>
     <section class="kid-modal-panel parent-panel" role="dialog" aria-modal="true" aria-labelledby="parentTitle">
       <header class="kid-modal-heading">
@@ -1347,9 +1394,9 @@
           <button class="parent-save" id="saveTaskButton" type="button">保存今天的任务</button>
           <button class="parent-import" id="parentImportWordsButton" type="button">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3v12H4Z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>
-            拍照或粘贴新词
+            添加这次要学的词
           </button>
-          <button class="parent-link" id="parentEditLibraryButton" type="button">编辑或导入词库</button>
+          <button class="parent-link" id="parentEditLibraryButton" type="button">管理全部词语</button>
           <button class="parent-link" id="openLegacyCardsButton" type="button">打开自由练习卡片</button>
         </div>
         <div class="parent-report">
@@ -1412,7 +1459,7 @@
   <div class="kid-modal word-import-modal" id="wordImportModal" hidden>
     <section class="kid-modal-panel word-import-panel" role="dialog" aria-modal="true" aria-labelledby="wordImportTitle">
       <header class="kid-modal-heading word-import-heading">
-        <div><span>PARENT WORD PACK</span><h2 id="wordImportTitle">导入本周词语</h2><p>按教材和课次收好，孩子只练这一包里的新词。</p></div>
+        <div><span>ADD LEARNING WORDS</span><h2 id="wordImportTitle">添加这次要学的词</h2><p>拍清楚词表、粘贴老师消息，或逐个输入；保存前都能修改。</p></div>
         <button class="round-tool" id="closeWordImportButton" type="button" aria-label="关闭导入词语">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
         </button>
@@ -1421,9 +1468,9 @@
       <div class="word-import-layout">
         <div class="word-import-workspace">
           <div class="pack-meta-grid">
-            <label><span>来自哪里</span><select id="packSourceSelect"><option value="new-concept-1">新概念英语第一册</option><option value="new-concept-2">新概念英语第二册</option><option value="new-concept-3">新概念英语第三册</option><option value="new-concept-4">新概念英语第四册</option><option value="school">学校英语</option><option value="teacher">老师词表</option><option value="custom">自定义</option></select></label>
-            <label><span>课次或单元</span><input id="packLessonInput" type="text" maxlength="30" placeholder="例如 Lesson 35"></label>
-            <label class="pack-name-field"><span>词包名称</span><input id="packNameInput" type="text" maxlength="50" placeholder="会自动生成，也可以修改"></label>
+            <label><span>词语来自</span><select id="packSourceSelect"><option value="school">学校课堂</option><option value="teacher">老师词表</option><option value="homework">家庭作业</option><option value="custom">自定义词包</option></select></label>
+            <label><span>单元（可不填）</span><input id="packLessonInput" type="text" maxlength="30" placeholder="例如 Unit 3"></label>
+            <label class="pack-name-field"><span>这组词叫什么</span><input id="packNameInput" type="text" maxlength="50" placeholder="会自动生成，也可以修改"></label>
           </div>
 
           <div class="import-method-tabs" role="tablist" aria-label="导入方式">
@@ -1436,18 +1483,21 @@
             <input id="wordPhotoInput" type="file" accept="image/*" capture="environment" hidden>
             <label class="photo-dropzone" for="wordPhotoInput" id="wordPhotoDropzone">
               <span class="photo-drop-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h3l1.5-2h7L17 7h3v12H4Z"></path><circle cx="12" cy="13" r="3.5"></circle></svg></span>
-              <strong>拍教材词汇页</strong>
-              <small>也可以从相册选择。请尽量拍正、拍清楚，只拍单词表区域。</small>
+              <strong>拍一张词表照片</strong>
+              <small>也可以从相册选择。拍正、避免反光，整页里只要能看清英文和中文即可。</small>
             </label>
             <div class="photo-scan-preview" id="photoScanPreview" hidden>
-              <div class="scan-image-wrap"><img id="wordPhotoPreview" alt="准备识别的教材照片"><span class="scan-line" id="wordScanLine"></span></div>
-              <div class="scan-progress"><span id="wordScanStatus">照片已经准备好</span><div><i id="wordScanProgress"></i></div></div>
-              <button class="scan-photo-button" id="scanWordPhotoButton" type="button">开始识别照片</button>
+              <div class="scan-image-editor">
+                <div class="scan-image-wrap" id="wordPhotoCropArea"><img id="wordPhotoPreview" alt="准备识别的词表照片"><span class="photo-crop-box" id="wordPhotoCropBox" aria-hidden="true"></span><span class="scan-line" id="wordScanLine"></span></div>
+                <div class="photo-crop-tools"><span id="photoCropHint">用手指框住单词表，能明显提高识别准确率</span><button id="resetPhotoCropButton" type="button">使用整张</button></div>
+              </div>
+              <div class="scan-progress"><span id="wordScanStatus">照片已准备好，请先框住词表</span><div><i id="wordScanProgress"></i></div><small>识别后会列出候选词，不会直接存进孩子的任务。</small></div>
+              <button class="scan-photo-button" id="scanWordPhotoButton" type="button">识别框选区域</button>
             </div>
           </section>
 
           <section class="import-method-panel" data-import-panel="paste" hidden>
-            <label class="import-text-label" for="packImportText">把老师发来的词表粘贴到这里</label>
+            <label class="import-text-label" for="packImportText">把老师发来的词表或自己整理的文本粘贴到这里</label>
             <textarea id="packImportText" spellcheck="false" placeholder="suddenly 突然&#10;slip 滑倒&#10;guest | /ɡest/ | n. | 客人"></textarea>
             <button class="parse-words-button" id="parsePackWordsButton" type="button">整理成词条</button>
           </section>
@@ -1462,7 +1512,7 @@
 
           <div class="import-message" id="wordImportMessage" aria-live="polite"></div>
           <section class="import-review" id="importReview" hidden>
-            <div class="import-review-head"><div><h3>确认识别结果</h3><p>不确定的内容请在保存前直接修改。</p></div><span id="importReviewCount">0 个词</span></div>
+            <div class="import-review-head"><div><h3>逐个确认结果</h3><p>英文和中文都可以直接改；没有勾选的候选词不会保存。</p></div><span id="importReviewCount">0 个词</span></div>
             <div class="import-review-list" id="importReviewList"></div>
             <button class="save-word-pack" id="saveWordPackButton" type="button">保存词包并设为今日任务</button>
           </section>
@@ -2552,7 +2602,8 @@
       });
     }
   </script>
-  <script src="word-packs.js?v=22"></script>
-  <script src="kid-game.js?v=22"></script>
+  <script src="word-packs.js?v=24"></script>
+  <script src="kid-game.js?v=24"></script>
+  <script src="pwa-install.js?v=24"></script>
 </body>
 </html>

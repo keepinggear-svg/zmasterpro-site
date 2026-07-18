@@ -117,6 +117,7 @@
     startMissionButton: $("startMissionButton"),
     startMissionText: $("startMissionText"),
     homeImportWordsButton: $("homeImportWordsButton"),
+    navImportWordsButton: $("navImportWordsButton"),
     openTodayReportButton: $("openTodayReportButton"),
     homeTravelHint: $("homeTravelHint"),
     homePostcardHint: $("homePostcardHint"),
@@ -1625,6 +1626,7 @@
     dom.homeButton.addEventListener("click", () => navigate("home"));
     dom.parentButton.addEventListener("click", () => openParent("panel"));
     dom.homeImportWordsButton.addEventListener("click", () => openParent("import"));
+    dom.navImportWordsButton.addEventListener("click", () => openParent("import"));
     dom.changePetButton.addEventListener("click", openPetPicker);
     dom.chooseAnotherPetButton.addEventListener("click", openPetPicker);
     dom.homeTentButton.addEventListener("click", openTent);

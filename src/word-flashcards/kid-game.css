@@ -1030,6 +1030,16 @@ body.legacy-mode .legacy-return {
   stroke-width: 2;
 }
 
+.install-tool {
+  border-color: #b9d5e9;
+  background: #eaf6ff;
+  color: #28688f;
+}
+
+.install-tool[hidden] {
+  display: none;
+}
+
 .mission-start svg path {
   fill: currentColor;
   stroke: none;
@@ -1475,7 +1485,7 @@ body.legacy-mode .legacy-return {
   right: 50%;
   bottom: max(14px, env(safe-area-inset-bottom));
   display: grid;
-  grid-template-columns: repeat(4, 76px);
+  grid-template-columns: repeat(5, 68px);
   gap: 4px;
   padding: 6px;
   border: 1px solid rgba(36, 49, 61, 0.12);
@@ -1502,6 +1512,30 @@ body.legacy-mode .legacy-return {
 .kid-nav button.is-active {
   background: var(--kid-mint);
   color: var(--kid-green-dark);
+}
+
+.kid-nav button.kid-nav-import {
+  background: var(--kid-coral);
+  color: #ffffff;
+  box-shadow: inset 0 -3px rgba(155, 62, 47, 0.18);
+}
+
+.kid-nav button.kid-nav-import:active {
+  transform: translateY(1px);
+}
+
+.kid-nav button.kid-nav-import span {
+  display: grid;
+  place-items: center;
+}
+
+.kid-nav button.kid-nav-import svg {
+  width: 23px;
+  height: 23px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 2.4;
 }
 
 .kid-nav button span {
@@ -2199,6 +2233,152 @@ body.legacy-mode .legacy-return {
   border-bottom: 1px solid var(--kid-line);
 }
 
+.install-guide-modal {
+  z-index: 140;
+}
+
+.install-guide-panel {
+  width: min(680px, 100%);
+}
+
+.install-guide-body {
+  padding: 22px 28px 28px;
+}
+
+.native-install-button {
+  width: 100%;
+  min-height: 52px;
+  margin-bottom: 16px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--kid-coral);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.native-install-button[hidden] {
+  display: none;
+}
+
+.native-install-button svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.install-device-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px;
+  border-radius: 8px;
+  background: #e6eeeb;
+}
+
+.install-device-tabs button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #5c6d69;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.install-device-tabs button.is-active {
+  background: #ffffff;
+  color: var(--kid-green-dark);
+  box-shadow: 0 2px 8px rgba(36, 49, 61, 0.1);
+}
+
+.install-guide-section {
+  margin-top: 18px;
+}
+
+.install-guide-section[hidden] {
+  display: none;
+}
+
+.install-steps {
+  margin: 0;
+  padding: 0;
+  counter-reset: install-step;
+  list-style: none;
+}
+
+.install-steps li {
+  position: relative;
+  min-height: 54px;
+  padding: 8px 0 12px 48px;
+  border-bottom: 1px solid var(--kid-line);
+  counter-increment: install-step;
+}
+
+.install-steps li::before {
+  content: counter(install-step);
+  position: absolute;
+  top: 6px;
+  left: 0;
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--kid-mint);
+  color: var(--kid-green-dark);
+  font-weight: 900;
+}
+
+.install-steps strong,
+.install-steps span {
+  display: block;
+}
+
+.install-steps strong {
+  font-size: 14px;
+}
+
+.install-steps span {
+  margin-top: 3px;
+  color: var(--kid-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.browser-paths {
+  margin-top: 16px;
+  border-top: 1px solid var(--kid-line);
+}
+
+.browser-paths > div {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 12px;
+  padding: 11px 2px;
+  border-bottom: 1px solid var(--kid-line);
+  font-size: 12px;
+}
+
+.browser-paths span {
+  color: var(--kid-muted);
+}
+
+.install-note {
+  margin: 14px 0 0;
+  color: var(--kid-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
 .pet-picker-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -2575,7 +2755,7 @@ body.legacy-mode .legacy-return {
   .progress-copy p { min-height: 0; font-size: 12px; }
   .daily-mission .text-tool { margin-top: 8px; }
   .quick-tile { min-height: 78px; }
-  .kid-nav { right: 10px; left: 10px; bottom: max(8px, env(safe-area-inset-bottom)); grid-template-columns: repeat(4, minmax(0, 1fr)); transform: none; }
+  .kid-nav { right: 10px; left: 10px; bottom: max(8px, env(safe-area-inset-bottom)); grid-template-columns: repeat(5, minmax(0, 1fr)); transform: none; }
   .dictation-topline { grid-template-columns: 38px minmax(0, 1fr) auto; gap: 10px; }
   .session-progress { display: block; }
   .session-progress > div { margin-top: 5px; }
@@ -2620,6 +2800,8 @@ body.legacy-mode .legacy-return {
   .kid-modal-panel { max-height: calc(100vh - 20px); }
   .kid-modal-heading { padding: 20px 18px 14px; }
   .kid-modal-heading h2 { font-size: 23px; }
+  .install-guide-body { padding: 16px 16px 22px; }
+  .browser-paths > div { grid-template-columns: 96px minmax(0, 1fr); gap: 8px; }
   .pet-picker-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; padding: 16px 14px; }
   .pet-name-row { grid-template-columns: 1fr; padding: 15px 18px 20px; }
   .pet-name-row button { min-height: 46px; }
