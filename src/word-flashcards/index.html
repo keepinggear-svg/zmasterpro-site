@@ -1,27 +1,2392 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0d6b68">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="单词卡片">
-<title>单词 Flashcards</title>
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<style>
-:root{--a:#0d6b68;--b:#dc5b49;--c:#315f85;--g:#efb547;--ink:#17202a;--mut:#66717f;--line:#dce3e7;--bg:#f4f7f7;--sh:0 22px 55px #17202a24}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(#eaf6f2,#f4f7f7 300px);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}main{width:min(1120px,calc(100% - 28px));margin:auto;padding:28px 0 42px}button,input,textarea{font:inherit}.top{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:18px}.brand{display:flex;gap:12px;align-items:center}.logo{display:grid;place-items:center;width:48px;height:48px;border-radius:8px;background:var(--a);color:white;font-weight:900;font-size:25px;box-shadow:0 12px 25px #0d6b6838}h1{margin:0;font-size:28px;letter-spacing:0}.sub{margin:4px 0 0;color:var(--mut);font-size:14px}.topBtns,.btns,.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.pill,.btn{min-height:42px;border:1px solid #0d6b682b;border-radius:8px;background:white;color:var(--a);padding:0 14px;font-weight:850;cursor:pointer;box-shadow:0 8px 20px #17202a14}.pill{display:inline-flex;align-items:center;min-height:34px;border-radius:999px;background:#ffffffbf}.primary{background:var(--a);color:white;border-color:transparent}.warn{color:var(--b);border-color:#dc5b4940}.layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:22px}.closed{grid-template-columns:minmax(0,850px);justify-content:center}.tabs{display:inline-grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;margin-bottom:14px;border:1px solid #0d6b682b;border-radius:8px;background:#fff}.tab{border:0;border-radius:6px;padding:10px 26px;background:transparent;color:var(--mut);font-weight:900;cursor:pointer}.on{background:var(--a);color:white}.scene,.card,.face,.quiz{min-height:420px}.scene{position:relative;perspective:1400px}.heart{position:absolute;right:18px;top:18px;z-index:4;width:46px;height:46px;border-radius:999px;border:1px solid #dc5b4940;background:#fff;color:var(--b);font-size:25px;box-shadow:0 10px 22px #17202a1f;cursor:pointer}.heart.on{background:var(--b);color:white}.card{position:relative;transform-style:preserve-3d;transition:.55s transform;cursor:pointer}.flip{transform:rotateY(180deg)}.face,.quiz{border:1px solid var(--line);border-radius:8px;background:white;box-shadow:var(--sh);overflow:hidden}.face{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;backface-visibility:hidden;padding:56px}.face:before,.quiz:before{content:"";position:absolute;inset:0 0 auto;height:12px;background:linear-gradient(90deg,var(--a),var(--g),var(--b),var(--c))}.back{transform:rotateY(180deg)}.meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;color:var(--mut);font-weight:800}.chip{border-radius:999px;background:#d8efeb;color:var(--a);padding:5px 10px;font-size:13px}.word{margin:0;font-size:64px;line-height:1;letter-spacing:0;overflow-wrap:anywhere}.long{font-size:50px}.pron{margin:18px 0 0;color:var(--c);font-size:24px;font-weight:800}.label{margin:0 0 16px;color:var(--c);font-size:19px;font-weight:900}.mean{margin:0;font-size:35px;line-height:1.28;font-weight:900}.note{margin:18px 0 0;color:var(--mut);font-size:17px;line-height:1.5}.btns{justify-content:center;margin-top:18px}.quiz{position:relative;padding:56px}.quiz[hidden],.list[hidden],.modal[hidden]{display:none}.prompt{margin:14px 0 22px;font-size:39px;line-height:1.2}.answer{display:grid;grid-template-columns:1fr auto;gap:10px}.answer input,.field,.area{border:1px solid var(--line);border-radius:8px;background:#fbfcfc;color:var(--ink);outline:none}.answer input,.field{min-height:48px;padding:0 14px}.answer input:focus,.field:focus,.area:focus{border-color:#0d6b688c;box-shadow:0 0 0 4px #0d6b681f}.area{width:100%;min-height:170px;padding:12px;line-height:1.55;resize:vertical}.fb,.msg{min-height:30px;margin:14px 0 0;font-weight:900;color:var(--mut)}.ok{color:var(--a)}.bad{color:var(--b)}.list{border:1px solid var(--line);border-radius:8px;background:#ffffffe0;box-shadow:0 14px 34px #17202a14;overflow:hidden}.listHead,.modalHead{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line);background:#fbfcfc}.listHead h2,.modalHead h2{margin:0;font-size:19px}.x{border:1px solid var(--line);background:white;border-radius:999px;width:38px;height:38px;font-size:20px;cursor:pointer}.rows{max-height:620px;overflow:auto}.row{display:grid;gap:5px;width:100%;border:0;border-bottom:1px solid #edf1f3;background:transparent;text-align:left;padding:13px 18px;cursor:pointer}.row:hover,.row.active{background:#d8efeb}.row strong{font-size:16px}.row span{color:var(--mut);font-size:13px}.modal{position:fixed;inset:0;z-index:30;background:#17202a8a;display:grid;place-items:center;padding:22px}.panel{width:min(560px,100%);max-height:calc(100vh - 44px);background:white;border-radius:8px;box-shadow:0 24px 72px #0005;overflow:hidden}.wide{width:min(780px,100%)}.scroll{display:grid;gap:12px;max-height:calc(100vh - 126px);overflow:auto;padding:16px 20px 20px}.quick{display:grid;grid-template-columns:1fr 1.25fr auto;gap:10px}.hint{margin:0;color:var(--mut);font-size:13px;line-height:1.45}.book,.bank{display:grid;gap:10px;max-height:500px;overflow:auto;padding:16px 20px 20px}.bank{max-height:260px;padding:0;border-top:1px solid var(--line);padding-top:12px}.bookRow,.bankRow{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:12px;background:#fbfcfc}.bookRow span,.bankRow span{color:var(--mut);font-size:13px;line-height:1.35}.empty{padding:34px;text-align:center;color:var(--mut)}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-@media(max-width:860px){.top{align-items:flex-start;flex-direction:column}.layout{grid-template-columns:1fr}.rows{max-height:330px}}@media(max-width:600px){main{width:calc(100% - 20px);padding-top:18px}.word,.long{font-size:42px}.face,.quiz{padding:48px 22px 28px}.scene,.card,.face,.quiz{min-height:360px}.answer,.quick{grid-template-columns:1fr}.btn{flex:1 1 145px}.prompt{font-size:30px}.mean{font-size:27px}.topBtns{width:100%}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="有真实听写记录、宠物装扮、旅行和明信片奖励的儿童单词记忆工具。">
+  <meta name="theme-color" content="#2e8b72">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="词语星球">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>词语星球 - 宠物听写</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="kid-game.css?v=9">
+  <style>
+    :root {
+      --bg: #f5f7f8;
+      --surface: #ffffff;
+      --ink: #17202a;
+      --muted: #66717f;
+      --line: #dce3e7;
+      --teal: #0d6b68;
+      --teal-soft: #d8efeb;
+      --coral: #dc5b49;
+      --coral-soft: #ffe0da;
+      --gold: #efb547;
+      --blue: #335c81;
+      --shadow: 0 22px 55px rgba(23, 32, 42, 0.14);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, #edf6f3 0, #f5f7f8 280px),
+        var(--bg);
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .app {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 30px 0 42px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      flex: 0 0 auto;
+      border-radius: var(--radius);
+      background: var(--teal);
+      color: white;
+      box-shadow: 0 12px 25px rgba(13, 107, 104, 0.22);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .top-actions,
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      gap: 7px;
+      border: 1px solid rgba(13, 107, 104, 0.22);
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--teal);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .list-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 34px;
+      border: 1px solid rgba(13, 107, 104, 0.22);
+      border-radius: 999px;
+      background: var(--teal);
+      color: white;
+      padding: 7px 12px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 800;
+      white-space: nowrap;
+      box-shadow: 0 10px 22px rgba(13, 107, 104, 0.18);
+    }
+
+    .list-toggle:hover {
+      background: #095c59;
+    }
+
+    .library-toggle {
+      background: white;
+      color: var(--teal);
+      box-shadow: 0 10px 22px rgba(23, 32, 42, 0.08);
+    }
+
+    .library-toggle:hover {
+      background: #edf6f3;
+      color: var(--teal);
+    }
+
+    .study-switch {
+      display: inline-grid;
+      grid-template-columns: repeat(2, minmax(96px, 1fr));
+      gap: 4px;
+      margin-bottom: 14px;
+      padding: 4px;
+      border: 1px solid rgba(13, 107, 104, 0.18);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 10px 24px rgba(23, 32, 42, 0.08);
+    }
+
+    .mode-button {
+      min-height: 38px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-weight: 850;
+    }
+
+    .mode-button.is-active {
+      background: var(--teal);
+      color: white;
+      box-shadow: 0 8px 18px rgba(13, 107, 104, 0.2);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .layout.list-collapsed {
+      grid-template-columns: minmax(0, 860px);
+      justify-content: center;
+    }
+
+    .stage {
+      min-width: 0;
+    }
+
+    .scene {
+      position: relative;
+      perspective: 1400px;
+      min-height: 430px;
+    }
+
+    .flashcard {
+      position: relative;
+      width: 100%;
+      min-height: 430px;
+      transform-style: preserve-3d;
+      transition: transform 560ms cubic-bezier(.2, .72, .2, 1);
+      cursor: pointer;
+      outline: none;
+    }
+
+    .flashcard.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    .flashcard:focus-visible .face {
+      box-shadow: 0 0 0 4px rgba(239, 181, 71, 0.48), var(--shadow);
+    }
+
+    .face {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+      min-height: 430px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      backface-visibility: hidden;
+    }
+
+    .face::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 12px;
+      background: linear-gradient(90deg, var(--teal), var(--gold), var(--coral), var(--blue));
+    }
+
+    .front {
+      padding: 54px 62px 46px;
+    }
+
+    .back {
+      transform: rotateY(180deg);
+      padding: 50px 56px 44px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .part-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      border-radius: 999px;
+      background: var(--teal-soft);
+      color: var(--teal);
+      padding: 5px 10px;
+      font-size: 13px;
+    }
+
+    .source-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      border-radius: 999px;
+      background: #edf1f4;
+      color: #53606e;
+      padding: 5px 10px;
+      font-size: 13px;
+    }
+
+    .word-title {
+      margin: 0;
+      max-width: 100%;
+      color: var(--ink);
+      font-size: 66px;
+      line-height: 1;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .word-title.long-word {
+      font-size: 56px;
+    }
+
+    .pronunciation {
+      margin: 18px 0 0;
+      color: var(--blue);
+      font-size: 26px;
+      font-weight: 750;
+    }
+
+    .answer-label {
+      margin: 0 0 20px;
+      color: var(--blue);
+      font-size: 20px;
+      line-height: 1.15;
+      letter-spacing: 0;
+      font-weight: 850;
+    }
+
+    .meaning {
+      margin: 0;
+      color: var(--ink);
+      font-size: 36px;
+      line-height: 1.28;
+      font-weight: 850;
+    }
+
+    .note {
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    .favorite-button {
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      z-index: 5;
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(220, 91, 73, 0.25);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--coral);
+      cursor: pointer;
+      transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+      box-shadow: 0 10px 22px rgba(23, 32, 42, 0.12);
+    }
+
+    .favorite-button:hover {
+      transform: translateY(-1px);
+      background: var(--coral-soft);
+    }
+
+    .favorite-button.is-active {
+      background: var(--coral);
+      color: white;
+    }
+
+    .favorite-button.is-active svg {
+      fill: currentColor;
+    }
+
+    .controls {
+      margin-top: 18px;
+      justify-content: center;
+    }
+
+    .action-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      padding: 0 16px;
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--ink);
+      background: white;
+      box-shadow: 0 8px 20px rgba(23, 32, 42, 0.08);
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+      white-space: nowrap;
+    }
+
+    .action-button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(13, 107, 104, 0.28);
+    }
+
+    .action-button.primary {
+      color: white;
+      background: var(--teal);
+      box-shadow: 0 12px 22px rgba(13, 107, 104, 0.22);
+    }
+
+    .action-button.primary:hover {
+      background: #095c59;
+    }
+
+    .action-button.secondary {
+      color: var(--teal);
+      border-color: rgba(13, 107, 104, 0.18);
+    }
+
+    .mode-view[hidden] {
+      display: none;
+    }
+
+    .quiz-panel {
+      position: relative;
+      min-height: 430px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      padding: 54px 56px 38px;
+    }
+
+    .quiz-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 12px;
+      background: linear-gradient(90deg, var(--blue), var(--teal), var(--gold), var(--coral));
+    }
+
+    .quiz-favorite {
+      top: 22px;
+      right: 22px;
+    }
+
+    .quiz-prompt {
+      margin: 18px 0 24px;
+      color: var(--ink);
+      font-size: 42px;
+      line-height: 1.22;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .answer-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .answer-input {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 0 14px;
+      color: var(--ink);
+      background: #fbfcfc;
+      font: inherit;
+      font-size: 18px;
+      outline: none;
+    }
+
+    .answer-input:focus {
+      border-color: rgba(13, 107, 104, 0.55);
+      box-shadow: 0 0 0 4px rgba(13, 107, 104, 0.12);
+    }
+
+    .feedback {
+      min-height: 30px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .feedback.is-right {
+      color: var(--teal);
+    }
+
+    .feedback.is-wrong {
+      color: var(--coral);
+    }
+
+    .answer-reveal {
+      margin: 6px 0 0;
+      color: var(--blue);
+      font-size: 18px;
+      font-weight: 850;
+    }
+
+    .list-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 14px 34px rgba(23, 32, 42, 0.08);
+      overflow: hidden;
+    }
+
+    .list-panel[hidden] {
+      display: none;
+    }
+
+    .list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfc;
+    }
+
+    .list-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .list-header h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .list-count {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .word-list {
+      display: grid;
+      gap: 0;
+      max-height: 635px;
+      overflow: auto;
+    }
+
+    .word-row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 5px;
+      border: 0;
+      border-bottom: 1px solid #edf1f3;
+      background: transparent;
+      padding: 13px 18px;
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .word-row:hover,
+    .word-row.is-active {
+      background: var(--teal-soft);
+    }
+
+    .word-row strong {
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .word-row span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      background: rgba(23, 32, 42, 0.54);
+    }
+
+    .modal[hidden] {
+      display: none;
+    }
+
+    .modal-panel {
+      width: min(560px, 100%);
+      max-height: min(680px, calc(100vh - 44px));
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: 0 24px 72px rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfc;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+
+    .icon-button {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .notebook-list {
+      display: grid;
+      gap: 10px;
+      max-height: 502px;
+      overflow: auto;
+      padding: 16px 20px 20px;
+    }
+
+    .favorite-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px 12px 12px 14px;
+      background: #fbfcfc;
+    }
+
+    .favorite-row strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 17px;
+    }
+
+    .favorite-row span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .library-panel {
+      width: min(760px, 100%);
+      max-height: min(760px, calc(100vh - 44px));
+    }
+
+    .library-body {
+      display: grid;
+      gap: 14px;
+      max-height: calc(100vh - 126px);
+      overflow: auto;
+      padding: 16px 20px 20px;
+    }
+
+    .quick-add {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .library-field,
+    .library-input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcfc;
+      color: var(--ink);
+      font: inherit;
+      outline: none;
+    }
+
+    .library-field {
+      min-height: 44px;
+      padding: 0 12px;
+    }
+
+    .library-input {
+      min-height: 156px;
+      resize: vertical;
+      padding: 12px;
+      line-height: 1.55;
+    }
+
+    .library-field:focus,
+    .library-input:focus {
+      border-color: rgba(13, 107, 104, 0.55);
+      box-shadow: 0 0 0 4px rgba(13, 107, 104, 0.12);
+    }
+
+    .library-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .library-message {
+      min-height: 24px;
+      margin: 0;
+      color: var(--muted);
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .library-message.is-error {
+      color: var(--coral);
+    }
+
+    .library-list {
+      display: grid;
+      gap: 8px;
+      max-height: 260px;
+      overflow: auto;
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+    }
+
+    .library-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcfc;
+      padding: 10px 10px 10px 12px;
+    }
+
+    .library-row strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 16px;
+    }
+
+    .library-row span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .remove-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 36px;
+      border: 1px solid rgba(220, 91, 73, 0.28);
+      border-radius: var(--radius);
+      background: white;
+      color: var(--coral);
+      padding: 0 10px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .empty-state {
+      padding: 34px 20px 38px;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      flex: 0 0 auto;
+    }
+
+    @media (max-width: 920px) {
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .word-list {
+        max-height: 360px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .app {
+        width: min(100% - 20px, 1180px);
+        padding-top: 18px;
+      }
+
+      .brand h1 {
+        font-size: 23px;
+      }
+
+      .scene,
+      .flashcard,
+      .face {
+        min-height: 360px;
+      }
+
+      .front,
+      .back {
+        padding: 48px 22px 30px;
+      }
+
+      .quiz-panel {
+        min-height: 380px;
+        padding: 48px 22px 28px;
+      }
+
+      .quiz-prompt {
+        font-size: 30px;
+      }
+
+      .answer-row {
+        grid-template-columns: 1fr;
+      }
+
+      .quick-add {
+        grid-template-columns: 1fr;
+      }
+
+      .word-title,
+      .word-title.long-word {
+        font-size: 42px;
+      }
+
+      .pronunciation {
+        font-size: 22px;
+      }
+
+      .meaning {
+        font-size: 27px;
+      }
+
+      .note {
+        font-size: 16px;
+      }
+
+      .controls {
+        align-items: stretch;
+      }
+
+      .action-button {
+        flex: 1 1 160px;
+      }
+    }
+  </style>
 </head>
 <body>
-<main><header class="top"><div class="brand"><div class="logo">A</div><div><h1>单词 Flashcards</h1><p class="sub">英文卡片、中文释义、默写、生词本和自定义词库</p></div></div><div class="topBtns"><span class="pill" id="total">0 个词</span><span class="pill" id="favN">0 个收藏</span><button class="btn" id="libBtn">编辑词库</button><button class="btn primary" id="toggleListBtn">展开词表</button></div></header><section class="layout closed" id="layout"><div><div class="tabs"><button class="tab on" id="tabCard">卡片</button><button class="tab" id="tabQuiz">默写</button></div><section id="cardMode"><div class="scene"><button class="heart" id="heart">♡</button><article class="card" id="card" tabindex="0"><div class="face"><div class="meta"><span id="pos">#01</span><span class="chip" id="part">n.</span><span class="chip" id="src">IMG</span></div><h2 class="word" id="word">book</h2><p class="pron" id="pron">/bʊk/</p></div><div class="face back"><p class="label">中文释义</p><p class="mean" id="mean">书</p><p class="note" id="note"></p></div></article></div><div class="btns"><button class="btn primary" id="randBtn">随机下一张</button><button class="btn" id="nextBtn">顺序下一张</button><button class="btn" id="flipBtn">翻转</button><button class="btn" id="bookBtn">查看生词本</button></div></section><section class="quiz" id="quizMode" hidden><button class="heart" id="qHeart">♡</button><div class="meta"><span id="qPos">#01</span><span class="chip" id="qPart">n.</span><span class="chip" id="qSrc">IMG</span></div><p class="label">中文提示</p><h2 class="prompt" id="prompt">书</h2><div class="answer"><input id="ans" autocomplete="off" spellcheck="false" placeholder="输入英文单词"><button class="btn primary" id="checkBtn">检查</button></div><p class="fb" id="fb"></p><p class="pron" id="reveal" hidden></p><div class="btns"><button class="btn" id="showBtn">显示答案</button><button class="btn primary" id="qRandBtn">随机下一题</button><button class="btn" id="qNextBtn">顺序下一题</button><button class="btn" id="qBookBtn">查看生词本</button></div></section></div><aside class="list" id="list" hidden><div class="listHead"><h2>排序词表</h2><button class="x" id="closeListBtn">×</button></div><div class="rows" id="rows"></div></aside></section></main>
-<div class="modal" id="bookModal" hidden><section class="panel"><header class="modalHead"><h2>生词本</h2><button class="x" id="closeBookBtn">×</button></header><div class="book" id="bookList"></div></section></div>
-<div class="modal" id="bankModal" hidden><section class="panel wide"><header class="modalHead"><h2>编辑词库</h2><button class="x" id="closeBankBtn">×</button></header><div class="scroll"><div class="quick"><input class="field" id="quickWord" autocomplete="off" spellcheck="false" placeholder="英文单词"><input class="field" id="quickMean" autocomplete="off" placeholder="中文释义"><button class="btn primary" id="quickAddBtn">添加</button></div><textarea class="area" id="bankText" spellcheck="false" placeholder="apple 苹果&#10;banana | /bəˈnænə/ | n. | 香蕉&#10;apple banana pear grape&#10;South Korean 韩国（人）的；韩国人"></textarea><p class="hint">可以直接粘贴中英词表；只粘贴英文时，会先生成待补充释义的卡片。</p><div class="actions"><button class="btn primary" id="appendBankBtn">智能导入</button><button class="btn" id="replaceBankBtn">替换词库</button><button class="btn" id="exportBankBtn">导出编辑</button><button class="btn warn" id="resetBankBtn">恢复默认</button></div><p class="msg" id="bankMsg"></p><div class="bank" id="bankList"></div></div></section></div>
-<span class="sr" id="status"></span>
-<script>
-const BASE=[["book","/bʊk/","n.","书","IMG_5068"],["car","/kɑːr/","n.","小汽车","IMG_5068"],["Chinese","/ˌtʃaɪˈniːz/","adj./n.","中国（人）的；中国人；汉语","IMG_5071"],["cloakroom","/ˈkloʊkruːm/","n.","衣帽存放处","IMG_5069"],["coat","/koʊt/","n.","上衣；外衣","IMG_5068"],["daughter","/ˈdɔːtər/","n.","女儿","IMG_5070"],["dress","/dres/","n.","连衣裙","IMG_5068"],["five","/faɪv/","num.","五","IMG_5069"],["Ford","/fɔːrd/","n.","福特（汽车品牌）","IMG_5072"],["German","/ˈdʒɜːrmən/","adj./n.","德国（人）的；德国人；德语","IMG_5071"],["house","/haʊs/","n.","房子","IMG_5068"],["Japanese","/ˌdʒæpəˈniːz/","adj./n.","日本（人）的；日本人；日语","IMG_5071"],["meet","/miːt/","v.","结识；遇见","IMG_5071"],["Mercedes","/mərˈseɪdiːz/","n.","梅赛德斯（汽车品牌）","IMG_5072"],["Mini","/ˈmɪni/","n.","迷你（汽车品牌）","IMG_5072"],["nice","/naɪs/","adj.","美好的；令人愉快的","IMG_5071"],["number","/ˈnʌmbər/","n.","号码；数字","IMG_5069"],["pen","/pen/","n.","钢笔","IMG_5068"],["pencil","/ˈpensl/","n.","铅笔","IMG_5068"],["Peugeot","/ˈpɜːʒoʊ/","n.","标致（汽车品牌）","IMG_5072"],["school","/skuːl/","n.","学校","IMG_5070"],["shirt","/ʃɜːrt/","n.","衬衣","IMG_5068"],["sir","/sɜːr/","n.","先生","IMG_5069"],["skirt","/skɜːrt/","n.","裙子","IMG_5068"],["son","/sʌn/","n.","儿子","IMG_5070"],["sorry","/ˈsɔːri/","adj.","对不起的；抱歉的","IMG_5069"],["South Korean","/ˌsaʊθ kəˈriːən/","adj./n.","韩国（人）的；韩国人","IMG_5071"],["suit","/suːt/","n.","一套衣服；套装","IMG_5070"],["tea","/tiː/","n.","茶；茶叶","IMG_5070"],["teach","/tiːtʃ/","v.","教；教书","IMG_5070"],["teacher","/ˈtiːtʃər/","n.","老师","IMG_5070"],["too","/tuː/","adv.","也；太","IMG_5071"],["Toyota","/tɔɪˈoʊtə/","n.","丰田（汽车品牌）","IMG_5072"],["watch","/wɑːtʃ/","n.","手表","IMG_5068"]];
-const $=id=>document.getElementById(id),favKey="word-flashcards-favorites-v5",bankKey="word-flashcards-bank-v2";let idx=0,mode="card",fav=new Set(JSON.parse(localStorage.getItem(favKey)||"[]"));function makeId(w){let x=String(w).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");return x||encodeURIComponent(w).replace(/%/g,"").toLowerCase()}function entry(x){let a=Array.isArray(x)?x:[x.w||x.word,x.pr||x.pronunciation,x.p||x.part,x.m||x.meaning,x.s||x.source];let w=String(a[0]||"").trim();if(!w)return null;let s=String(a[4]||"自定义").trim()||"自定义";return{w,pr:String(a[1]||"").trim(),p:String(a[2]||"自定义").trim()||"自定义",m:String(a[3]||"待补充释义").trim()||"待补充释义",s,id:makeId(w)}}function listNorm(list){let map=new Map;(list||[]).forEach(x=>{x=entry(x);if(x)map.set(x.id,x)});return[...map.values()].sort((a,b)=>a.w.localeCompare(b.w,"en",{sensitivity:"base"}))}function loadBank(){try{let x=JSON.parse(localStorage.getItem(bankKey)||"null");return Array.isArray(x)&&x.length?x:null}catch{return null}}let words=listNorm(loadBank()||BASE);function saveFav(){localStorage.setItem(favKey,JSON.stringify([...fav]))}function saveBank(){localStorage.setItem(bankKey,JSON.stringify(words.map(({w,pr,p,m,s})=>({w,pr,p,m,s}))))}function cur(){return words[idx]}function setMsg(t,bad=false){$("bankMsg").textContent=t;$("bankMsg").className="msg"+(bad?" bad":"")}function setCounts(){ $("total").textContent=words.length+" 个词";$("favN").textContent=words.filter(x=>fav.has(x.id)).length+" 个收藏" }function clearQuiz(){$("ans").value="";$("fb").textContent="";$("fb").className="fb";$("reveal").hidden=true;$("reveal").textContent=""}function setFavUi(){let on=fav.has(cur().id);[$("heart"),$("qHeart")].forEach(b=>{b.classList.toggle("on",on);b.textContent=on?"♥":"♡"});setCounts()}function render(n=0){idx=(n+words.length)%words.length;let w=cur(),num="#"+String(idx+1).padStart(2,"0");$("pos").textContent=$("qPos").textContent=num;$("part").textContent=$("qPart").textContent=w.p;$("src").textContent=$("qSrc").textContent=w.s;$("word").textContent=w.w;$("word").classList.toggle("long",w.w.length>10);$("pron").textContent=w.pr;$("mean").textContent=w.m;$("note").textContent=w.s==="自定义"?"来自自定义词库。":"";$("prompt").textContent=w.m;$("card").classList.remove("flip");clearQuiz();setFavUi();renderWordRows();$("status").textContent="当前单词："+w.w}function goRandom(){if(words.length<2)return;render(idx+Math.floor(Math.random()*(words.length-1))+1)}function goNext(){render(idx+1)}function toggleFav(){let id=cur().id;fav.has(id)?fav.delete(id):fav.add(id);saveFav();setFavUi();renderBook()}function addFav(w){if(fav.has(w.id))return false;fav.add(w.id);saveFav();setFavUi();renderBook();return true}function clean(s){return s.toLowerCase().replace(/[^a-z0-9]+/g," ").trim().replace(/\s+/g," ")}function checkAnswer(){let w=cur(),a=clean($("ans").value),t=clean(w.w);if(!a){$("fb").textContent="先写一个答案。";$("fb").className="fb bad";return}if(a===t||a.replace(/\s/g,"")===t.replace(/\s/g,"")){$("fb").textContent="答对了";$("fb").className="fb ok";$("reveal").hidden=false;$("reveal").textContent=w.w+"  "+w.pr}else{$("fb").textContent=addFav(w)?"再想一下，已加入生词本":"再想一下，已在生词本";$("fb").className="fb bad"}}function showAnswer(){let w=cur();$("reveal").hidden=false;$("reveal").textContent=w.w+"  "+w.pr;$("fb").textContent="答案已显示";$("fb").className="fb"}function renderWordRows(){$("rows").replaceChildren();words.forEach((w,n)=>{let b=document.createElement("button");b.className="row"+(n===idx?" active":"");b.innerHTML="<strong>"+w.w+"</strong><span>"+w.p+" "+w.m+"</span>";b.onclick=()=>render(n);$("rows").append(b)})}function renderBook(){$("bookList").replaceChildren();let a=words.filter(w=>fav.has(w.id));if(!a.length){let d=document.createElement("div");d.className="empty";d.textContent="还没有收藏的单词。";$("bookList").append(d);return}a.forEach(w=>{let r=document.createElement("div");r.className="bookRow";r.innerHTML="<div><strong>"+w.w+"</strong><br><span>"+w.p+" "+w.m+"</span></div>";let x=document.createElement("button");x.className="btn warn";x.textContent="移除";x.onclick=()=>{fav.delete(w.id);saveFav();setFavUi();renderBook()};r.append(x);$("bookList").append(r)})}function renderBank(){$("bankList").replaceChildren();words.forEach((w,n)=>{let r=document.createElement("div");r.className="bankRow";r.innerHTML="<div><strong>"+w.w+"</strong><br><span>"+w.p+" "+w.m+"</span></div>";let x=document.createElement("button");x.className="btn warn";x.textContent="移除";x.disabled=words.length<=1;x.onclick=()=>{if(words.length<=1)return setMsg("词库里至少要保留 1 个词。",true);setBank(words.filter((_,j)=>j!==n),"已移除："+w.w)};r.append(x);$("bankList").append(r)})}function setBank(list,text){let n=listNorm(list);if(!n.length)return setMsg("没有识别到可导入的词。",true);words=n;idx=0;saveBank();render(0);renderBank();setMsg(text)}function englishTokens(t){return t.split(/[\s,，;；]+/).map(x=>x.trim()).filter(Boolean).filter(x=>/^[A-Za-z][A-Za-z'-]*$/.test(x)).map(w=>({w,pr:"",p:"自定义",m:"待补充释义",s:"自定义"}))}function parseLine(line){let t=line.replace(/^\s*(?:[-*]|\d+[.)、])\s*/,"").trim();if(!t)return[];let f=t.split(/\s*\|\s*|\t+/).map(x=>x.trim()).filter(Boolean);if(f.length>=4)return[{w:f[0],pr:f[1],p:f[2],m:f.slice(3).join("；"),s:"自定义"}];if(f.length===3){let isPr=/^\/.+\/$|^\[.+\]$/.test(f[1]);return[{w:f[0],pr:isPr?f[1]:"",p:isPr?"自定义":f[1],m:f[2],s:"自定义"}]}if(f.length===2)return[{w:f[0],pr:"",p:"自定义",m:f[1],s:"自定义"}];let sep=t.match(/^(.+?)\s*(?:,|，|=|：|:|\s[-–—]\s)\s*(.+)$/);if(sep)return[{w:sep[1].trim(),pr:"",p:"自定义",m:sep[2].trim(),s:"自定义"}];let c=t.search(/[\u3400-\u9fff]/);if(c>0){let h=t.slice(0,c).replace(/[-=:=：,，|]+$/g,"").trim(),m=t.slice(c).trim(),pm=h.match(/\/[^/]+\/|\[[^\]]+\]/),pr=pm?pm[0]:"",hp=pr?h.replace(pr,"").trim():h,pt=hp.match(/\b((?:n|v|adj|adv|num|prep|pron|conj|art)\.?(?:\s*\/\s*(?:n|v|adj|adv|num)\.?)*)$/i),p=pt?pt[1]:"",w=(p?hp.slice(0,pt.index).trim():hp).trim();return[{w,pr,p,m,s:"自定义"}]}if(!/[\u3400-\u9fff]/.test(t)&&(/[,，;；]/.test(t)||t.split(/\s+/).length>1)){let tokens=englishTokens(t);if(tokens.length>1)return tokens}return[{w:t,pr:"",p:"自定义",m:"待补充释义",s:"自定义"}]}function parseText(t){return t.split(/\r?\n/).flatMap(parseLine).filter(x=>x&&x.w)}function importText(replace){let a=parseText($("bankText").value);if(!a.length)return setMsg("没有识别到可导入的词。",true);if(replace)setBank(a,"已替换为 "+listNorm(a).length+" 个词。");else{let merged=[...words,...a];setBank(merged,"已导入 "+a.length+" 个词，当前词库 "+listNorm(merged).length+" 个词。");$("bankText").value=""}}function addQuick(){let w=$("quickWord").value.trim();if(!w)return setMsg("先输入英文单词。",true);setBank([...words,{w,pr:"",p:"自定义",m:$("quickMean").value.trim()||"待补充释义",s:"自定义"}],"已添加："+w);$("quickWord").value="";$("quickMean").value="";$("quickWord").focus()}function setMode(m){mode=m;$("cardMode").hidden=m==="quiz";$("quizMode").hidden=m!=="quiz";$("tabCard").classList.toggle("on",m==="card");$("tabQuiz").classList.toggle("on",m==="quiz");if(m==="quiz"){clearQuiz();setTimeout(()=>$("ans").focus(),0)}}function setList(open){$("list").hidden=!open;$("layout").classList.toggle("closed",!open);$("toggleListBtn").textContent=open?"收起词表":"展开词表"}function openBook(){renderBook();$("bookModal").hidden=false}function openBank(){renderBank();setMsg("当前词库 "+words.length+" 个词。");$("bankModal").hidden=false;$("quickWord").focus()}$("card").onclick=()=>$("card").classList.toggle("flip");$("card").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();$("card").click()}};$("flipBtn").onclick=()=>$("card").click();$("randBtn").onclick=goRandom;$("qRandBtn").onclick=goRandom;$("nextBtn").onclick=goNext;$("qNextBtn").onclick=goNext;$("heart").onclick=toggleFav;$("qHeart").onclick=toggleFav;$("checkBtn").onclick=checkAnswer;$("ans").onkeydown=e=>{if(e.key==="Enter")checkAnswer()};$("showBtn").onclick=showAnswer;$("bookBtn").onclick=openBook;$("qBookBtn").onclick=openBook;$("closeBookBtn").onclick=()=>$("bookModal").hidden=true;$("bookModal").onclick=e=>{if(e.target===$("bookModal"))$("bookModal").hidden=true};$("libBtn").onclick=openBank;$("closeBankBtn").onclick=()=>$("bankModal").hidden=true;$("bankModal").onclick=e=>{if(e.target===$("bankModal"))$("bankModal").hidden=true};$("quickAddBtn").onclick=addQuick;$("quickWord").onkeydown=$("quickMean").onkeydown=e=>{if(e.key==="Enter")addQuick()};$("appendBankBtn").onclick=()=>importText(false);$("replaceBankBtn").onclick=()=>importText(true);$("exportBankBtn").onclick=()=>{$("bankText").value=words.map(w=>[w.w,w.pr,w.p,w.m].join(" | ")).join("\n");$("bankText").focus();$("bankText").select();setMsg("当前词库已放入编辑框。修改后点“替换词库”。")};$("resetBankBtn").onclick=()=>{if(confirm("恢复默认 34 个词？当前自定义词库会被清空。")){localStorage.removeItem(bankKey);words=listNorm(BASE);render(0);renderBank();setMsg("已恢复默认词库。")}};$("tabCard").onclick=()=>setMode("card");$("tabQuiz").onclick=()=>setMode("quiz");$("toggleListBtn").onclick=()=>setList($("list").hidden);$("closeListBtn").onclick=()=>setList(false);document.onkeydown=e=>{if(e.key==="Escape"){$("bookModal").hidden=true;$("bankModal").hidden=true}};render(0);setList(false);if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
-</script>
+  <div class="kid-app" id="kidApp">
+    <header class="kid-topbar">
+      <button class="kid-brand" id="kidHomeButton" type="button" aria-label="回到今日任务">
+        <span class="kid-brand-mark" aria-hidden="true">W</span>
+        <span>
+          <strong>词语星球</strong>
+          <small id="kidGreeting">和小伙伴一起完成今天的挑战</small>
+        </span>
+      </button>
+      <div class="kid-wallet" aria-label="我的奖励">
+        <div class="lucky-pocket" id="pointsPocket" title="积分">
+          <span class="wallet-icon" aria-hidden="true">★</span>
+          <span><strong id="kidPoints">0</strong><small>积分</small></span>
+        </div>
+        <div class="cookie-pocket" title="小饼干">
+          <span class="wallet-icon" aria-hidden="true">●</span>
+          <span><strong id="kidCookies">0</strong><small>饼干</small></span>
+        </div>
+        <button class="round-tool" id="parentButton" type="button" title="家长区" aria-label="打开家长区">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path><path d="M4.9 19a8 8 0 0 1 14.2 0"></path></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="kid-main">
+      <section class="kid-screen is-active" id="homeScreen" data-screen="home">
+        <div class="home-band">
+          <div class="pet-room" id="petRoom">
+            <div class="room-window" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            <div class="room-furniture" id="roomFurniture" aria-hidden="true"></div>
+            <button class="pet-stage" id="changePetButton" type="button" aria-label="更换小伙伴">
+              <img id="homePetImage" src="assets/pets/rabbit.webp" alt="我的小伙伴">
+              <span class="pet-accessory" id="homePetAccessory" aria-hidden="true"></span>
+            </button>
+            <div class="pet-speech" id="petSpeech">先给我取个名字吧！</div>
+            <div class="room-lock" id="roomLock">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+              <strong>完成今日任务后解锁小屋</strong>
+              <span id="roomLockText">还差 10 个单词</span>
+            </div>
+          </div>
+
+          <div class="daily-mission">
+            <div class="mission-heading">
+              <div>
+                <span class="mission-eyebrow">TODAY'S MISSION</span>
+                <h1>今日听写</h1>
+              </div>
+              <span class="mission-date" id="missionDate"></span>
+            </div>
+            <div class="mission-progress" aria-label="今日进度">
+              <div class="progress-ring" id="progressRing"><strong id="missionDone">0</strong><span id="missionTotal">/ 10</span></div>
+              <div class="progress-copy">
+                <strong id="missionTitle">准备好了吗？</strong>
+                <p id="missionSummary">写对才能过关，过程会自动记录。</p>
+                <div class="progress-track"><span id="missionProgressBar"></span></div>
+              </div>
+            </div>
+            <button class="mission-start" id="startMissionButton" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7Z"></path></svg>
+              <span id="startMissionText">开始今天的 10 个词</span>
+            </button>
+            <button class="text-tool" id="openTodayReportButton" type="button">查看今天的听写记录</button>
+          </div>
+        </div>
+
+        <div class="quick-strip">
+          <button class="quick-tile" type="button" data-go="pet">
+            <span class="tile-icon tile-shop" aria-hidden="true">⌂</span>
+            <span><strong>装扮小屋</strong><small>衣服、粮食和家具都很便宜</small></span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+          </button>
+          <button class="quick-tile" type="button" data-go="travel">
+            <span class="tile-icon tile-travel" aria-hidden="true">✈</span>
+            <span><strong>出发旅行</strong><small id="homeTravelHint">用小饼干换一张明信片</small></span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+          </button>
+          <button class="quick-tile" type="button" data-go="growth">
+            <span class="tile-icon tile-postcard" aria-hidden="true">▣</span>
+            <span><strong>成长足迹</strong><small id="homePostcardHint">还没有明信片</small></span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+          </button>
+        </div>
+      </section>
+
+      <section class="kid-screen dictation-screen" id="dictationScreen" data-screen="dictation">
+        <div class="dictation-topline">
+          <button class="round-tool" id="leaveMissionButton" type="button" aria-label="暂时离开听写">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+          </button>
+          <div class="session-progress"><span id="sessionProgressText">第 1 个，共 10 个</span><div><i id="sessionProgressBar"></i></div></div>
+          <span class="session-score" id="sessionScore">★ 0</span>
+        </div>
+        <div class="dictation-workspace">
+          <div class="dictation-pet">
+            <img id="dictationPetImage" src="assets/pets/rabbit.webp" alt="陪你听写的小伙伴">
+            <span class="pet-accessory" id="dictationPetAccessory" aria-hidden="true"></span>
+            <p id="dictationPetText">我会一直陪着你。</p>
+          </div>
+          <div class="dictation-board">
+            <span class="question-label">根据中文，拼出英文单词</span>
+            <h2 id="dictationMeaning">书</h2>
+            <button class="listen-button" id="speakWordButton" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4Z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18 6a9 9 0 0 1 0 12"></path></svg>
+              听一听
+            </button>
+            <label class="dictation-input-wrap">
+              <span class="sr-only">输入英文单词</span>
+              <input id="dictationInput" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="在这里拼写">
+            </label>
+            <p class="dictation-feedback" id="dictationFeedback" aria-live="polite"></p>
+            <div class="revealed-answer" id="revealedAnswer" hidden>
+              <span>答案</span><strong id="revealedWord"></strong><small>现在看着它，自己重新拼写一遍才能过关。</small>
+            </div>
+            <div class="dictation-actions">
+              <button class="answer-check" id="submitDictationButton" type="button">检查拼写</button>
+              <button class="answer-help" id="revealDictationButton" type="button">我不会，看看答案</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="kid-screen" id="petScreen" data-screen="pet">
+        <header class="screen-heading">
+          <div><span>MY LITTLE ROOM</span><h2>我的小屋</h2><p>用听写得到的积分，给小伙伴添一点新东西。</p></div>
+          <button class="secondary-tool" id="chooseAnotherPetButton" type="button">更换伙伴</button>
+        </header>
+        <div class="pet-customizer">
+          <div class="room-preview" id="shopRoomPreview">
+            <div class="room-window" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            <div class="room-furniture" id="shopRoomFurniture" aria-hidden="true"></div>
+            <div class="shop-pet-stage"><img id="shopPetImage" src="assets/pets/rabbit.webp" alt="正在装扮的小伙伴"><span class="pet-accessory" id="shopPetAccessory" aria-hidden="true"></span></div>
+            <div class="friendship-meter"><span>亲密值</span><div><i id="friendshipBar"></i></div><strong id="friendshipValue">0</strong></div>
+          </div>
+          <div class="shop-panel">
+            <div class="shop-tabs" role="tablist">
+              <button class="is-active" type="button" data-shop="clothes">衣服</button>
+              <button type="button" data-shop="food">粮食</button>
+              <button type="button" data-shop="furniture">家具</button>
+            </div>
+            <div class="shop-grid" id="shopGrid"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="kid-screen" id="travelScreen" data-screen="travel">
+        <header class="screen-heading">
+          <div><span>POSTCARD JOURNEY</span><h2>小伙伴去旅行</h2><p>每完成 10 次听写得到 1 块小饼干，旅行回来会带回明信片。</p></div>
+        </header>
+        <div class="travel-map">
+          <div class="map-route" aria-hidden="true"></div>
+          <div class="travel-pet-wrap" id="travelPetWrap"><img id="travelPetImage" src="assets/pets/rabbit.webp" alt="旅行中的小伙伴"></div>
+          <div class="destination-pin pin-one">雪山</div>
+          <div class="destination-pin pin-two">海岛</div>
+          <div class="destination-pin pin-three">森林</div>
+          <div class="destination-pin pin-four">星光城</div>
+          <div class="travel-console">
+            <div id="travelIdle">
+              <span class="console-eyebrow">下一站会去哪里？</span>
+              <h3>花 1 块小饼干出发</h3>
+              <p>旅行会在后台继续，关掉页面也没关系。</p>
+              <button class="travel-button" id="startTravelButton" type="button">出发旅行</button>
+            </div>
+            <div id="travelActive" hidden>
+              <span class="console-eyebrow">正在旅行</span>
+              <h3 id="travelDestination">正在前往森林</h3>
+              <p id="travelCountdown">04:59 后回来</p>
+              <button class="travel-button" id="claimPostcardButton" type="button" disabled>等小伙伴回来</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="kid-screen" id="growthScreen" data-screen="growth">
+        <header class="screen-heading">
+          <div><span>MY PROGRESS</span><h2>成长足迹</h2><p>每一次认真拼写，都在这里留下证据。</p></div>
+          <button class="secondary-tool" id="openNotebookFromKidButton" type="button">查看错词本</button>
+        </header>
+        <div class="growth-summary">
+          <div><span>累计听写</span><strong id="totalDictationsStat">0</strong><small>个单词</small></div>
+          <div><span>一次写对</span><strong id="firstTryStat">0</strong><small>个单词</small></div>
+          <div><span>看过答案</span><strong id="revealedStat">0</strong><small>次记录</small></div>
+          <div><span>明信片等级</span><strong id="postcardLevelStat">Lv.0</strong><small id="dailyIncomeStat">每天 +0 积分</small></div>
+        </div>
+        <div class="postcard-section">
+          <div class="section-title"><div><h3>我的明信片</h3><p id="postcardIncomeCopy">获得第一张后，每天都会有积分装进口袋。</p></div><span id="postcardCount">0 张</span></div>
+          <div class="postcard-grid" id="postcardGrid"></div>
+        </div>
+        <div class="history-section">
+          <div class="section-title"><div><h3>最近听写</h3><p>家长可以看到每个词是否写错、是否看过答案。</p></div></div>
+          <div class="history-list" id="historyList"></div>
+        </div>
+      </section>
+    </main>
+
+    <nav class="kid-nav" aria-label="主要功能">
+      <button class="is-active" type="button" data-nav="home"><span aria-hidden="true">⌂</span><strong>今日</strong></button>
+      <button type="button" data-nav="pet"><span aria-hidden="true">♡</span><strong>小屋</strong></button>
+      <button type="button" data-nav="travel"><span aria-hidden="true">✈</span><strong>旅行</strong></button>
+      <button type="button" data-nav="growth"><span aria-hidden="true">▣</span><strong>足迹</strong></button>
+    </nav>
+  </div>
+
+  <main class="app legacy-app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg class="icon" viewBox="0 0 24 24">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"></path>
+          </svg>
+        </div>
+        <div>
+          <h1>单词 Flashcards</h1>
+          <p>图片词汇已按字母顺序整理</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <span class="pill" id="totalPill">0 个词</span>
+        <span class="pill" id="favoritePill">0 个收藏</span>
+        <button class="list-toggle library-toggle" id="openLibraryButton" type="button" aria-controls="libraryModal">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+          </svg>
+          编辑词库
+        </button>
+        <button class="list-toggle" id="toggleWordListButton" type="button" aria-controls="wordListPanel" aria-expanded="false">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8 6h13"></path>
+            <path d="M8 12h13"></path>
+            <path d="M8 18h13"></path>
+            <path d="M3 6h.01"></path>
+            <path d="M3 12h.01"></path>
+            <path d="M3 18h.01"></path>
+          </svg>
+          <span id="wordListToggleText">展开词表</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="layout list-collapsed" id="studyLayout" aria-label="单词记忆工具">
+      <div class="stage">
+        <div class="study-switch" aria-label="学习模式">
+          <button class="mode-button is-active" id="cardModeButton" type="button" aria-pressed="true">卡片</button>
+          <button class="mode-button" id="quizModeButton" type="button" aria-pressed="false">默写</button>
+        </div>
+
+        <section class="mode-view" id="cardMode">
+          <div class="scene">
+            <button class="favorite-button" id="favoriteButton" type="button" aria-label="收藏当前单词" aria-pressed="false">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19.5 12.6 12 20l-7.5-7.4a5 5 0 0 1 7.1-7.1l.4.4.4-.4a5 5 0 1 1 7.1 7.1Z"></path>
+              </svg>
+            </button>
+
+            <article class="flashcard" id="flashcard" tabindex="0" role="button" aria-label="翻转单词卡片">
+              <div class="face front">
+                <div class="card-meta">
+                  <span id="positionText">#01</span>
+                  <span class="part-chip" id="partText">n.</span>
+                  <span class="source-chip" id="sourceText">IMG_5068</span>
+                </div>
+                <h2 class="word-title" id="wordText">book</h2>
+                <p class="pronunciation" id="pronText">/bʊk/</p>
+              </div>
+              <div class="face back">
+                <p class="answer-label">中文释义</p>
+                <p class="meaning" id="meaningText">书</p>
+                <p class="note" id="noteText"></p>
+              </div>
+            </article>
+          </div>
+
+          <div class="controls">
+            <button class="action-button primary" id="randomButton" type="button">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18 14l4 4-4 4"></path>
+                <path d="M18 2l4 4-4 4"></path>
+                <path d="M2 18h1.5c1.5 0 2.8-.8 3.6-2l6-8A4.5 4.5 0 0 1 16.7 6H22"></path>
+                <path d="M2 6h1.5c1.4 0 2.7.7 3.5 1.8l.9 1.2"></path>
+                <path d="M14.8 15.2l.3.5A4.5 4.5 0 0 0 18.9 18H22"></path>
+              </svg>
+              随机下一张
+            </button>
+            <button class="action-button secondary" id="sequentialButton" type="button">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14"></path>
+                <path d="m13 6 6 6-6 6"></path>
+              </svg>
+              顺序下一张
+            </button>
+            <button class="action-button secondary" id="flipButton" type="button">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 12a9 9 0 0 1-9 9 8.7 8.7 0 0 1-6-2.3"></path>
+                <path d="M3 12a9 9 0 0 1 9-9 8.7 8.7 0 0 1 6 2.3"></path>
+                <path d="M7 18H5v2"></path>
+                <path d="M17 6h2V4"></path>
+              </svg>
+              翻转
+            </button>
+            <button class="action-button secondary" id="openNotebookButton" type="button">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M2 6h6a4 4 0 0 1 4 4v10a3 3 0 0 0-3-3H2Z"></path>
+                <path d="M22 6h-6a4 4 0 0 0-4 4v10a3 3 0 0 1 3-3h7Z"></path>
+              </svg>
+              查看生词本
+            </button>
+          </div>
+        </section>
+
+        <section class="mode-view quiz-panel" id="quizMode" hidden aria-label="默写模式">
+          <button class="favorite-button quiz-favorite" id="quizFavoriteButton" type="button" aria-label="收藏当前单词" aria-pressed="false">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M19.5 12.6 12 20l-7.5-7.4a5 5 0 0 1 7.1-7.1l.4.4.4-.4a5 5 0 1 1 7.1 7.1Z"></path>
+            </svg>
+          </button>
+          <div class="card-meta">
+            <span id="quizPositionText">#01</span>
+            <span class="part-chip" id="quizPartText">n.</span>
+            <span class="source-chip" id="quizSourceText">IMG_5068</span>
+          </div>
+          <p class="answer-label">中文提示</p>
+          <h2 class="quiz-prompt" id="quizPromptText">书</h2>
+          <div class="answer-row">
+            <input class="answer-input" id="answerInput" type="text" autocomplete="off" spellcheck="false" placeholder="输入英文">
+            <button class="action-button primary" id="checkAnswerButton" type="button">检查</button>
+          </div>
+          <p class="feedback" id="feedbackText" aria-live="polite"></p>
+          <p class="answer-reveal" id="answerRevealText" hidden></p>
+          <div class="controls">
+            <button class="action-button secondary" id="showAnswerButton" type="button">显示答案</button>
+            <button class="action-button primary" id="quizNextButton" type="button">随机下一题</button>
+            <button class="action-button secondary" id="quizSequentialButton" type="button">顺序下一题</button>
+            <button class="action-button secondary" id="quizNotebookButton" type="button">查看生词本</button>
+          </div>
+        </section>
+      </div>
+
+      <aside class="list-panel" id="wordListPanel" aria-label="排序词表" hidden>
+        <div class="list-header">
+          <h2>排序词表</h2>
+          <div class="list-header-actions">
+            <span class="list-count" id="listCount">0 / 0</span>
+            <button class="icon-button" id="closeWordListButton" type="button" aria-label="收起排序词表">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="word-list" id="wordList"></div>
+      </aside>
+    </section>
+  </main>
+
+  <div class="kid-modal" id="petPickerModal" hidden>
+    <section class="kid-modal-panel pet-picker-panel" role="dialog" aria-modal="true" aria-labelledby="petPickerTitle">
+      <header class="kid-modal-heading">
+        <div><span>FIRST THINGS FIRST</span><h2 id="petPickerTitle">选一个最想陪你的伙伴</h2><p>以后随时可以更换，已经买到的东西都会保留。</p></div>
+        <button class="round-tool" id="closePetPickerButton" type="button" aria-label="关闭角色选择" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        </button>
+      </header>
+      <div class="pet-picker-grid" id="petPickerGrid"></div>
+      <div class="pet-name-row">
+        <label for="petNameInput">给它取个名字</label>
+        <input id="petNameInput" type="text" maxlength="8" placeholder="比如：团团">
+        <button id="confirmPetButton" type="button" disabled>就选它</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="kid-modal" id="parentModal" hidden>
+    <section class="kid-modal-panel parent-panel" role="dialog" aria-modal="true" aria-labelledby="parentTitle">
+      <header class="kid-modal-heading">
+        <div><span>FOR GROWN-UPS</span><h2 id="parentTitle">家长区</h2><p>设置今天的任务，也可以核对真实的听写过程。</p></div>
+        <button class="round-tool" id="closeParentButton" type="button" aria-label="关闭家长区">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        </button>
+      </header>
+      <div class="parent-layout">
+        <div class="parent-settings">
+          <h3>今日任务</h3>
+          <label class="setting-label" for="dailyTargetInput">每天听写几个词</label>
+          <div class="target-stepper">
+            <button id="targetMinusButton" type="button" aria-label="减少一个">−</button>
+            <input id="dailyTargetInput" type="number" min="1" max="30" value="10">
+            <button id="targetPlusButton" type="button" aria-label="增加一个">＋</button>
+          </div>
+          <span class="setting-label">怎么选词</span>
+          <div class="choice-control" id="taskModeControl">
+            <button class="is-active" type="button" data-task-mode="sequential">按词表顺序</button>
+            <button type="button" data-task-mode="random">每天随机</button>
+            <button type="button" data-task-mode="mistakes">优先生词</button>
+          </div>
+          <div class="task-preview"><strong>本次会听写</strong><p id="taskPreviewText"></p></div>
+          <button class="parent-save" id="saveTaskButton" type="button">保存今天的任务</button>
+          <button class="parent-link" id="parentEditLibraryButton" type="button">编辑或导入词库</button>
+          <button class="parent-link" id="openLegacyCardsButton" type="button">打开自由练习卡片</button>
+        </div>
+        <div class="parent-report">
+          <div class="report-head"><h3>今天的记录</h3><span id="parentReportStatus">还没开始</span></div>
+          <div class="report-numbers">
+            <div><strong id="parentCompletedStat">0</strong><span>已完成</span></div>
+            <div><strong id="parentFirstTryStat">0</strong><span>一次写对</span></div>
+            <div><strong id="parentHelpStat">0</strong><span>看答案</span></div>
+          </div>
+          <div class="parent-records" id="parentRecords"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="kid-modal" id="todayReportModal" hidden>
+    <section class="kid-modal-panel report-panel" role="dialog" aria-modal="true" aria-labelledby="todayReportTitle">
+      <header class="kid-modal-heading">
+        <div><span>TODAY'S RECORD</span><h2 id="todayReportTitle">今天的听写记录</h2><p>写错和看答案都会如实保留，重新写对也会记录。</p></div>
+        <button class="round-tool" id="closeTodayReportButton" type="button" aria-label="关闭听写记录">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        </button>
+      </header>
+      <div class="report-list" id="todayReportList"></div>
+    </section>
+  </div>
+
+  <div class="kid-modal reward-modal" id="missionCompleteModal" hidden>
+    <section class="kid-modal-panel reward-panel" role="dialog" aria-modal="true" aria-labelledby="rewardTitle">
+      <div class="reward-burst" aria-hidden="true"><span>★</span><span>★</span><span>★</span></div>
+      <img id="rewardPetImage" src="assets/pets/rabbit.webp" alt="为你庆祝的小伙伴">
+      <span class="reward-kicker">TODAY COMPLETE</span>
+      <h2 id="rewardTitle">今天的任务完成啦！</h2>
+      <p id="rewardSummary">10 个单词都已经认真拼完。</p>
+      <div class="reward-chips"><span id="rewardPoints">+10 积分</span><span id="rewardCookies">+1 小饼干</span></div>
+      <button id="unlockRoomButton" type="button">去找小伙伴玩</button>
+    </section>
+  </div>
+
+  <div class="legacy-return" id="legacyReturn" hidden>
+    <button id="returnToKidButton" type="button">返回词语星球</button>
+  </div>
+
+  <div class="toast" id="kidToast" role="status" aria-live="polite"></div>
+
+  <div class="modal" id="notebookModal" hidden>
+    <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="notebookTitle">
+      <header class="modal-header">
+        <h2 id="notebookTitle">生词本</h2>
+        <button class="icon-button" id="closeModalButton" type="button" aria-label="关闭生词本">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </header>
+      <div class="notebook-list" id="notebookList"></div>
+    </section>
+  </div>
+
+  <div class="modal" id="libraryModal" hidden>
+    <section class="modal-panel library-panel" role="dialog" aria-modal="true" aria-labelledby="libraryTitle">
+      <header class="modal-header">
+        <h2 id="libraryTitle">词库管理</h2>
+        <button class="icon-button" id="closeLibraryButton" type="button" aria-label="关闭词库管理">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </header>
+      <div class="library-body">
+        <div class="quick-add">
+          <input class="library-field" id="quickWordInput" type="text" autocomplete="off" spellcheck="false" placeholder="英文单词">
+          <input class="library-field" id="quickMeaningInput" type="text" autocomplete="off" placeholder="中文释义">
+          <button class="action-button primary" id="quickAddButton" type="button">添加</button>
+        </div>
+        <textarea class="library-input" id="libraryInput" spellcheck="false" placeholder="apple 苹果&#10;banana | /bəˈnænə/ | n. | 香蕉&#10;South Korean 韩国（人）的；韩国人"></textarea>
+        <div class="library-actions">
+          <button class="action-button primary" id="appendLibraryButton" type="button">追加导入</button>
+          <button class="action-button secondary" id="replaceLibraryButton" type="button">替换词库</button>
+          <button class="action-button secondary" id="exportLibraryButton" type="button">导出编辑</button>
+          <button class="action-button secondary" id="resetLibraryButton" type="button">恢复默认</button>
+        </div>
+        <p class="library-message" id="libraryMessage" aria-live="polite"></p>
+        <div class="library-list" id="libraryList"></div>
+      </div>
+    </section>
+  </div>
+
+  <span class="sr-only" id="statusText" aria-live="polite"></span>
+
+  <script>
+    const rawWords = [
+      {
+        word: "book",
+        pronunciation: "/bʊk/",
+        part: "n.",
+        meaning: "书",
+        note: "来自 IMG_5068。",
+        source: "IMG_5068"
+      },
+      {
+        word: "car",
+        pronunciation: "/kɑːr/",
+        part: "n.",
+        meaning: "小汽车",
+        note: "来自 IMG_5068。",
+        source: "IMG_5068"
+      },
+      {
+        word: "Chinese",
+        pronunciation: "/ˌtʃaɪˈniːz/",
+        part: "adj. / n.",
+        meaning: "中国（人）的；中国人；汉语",
+        note: "图片中释义为“中国（人）的”。",
+        source: "IMG_5071"
+      },
+      {
+        word: "cloakroom",
+        pronunciation: "/ˈkloʊkruːm/",
+        part: "n.",
+        meaning: "衣帽存放处",
+        note: "来自 IMG_5069。",
+        source: "IMG_5069"
+      },
+      {
+        word: "coat",
+        pronunciation: "/koʊt/",
+        part: "n.",
+        meaning: "上衣；外衣",
+        note: "来自 IMG_5068。",
+        source: "IMG_5068"
+      },
+      {
+        word: "daughter",
+        pronunciation: "/ˈdɔːtər/",
+        part: "n.",
+        meaning: "女儿",
+        note: "图中有复数提示：daughters。",
+        source: "IMG_5070"
+      },
+      {
+        word: "dress",
+        pronunciation: "/dres/",
+        part: "n.",
+        meaning: "连衣裙",
+        note: "来自 IMG_5068。",
+        source: "IMG_5068"
+      },
+      {
+        word: "five",
+        pronunciation: "/faɪv/",
+        part: "num.",
+        meaning: "五",
+        note: "来自 IMG_5069。",
+        source: "IMG_5069"
+      },
+      {
+        word: "Ford",
+        pronunciation: "/fɔːrd/",
+        part: "n.",
+        meaning: "福特（汽车品牌）",
+        note: "来自 IMG_5072。",
+        source: "IMG_5072"
+      },
+      {
+        word: "German",
+        pronunciation: "/ˈdʒɜːrmən/",
+        part: "adj. / n.",
+        meaning: "德国（人）的；德国人；德语",
+        note: "图片中释义为“德国（人）的”。",
+        source: "IMG_5071"
+      },
+      {
+        word: "house",
+        pronunciation: "/haʊs/",
+        part: "n.",
+        meaning: "房子",
+        note: "来自 IMG_5068。",
+        source: "IMG_5068"
+      },
+      {
+        word: "Japanese",
+        pronunciation: "/ˌdʒæpəˈniːz/",
+        part: "adj. / n.",
+        meaning: "日本（人）的；日本人；日语",
+        note: "图片中释义为“日本（人）的”。",
+        source: "IMG_5071"
+      },
+      {
+        word: "meet",
+        pronunciation: "/miːt/",
+        part: "v.",
+        meaning: "结识；遇见",
+        note: "来自 IMG_5071。",
+        source: "IMG_5071"
+      },
+      {
+        word: "Mercedes",
+        pronunciation: "/mərˈseɪdiːz/",
+        part: "n.",
+        meaning: "梅赛德斯（汽车品牌）",
+        note: "来自 IMG_5072。",
+        source: "IMG_5072"
+      },
+      {
+        word: "Mini",
+        pronunciation: "/ˈmɪni/",
+        part: "n.",
+        meaning: "迷你（汽车品牌）",
+        note: "来自 IMG_5072。",
+        source: "IMG_5072"
+      },
+      {
+        word: "nice",
+        pronunciation: "/naɪs/",
+        part: "adj.",
+        meaning: "美好的；令人愉快的",
+        note: "来自 IMG_5071。",
+        source: "IMG_5071"
+      },
+      {
+        word: "number",
+        pronunciation: "/ˈnʌmbər/",
+        part: "n.",
+        meaning: "号码；数字",
+        note: "来自 IMG_5069。",
+        source: "IMG_5069"
+      },
+      {
+        word: "pen",
+        pronunciation: "/pen/",
+        part: "n.",
+        meaning: "钢笔",
+        note: "来自 IMG_5068。",
+        source: "IMG_5068"
+      },
+      {
+        word: "pencil",
+        pronunciation: "/ˈpensl/",
+        part: "n.",
+        meaning: "铅笔",
+        note: "来自 IMG_5068。",
+        source: "IMG_5068"
+      },
+      {
+        word: "Peugeot",
+        pronunciation: "/ˈpɜːʒoʊ/",
+        part: "n.",
+        meaning: "标致（汽车品牌）",
+        note: "来自 IMG_5072。",
+        source: "IMG_5072"
+      },
+      {
+        word: "school",
+        pronunciation: "/skuːl/",
+        part: "n.",
+        meaning: "学校",
+        note: "图中有复数提示：schools。",
+        source: "IMG_5070"
+      },
+      {
+        word: "shirt",
+        pronunciation: "/ʃɜːrt/",
+        part: "n.",
+        meaning: "衬衣",
+        note: "来自 IMG_5068。",
+        source: "IMG_5068"
+      },
+      {
+        word: "sir",
+        pronunciation: "/sɜːr/",
+        part: "n.",
+        meaning: "先生",
+        note: "来自 IMG_5069。",
+        source: "IMG_5069"
+      },
+      {
+        word: "skirt",
+        pronunciation: "/skɜːrt/",
+        part: "n.",
+        meaning: "裙子",
+        note: "来自 IMG_5068。",
+        source: "IMG_5068"
+      },
+      {
+        word: "son",
+        pronunciation: "/sʌn/",
+        part: "n.",
+        meaning: "儿子",
+        note: "图中有复数提示：sons。",
+        source: "IMG_5070"
+      },
+      {
+        word: "sorry",
+        pronunciation: "/ˈsɔːri/",
+        part: "adj.",
+        meaning: "对不起的；抱歉的",
+        note: "来自 IMG_5069。",
+        source: "IMG_5069"
+      },
+      {
+        word: "South Korean",
+        pronunciation: "/ˌsaʊθ kəˈriːən/",
+        part: "adj. / n.",
+        meaning: "韩国（人）的；韩国人",
+        note: "图片中释义为“韩国（人）的”。",
+        source: "IMG_5071"
+      },
+      {
+        word: "suit",
+        pronunciation: "/suːt/",
+        part: "n.",
+        meaning: "一套衣服；套装",
+        note: "图中有复数提示：suits。",
+        source: "IMG_5070"
+      },
+      {
+        word: "tea",
+        pronunciation: "/tiː/",
+        part: "n.",
+        meaning: "茶；茶叶",
+        note: "来自 IMG_5070 的手写补充。",
+        source: "IMG_5070"
+      },
+      {
+        word: "teach",
+        pronunciation: "/tiːtʃ/",
+        part: "v.",
+        meaning: "教；教书",
+        note: "来自 IMG_5070 的手写补充。",
+        source: "IMG_5070"
+      },
+      {
+        word: "teacher",
+        pronunciation: "/ˈtiːtʃər/",
+        part: "n.",
+        meaning: "老师",
+        note: "图中有复数提示：teachers。",
+        source: "IMG_5070"
+      },
+      {
+        word: "too",
+        pronunciation: "/tuː/",
+        part: "adv.",
+        meaning: "也；太",
+        note: "来自 IMG_5071 底部露出的词条。",
+        source: "IMG_5071"
+      },
+      {
+        word: "Toyota",
+        pronunciation: "/tɔɪˈoʊtə/",
+        part: "n.",
+        meaning: "丰田（汽车品牌）",
+        note: "来自 IMG_5072。",
+        source: "IMG_5072"
+      },
+      {
+        word: "watch",
+        pronunciation: "/wɑːtʃ/",
+        part: "n.",
+        meaning: "手表",
+        note: "来自 IMG_5068。",
+        source: "IMG_5068"
+      }
+    ];
+
+    const defaultWords = rawWords.map((entry) => ({ ...entry }));
+    const storageKey = "image-word-flashcards-favorites-v1";
+    const wordBankStorageKey = "image-word-flashcards-word-bank-v1";
+    const previousStorageKey = "word-flashcards-favorites-v5";
+    const previousWordBankStorageKey = "word-flashcards-bank-v2";
+
+    function createWordId(word) {
+      const normalized = String(word)
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+      return normalized || encodeURIComponent(String(word).trim()).toLowerCase().replace(/%/g, "");
+    }
+
+    function normalizeWordEntry(entry) {
+      const word = String(entry.word || "").trim();
+      if (!word) {
+        return null;
+      }
+
+      const source = String(entry.source || "自定义").trim() || "自定义";
+      return {
+        word,
+        pronunciation: String(entry.pronunciation || "").trim(),
+        part: String(entry.part || "自定义").trim() || "自定义",
+        meaning: String(entry.meaning || "待补充释义").trim() || "待补充释义",
+        note: String(entry.note || (source === "自定义" ? "来自自定义词库。" : "")).trim(),
+        source,
+        id: createWordId(word)
+      };
+    }
+
+    function normalizeWordList(entries) {
+      const byId = new Map();
+      entries.forEach((entry) => {
+        const normalized = normalizeWordEntry(entry);
+        if (normalized) {
+          byId.set(normalized.id, normalized);
+        }
+      });
+      return [...byId.values()].sort((a, b) => a.word.localeCompare(b.word, "en", { sensitivity: "base" }));
+    }
+
+    function toStoredEntry(entry) {
+      return {
+        word: entry.word,
+        pronunciation: entry.pronunciation,
+        part: entry.part,
+        meaning: entry.meaning,
+        note: entry.note,
+        source: entry.source
+      };
+    }
+
+    function loadSavedWordBank() {
+      try {
+        const stored = JSON.parse(localStorage.getItem(wordBankStorageKey) || localStorage.getItem(previousWordBankStorageKey) || "null");
+        return Array.isArray(stored) && stored.length > 0 ? stored : null;
+      } catch {
+        return null;
+      }
+    }
+
+    const savedWords = normalizeWordList(loadSavedWordBank() || []);
+    let words = savedWords.length > 0 ? savedWords : normalizeWordList(defaultWords);
+    const cardModeButton = document.getElementById("cardModeButton");
+    const quizModeButton = document.getElementById("quizModeButton");
+    const cardMode = document.getElementById("cardMode");
+    const quizMode = document.getElementById("quizMode");
+    const studyLayout = document.getElementById("studyLayout");
+    const toggleWordListButton = document.getElementById("toggleWordListButton");
+    const wordListToggleText = document.getElementById("wordListToggleText");
+    const closeWordListButton = document.getElementById("closeWordListButton");
+    const wordListPanel = document.getElementById("wordListPanel");
+    const openLibraryButton = document.getElementById("openLibraryButton");
+    const libraryModal = document.getElementById("libraryModal");
+    const closeLibraryButton = document.getElementById("closeLibraryButton");
+    const quickWordInput = document.getElementById("quickWordInput");
+    const quickMeaningInput = document.getElementById("quickMeaningInput");
+    const quickAddButton = document.getElementById("quickAddButton");
+    const libraryInput = document.getElementById("libraryInput");
+    const appendLibraryButton = document.getElementById("appendLibraryButton");
+    const replaceLibraryButton = document.getElementById("replaceLibraryButton");
+    const exportLibraryButton = document.getElementById("exportLibraryButton");
+    const resetLibraryButton = document.getElementById("resetLibraryButton");
+    const libraryMessage = document.getElementById("libraryMessage");
+    const libraryList = document.getElementById("libraryList");
+    const flashcard = document.getElementById("flashcard");
+    const favoriteButton = document.getElementById("favoriteButton");
+    const quizFavoriteButton = document.getElementById("quizFavoriteButton");
+    const randomButton = document.getElementById("randomButton");
+    const sequentialButton = document.getElementById("sequentialButton");
+    const flipButton = document.getElementById("flipButton");
+    const openNotebookButton = document.getElementById("openNotebookButton");
+    const quizNotebookButton = document.getElementById("quizNotebookButton");
+    const closeModalButton = document.getElementById("closeModalButton");
+    const notebookModal = document.getElementById("notebookModal");
+    const notebookList = document.getElementById("notebookList");
+    const wordList = document.getElementById("wordList");
+    const statusText = document.getElementById("statusText");
+
+    const totalPill = document.getElementById("totalPill");
+    const favoritePill = document.getElementById("favoritePill");
+    const listCount = document.getElementById("listCount");
+    const positionText = document.getElementById("positionText");
+    const partText = document.getElementById("partText");
+    const sourceText = document.getElementById("sourceText");
+    const wordText = document.getElementById("wordText");
+    const pronText = document.getElementById("pronText");
+    const meaningText = document.getElementById("meaningText");
+    const noteText = document.getElementById("noteText");
+    const quizPositionText = document.getElementById("quizPositionText");
+    const quizPartText = document.getElementById("quizPartText");
+    const quizSourceText = document.getElementById("quizSourceText");
+    const quizPromptText = document.getElementById("quizPromptText");
+    const answerInput = document.getElementById("answerInput");
+    const checkAnswerButton = document.getElementById("checkAnswerButton");
+    const showAnswerButton = document.getElementById("showAnswerButton");
+    const quizNextButton = document.getElementById("quizNextButton");
+    const quizSequentialButton = document.getElementById("quizSequentialButton");
+    const feedbackText = document.getElementById("feedbackText");
+    const answerRevealText = document.getElementById("answerRevealText");
+
+    let currentIndex = 0;
+    let currentMode = "card";
+    let favorites = new Set(loadFavorites());
+
+    function loadFavorites() {
+      try {
+        const stored = JSON.parse(localStorage.getItem(storageKey) || localStorage.getItem(previousStorageKey) || "[]");
+        return Array.isArray(stored) ? stored : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveFavorites() {
+      try {
+        const value = JSON.stringify([...favorites]);
+        localStorage.setItem(storageKey, value);
+        localStorage.setItem(previousStorageKey, value);
+      } catch {
+        statusText.textContent = "当前浏览器未保存收藏。";
+      }
+    }
+
+    function saveWordBank(entries) {
+      try {
+        const value = JSON.stringify(entries.map(toStoredEntry));
+        localStorage.setItem(wordBankStorageKey, value);
+        localStorage.setItem(previousWordBankStorageKey, value);
+        return true;
+      } catch {
+        statusText.textContent = "当前浏览器未保存词库。";
+        return false;
+      }
+    }
+
+    function setLibraryMessage(message, isError = false) {
+      libraryMessage.textContent = message;
+      libraryMessage.classList.toggle("is-error", isError);
+    }
+
+    function parseCjkLine(line) {
+      const cjkIndex = line.search(/[\u3400-\u9fff]/);
+      if (cjkIndex <= 0) {
+        return null;
+      }
+
+      const head = line.slice(0, cjkIndex).replace(/[-=:=：,，|]+$/g, "").trim();
+      const meaning = line.slice(cjkIndex).trim();
+      const pronunciationMatch = head.match(/\/[^/]+\/|\[[^\]]+\]/);
+      const pronunciation = pronunciationMatch ? pronunciationMatch[0] : "";
+      const withoutPronunciation = pronunciation ? head.replace(pronunciation, "").trim() : head;
+      const partMatch = withoutPronunciation.match(/\b((?:n|v|adj|adv|num|prep|pron|conj|art)\.?(?:\s*\/\s*(?:n|v|adj|adv|num)\.?)*)$/i);
+      const part = partMatch ? partMatch[1] : "";
+      const word = (part ? withoutPronunciation.slice(0, partMatch.index).trim() : withoutPronunciation).trim();
+
+      return {
+        word,
+        pronunciation,
+        part,
+        meaning,
+        note: "来自手动导入。",
+        source: "自定义"
+      };
+    }
+
+    function parseImportLine(line) {
+      const cleaned = line
+        .replace(/^\s*(?:[-*]|\d+[.)、])\s*/, "")
+        .trim();
+
+      if (!cleaned) {
+        return null;
+      }
+
+      const structuredFields = cleaned.split(/\s*\|\s*|\t+/).map((item) => item.trim()).filter(Boolean);
+      if (structuredFields.length >= 4) {
+        return {
+          word: structuredFields[0],
+          pronunciation: structuredFields[1],
+          part: structuredFields[2],
+          meaning: structuredFields.slice(3).join("；"),
+          note: "来自手动导入。",
+          source: "自定义"
+        };
+      }
+
+      if (structuredFields.length === 3) {
+        const secondLooksPronunciation = /^\/.+\/$|^\[.+\]$/.test(structuredFields[1]);
+        return {
+          word: structuredFields[0],
+          pronunciation: secondLooksPronunciation ? structuredFields[1] : "",
+          part: secondLooksPronunciation ? "自定义" : structuredFields[1],
+          meaning: structuredFields[2],
+          note: "来自手动导入。",
+          source: "自定义"
+        };
+      }
+
+      if (structuredFields.length === 2) {
+        return {
+          word: structuredFields[0],
+          pronunciation: "",
+          part: "自定义",
+          meaning: structuredFields[1],
+          note: "来自手动导入。",
+          source: "自定义"
+        };
+      }
+
+      const separatorMatch = cleaned.match(/^(.+?)\s*(?:,|，|=|：|:|\s[-–—]\s)\s*(.+)$/);
+      if (separatorMatch) {
+        return {
+          word: separatorMatch[1].trim(),
+          pronunciation: "",
+          part: "自定义",
+          meaning: separatorMatch[2].trim(),
+          note: "来自手动导入。",
+          source: "自定义"
+        };
+      }
+
+      const cjkEntry = parseCjkLine(cleaned);
+      if (cjkEntry) {
+        return cjkEntry;
+      }
+
+      return {
+        word: cleaned,
+        pronunciation: "",
+        part: "自定义",
+        meaning: "待补充释义",
+        note: "来自手动导入。",
+        source: "自定义"
+      };
+    }
+
+    function parseImportText(text) {
+      return text
+        .split(/\r?\n/)
+        .map(parseImportLine)
+        .filter((entry) => entry && String(entry.word || "").trim());
+    }
+
+    function refreshWordBankUi(nextIndex = 0) {
+      currentIndex = Math.max(0, Math.min(nextIndex, words.length - 1));
+      totalPill.textContent = `${words.length} 个词`;
+      showCard(currentIndex);
+      renderLibraryList();
+    }
+
+    function replaceWordBank(entries, message) {
+      const nextWords = normalizeWordList(entries);
+      if (nextWords.length === 0) {
+        setLibraryMessage("没有识别到可导入的词。", true);
+        return false;
+      }
+
+      words = nextWords;
+      saveWordBank(words);
+      refreshWordBankUi(0);
+      setLibraryMessage(message);
+      statusText.textContent = message;
+      return true;
+    }
+
+    function appendImportedWords(entries) {
+      const merged = [...words.map(toStoredEntry), ...entries];
+      return replaceWordBank(merged, `已导入 ${entries.length} 个词，当前词库 ${normalizeWordList(merged).length} 个词。`);
+    }
+
+    function formatWordForExport(entry) {
+      return [entry.word, entry.pronunciation, entry.part, entry.meaning].join(" | ");
+    }
+
+    function renderLibraryList() {
+      libraryList.replaceChildren();
+      words.forEach((entry, index) => {
+        const row = document.createElement("div");
+        row.className = "library-row";
+
+        const text = document.createElement("div");
+        const title = document.createElement("strong");
+        title.textContent = entry.word;
+        const detail = document.createElement("span");
+        detail.textContent = `${entry.part} ${entry.meaning}`;
+        text.append(title, detail);
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "remove-button";
+        remove.textContent = "移除";
+        remove.disabled = words.length <= 1;
+        remove.setAttribute("aria-label", `从词库移除 ${entry.word}`);
+        remove.addEventListener("click", () => {
+          if (words.length <= 1) {
+            setLibraryMessage("词库里至少要保留 1 个词。", true);
+            return;
+          }
+          replaceWordBank(words.filter((_, itemIndex) => itemIndex !== index), `已移除：${entry.word}`);
+        });
+
+        row.append(text, remove);
+        libraryList.append(row);
+      });
+    }
+
+    function openLibrary() {
+      renderLibraryList();
+      setLibraryMessage(`当前词库 ${words.length} 个词。`);
+      libraryModal.hidden = false;
+      quickWordInput.focus();
+    }
+
+    function closeLibrary() {
+      libraryModal.hidden = true;
+      openLibraryButton.focus();
+    }
+
+    function addQuickWord() {
+      const word = quickWordInput.value.trim();
+      const meaning = quickMeaningInput.value.trim();
+      if (!word) {
+        setLibraryMessage("先输入英文单词。", true);
+        quickWordInput.focus();
+        return;
+      }
+
+      const entry = {
+        word,
+        pronunciation: "",
+        part: "自定义",
+        meaning: meaning || "待补充释义",
+        note: "来自手动添加。",
+        source: "自定义"
+      };
+
+      if (appendImportedWords([entry])) {
+        quickWordInput.value = "";
+        quickMeaningInput.value = "";
+        quickWordInput.focus();
+      }
+    }
+
+    function importFromTextarea(replaceExisting) {
+      const imported = parseImportText(libraryInput.value);
+      if (imported.length === 0) {
+        setLibraryMessage("没有识别到可导入的词。", true);
+        libraryInput.focus();
+        return;
+      }
+
+      if (replaceExisting) {
+        replaceWordBank(imported, `已替换为 ${normalizeWordList(imported).length} 个词。`);
+      } else if (appendImportedWords(imported)) {
+        libraryInput.value = "";
+      }
+    }
+
+    function exportWordBank() {
+      libraryInput.value = words.map(formatWordForExport).join("\n");
+      libraryInput.focus();
+      libraryInput.select();
+      setLibraryMessage("当前词库已放入编辑框。修改后点“替换词库”。");
+    }
+
+    function resetWordBank() {
+      if (!window.confirm("恢复默认 34 个词？当前自定义词库会被清空。")) {
+        return;
+      }
+
+      localStorage.removeItem(wordBankStorageKey);
+      words = normalizeWordList(defaultWords);
+      libraryInput.value = "";
+      refreshWordBankUi(0);
+      setLibraryMessage("已恢复默认词库。");
+      statusText.textContent = "已恢复默认词库。";
+    }
+
+    function getCurrentWord() {
+      return words[currentIndex];
+    }
+
+    function setWordListExpanded(isExpanded, announce = true) {
+      wordListPanel.hidden = !isExpanded;
+      studyLayout.classList.toggle("list-collapsed", !isExpanded);
+      toggleWordListButton.setAttribute("aria-expanded", String(isExpanded));
+      wordListToggleText.textContent = isExpanded ? "收起词表" : "展开词表";
+      if (announce) {
+        statusText.textContent = isExpanded ? "排序词表已展开。" : "排序词表已收起。";
+      }
+    }
+
+    function normalizeAnswer(value) {
+      return value
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, " ")
+        .trim()
+        .replace(/\s+/g, " ");
+    }
+
+    function answersMatch(input, target) {
+      const normalizedInput = normalizeAnswer(input);
+      const normalizedTarget = normalizeAnswer(target);
+      return normalizedInput === normalizedTarget || normalizedInput.replace(/\s/g, "") === normalizedTarget.replace(/\s/g, "");
+    }
+
+    function setFlipped(isFlipped) {
+      flashcard.classList.toggle("is-flipped", isFlipped);
+      flashcard.setAttribute("aria-label", isFlipped ? "翻回单词卡片正面" : "翻转单词卡片");
+    }
+
+    function setMode(mode) {
+      currentMode = mode;
+      const isQuiz = mode === "quiz";
+      cardMode.hidden = isQuiz;
+      quizMode.hidden = !isQuiz;
+      cardModeButton.classList.toggle("is-active", !isQuiz);
+      quizModeButton.classList.toggle("is-active", isQuiz);
+      cardModeButton.setAttribute("aria-pressed", String(!isQuiz));
+      quizModeButton.setAttribute("aria-pressed", String(isQuiz));
+
+      if (isQuiz) {
+        setFlipped(false);
+        resetQuiz();
+        answerInput.focus();
+      }
+    }
+
+    function resetQuiz() {
+      answerInput.value = "";
+      feedbackText.textContent = "";
+      feedbackText.classList.remove("is-right", "is-wrong");
+      answerRevealText.hidden = true;
+      answerRevealText.textContent = "";
+    }
+
+    function renderQuiz(entry, index) {
+      quizPositionText.textContent = `#${String(index + 1).padStart(2, "0")}`;
+      quizPartText.textContent = entry.part;
+      quizSourceText.textContent = entry.source;
+      quizPromptText.textContent = entry.meaning;
+      resetQuiz();
+    }
+
+    function showCard(index, keepFlip = false) {
+      currentIndex = index;
+      const entry = getCurrentWord();
+      positionText.textContent = `#${String(index + 1).padStart(2, "0")}`;
+      partText.textContent = entry.part;
+      sourceText.textContent = entry.source;
+      wordText.textContent = entry.word;
+      wordText.classList.toggle("long-word", entry.word.length > 10);
+      pronText.textContent = entry.pronunciation;
+      meaningText.textContent = entry.meaning;
+      noteText.textContent = entry.note;
+      renderQuiz(entry, index);
+
+      if (!keepFlip) {
+        setFlipped(false);
+      }
+
+      updateFavoriteButton();
+      renderWordList();
+      listCount.textContent = `${index + 1} / ${words.length}`;
+      statusText.textContent = `当前单词：${entry.word}`;
+    }
+
+    function updateFavoriteButton() {
+      const entry = getCurrentWord();
+      const isFavorite = favorites.has(entry.id);
+      [favoriteButton, quizFavoriteButton].forEach((button) => {
+        button.classList.toggle("is-active", isFavorite);
+        button.setAttribute("aria-pressed", String(isFavorite));
+        button.setAttribute("aria-label", isFavorite ? `取消收藏 ${entry.word}` : `收藏 ${entry.word}`);
+      });
+      favoritePill.textContent = `${words.filter((item) => favorites.has(item.id)).length} 个收藏`;
+    }
+
+    function toggleFavorite() {
+      const entry = getCurrentWord();
+      if (favorites.has(entry.id)) {
+        favorites.delete(entry.id);
+        statusText.textContent = `已移除：${entry.word}`;
+      } else {
+        favorites.add(entry.id);
+        statusText.textContent = `已收藏：${entry.word}`;
+      }
+      saveFavorites();
+      updateFavoriteButton();
+      renderNotebook();
+    }
+
+    function addToNotebook(entry) {
+      if (favorites.has(entry.id)) {
+        return false;
+      }
+      favorites.add(entry.id);
+      saveFavorites();
+      updateFavoriteButton();
+      renderNotebook();
+      return true;
+    }
+
+    function chooseRandomCard() {
+      if (words.length < 2) {
+        return;
+      }
+      const offset = Math.floor(Math.random() * (words.length - 1)) + 1;
+      showCard((currentIndex + offset) % words.length);
+    }
+
+    function chooseSequentialCard() {
+      showCard((currentIndex + 1) % words.length);
+    }
+
+    function checkAnswer() {
+      const entry = getCurrentWord();
+      const input = answerInput.value;
+      if (!input.trim()) {
+        feedbackText.textContent = "先写一个答案。";
+        feedbackText.classList.remove("is-right");
+        feedbackText.classList.add("is-wrong");
+        return;
+      }
+
+      if (answersMatch(input, entry.word)) {
+        feedbackText.textContent = "答对了";
+        feedbackText.classList.remove("is-wrong");
+        feedbackText.classList.add("is-right");
+        answerRevealText.hidden = false;
+        answerRevealText.textContent = `${entry.word}  ${entry.pronunciation}`;
+      } else {
+        const wasAdded = addToNotebook(entry);
+        feedbackText.textContent = wasAdded ? "再想一下，已加入生词本" : "再想一下，已在生词本";
+        feedbackText.classList.remove("is-right");
+        feedbackText.classList.add("is-wrong");
+        statusText.textContent = wasAdded ? `${entry.word} 已加入生词本。` : `${entry.word} 已在生词本。`;
+      }
+    }
+
+    function showAnswer() {
+      const entry = getCurrentWord();
+      answerRevealText.hidden = false;
+      answerRevealText.textContent = `${entry.word}  ${entry.pronunciation}`;
+      feedbackText.textContent = "答案已显示";
+      feedbackText.classList.remove("is-right", "is-wrong");
+    }
+
+    function renderWordList() {
+      wordList.replaceChildren();
+      words.forEach((entry, index) => {
+        const row = document.createElement("button");
+        row.type = "button";
+        row.className = "word-row";
+        row.classList.toggle("is-active", index === currentIndex);
+        row.setAttribute("aria-label", `查看 ${entry.word}`);
+
+        const word = document.createElement("strong");
+        word.textContent = entry.word;
+        const meaning = document.createElement("span");
+        meaning.textContent = `${entry.part} ${entry.meaning}`;
+
+        row.append(word, meaning);
+        row.addEventListener("click", () => showCard(index));
+        wordList.append(row);
+      });
+    }
+
+    function renderNotebook() {
+      notebookList.replaceChildren();
+      const favoriteEntries = words.filter((entry) => favorites.has(entry.id));
+
+      if (favoriteEntries.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "empty-state";
+        empty.textContent = "还没有收藏的单词。";
+        notebookList.append(empty);
+        return;
+      }
+
+      favoriteEntries.forEach((entry) => {
+        const row = document.createElement("div");
+        row.className = "favorite-row";
+
+        const text = document.createElement("div");
+        const title = document.createElement("strong");
+        title.textContent = entry.word;
+        const detail = document.createElement("span");
+        detail.textContent = `${entry.part} ${entry.meaning}`;
+        text.append(title, detail);
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "remove-button";
+        remove.setAttribute("aria-label", `从生词本移除 ${entry.word}`);
+        remove.innerHTML = `
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+          移除
+        `;
+        remove.addEventListener("click", () => {
+          favorites.delete(entry.id);
+          saveFavorites();
+          updateFavoriteButton();
+          renderNotebook();
+          statusText.textContent = `已从生词本移除：${entry.word}`;
+        });
+
+        row.append(text, remove);
+        notebookList.append(row);
+      });
+    }
+
+    function openNotebook() {
+      renderNotebook();
+      notebookModal.hidden = false;
+      closeModalButton.focus();
+    }
+
+    function closeNotebook() {
+      notebookModal.hidden = true;
+      if (currentMode === "quiz") {
+        quizNotebookButton.focus();
+      } else {
+        openNotebookButton.focus();
+      }
+    }
+
+    flashcard.addEventListener("click", () => {
+      setFlipped(!flashcard.classList.contains("is-flipped"));
+    });
+
+    flashcard.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        setFlipped(!flashcard.classList.contains("is-flipped"));
+      }
+    });
+
+    cardModeButton.addEventListener("click", () => setMode("card"));
+    quizModeButton.addEventListener("click", () => setMode("quiz"));
+    toggleWordListButton.addEventListener("click", () => {
+      setWordListExpanded(wordListPanel.hidden);
+    });
+    closeWordListButton.addEventListener("click", () => {
+      setWordListExpanded(false);
+      toggleWordListButton.focus();
+    });
+    favoriteButton.addEventListener("click", toggleFavorite);
+    quizFavoriteButton.addEventListener("click", toggleFavorite);
+    randomButton.addEventListener("click", chooseRandomCard);
+    sequentialButton.addEventListener("click", chooseSequentialCard);
+    flipButton.addEventListener("click", () => {
+      setFlipped(!flashcard.classList.contains("is-flipped"));
+    });
+    openNotebookButton.addEventListener("click", openNotebook);
+    quizNotebookButton.addEventListener("click", openNotebook);
+    openLibraryButton.addEventListener("click", openLibrary);
+    quickAddButton.addEventListener("click", addQuickWord);
+    quickWordInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        addQuickWord();
+      }
+    });
+    quickMeaningInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        addQuickWord();
+      }
+    });
+    appendLibraryButton.addEventListener("click", () => importFromTextarea(false));
+    replaceLibraryButton.addEventListener("click", () => importFromTextarea(true));
+    exportLibraryButton.addEventListener("click", exportWordBank);
+    resetLibraryButton.addEventListener("click", resetWordBank);
+    quizNextButton.addEventListener("click", chooseRandomCard);
+    quizSequentialButton.addEventListener("click", chooseSequentialCard);
+    showAnswerButton.addEventListener("click", showAnswer);
+    checkAnswerButton.addEventListener("click", checkAnswer);
+    answerInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        checkAnswer();
+      }
+    });
+    closeModalButton.addEventListener("click", closeNotebook);
+    closeLibraryButton.addEventListener("click", closeLibrary);
+
+    notebookModal.addEventListener("click", (event) => {
+      if (event.target === notebookModal) {
+        closeNotebook();
+      }
+    });
+
+    libraryModal.addEventListener("click", (event) => {
+      if (event.target === libraryModal) {
+        closeLibrary();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !notebookModal.hidden) {
+        closeNotebook();
+      }
+      if (event.key === "Escape" && !libraryModal.hidden) {
+        closeLibrary();
+      }
+    });
+
+    totalPill.textContent = `${words.length} 个词`;
+    showCard(0);
+    setWordListExpanded(false, false);
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch(() => {
+          statusText.textContent = "离线缓存暂时不可用。";
+        });
+      });
+    }
+  </script>
+  <script src="kid-game.js?v=9"></script>
 </body>
 </html>

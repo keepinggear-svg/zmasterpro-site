@@ -1,8 +1,19 @@
-const CACHE_NAME = "word-flashcards-pwa-v3";
+const CACHE_NAME = "word-flashcards-pwa-v9";
 const APP_SHELL = [
   "./",
   "./index.html",
+  "./kid-game.css?v=9",
+  "./kid-game.js?v=9",
   "./manifest.webmanifest",
+  "./assets/pets/rabbit.webp",
+  "./assets/pets/dino.webp",
+  "./assets/pets/kitten.webp",
+  "./assets/pets/capybara.webp",
+  "./assets/pets/sadcat.webp",
+  "./assets/pets/puppy.webp",
+  "./assets/pets/hamster.webp",
+  "./assets/pets/parrot.webp",
+  "./assets/pets/snake.webp",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/maskable-512.png",
