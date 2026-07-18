@@ -8,6 +8,7 @@ SOURCE = ROOT / "src" / "word-flashcards"
 DIST = ROOT / "dist"
 TARGET = DIST / "word-flashcards"
 ROOT_ICON_DIR = DIST / "icons"
+PACKED = SOURCE / ".packed"
 
 ROOT_MANIFEST = """{
   "id": "/word-flashcards/",
@@ -122,6 +123,19 @@ if SOURCE.exists():
     if TARGET.exists():
         shutil.rmtree(TARGET)
     shutil.copytree(SOURCE, TARGET)
+
+    if PACKED.exists():
+        for packed_dir in sorted(path for path in PACKED.rglob("*") if path.is_dir()):
+            parts = sorted(packed_dir.glob("*.part"))
+            if not parts:
+                continue
+            output = TARGET / packed_dir.relative_to(PACKED)
+            output.parent.mkdir(parents=True, exist_ok=True)
+            with output.open("wb") as destination:
+                for part in parts:
+                    with part.open("rb") as source:
+                        shutil.copyfileobj(source, destination)
+        shutil.rmtree(TARGET / ".packed")
 
     (DIST / "manifest.webmanifest").write_text(ROOT_MANIFEST, encoding="utf-8")
     (DIST / "sw.js").write_text(ROOT_SW, encoding="utf-8")

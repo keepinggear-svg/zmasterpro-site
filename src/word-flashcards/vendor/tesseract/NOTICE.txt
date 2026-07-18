@@ -1,0 +1,14 @@
+OCR runtime notice
+
+This directory contains Tesseract.js 7.0.0, tesseract.js-core 7.0.0,
+and English/Simplified Chinese trained data distributed for Tesseract.js.
+
+Tesseract.js and tesseract.js-core are provided under the Apache License 2.0.
+The corresponding license texts are included in this directory.
+The @tesseract.js-data language packages are distributed under the MIT license;
+their trained data originates from the Tesseract tessdata project.
+
+Project sources:
+https://github.com/naptha/tesseract.js
+https://github.com/naptha/tesseract.js-core
+https://github.com/naptha/tessdata

@@ -3504,3 +3504,295 @@ body:not(.legacy-mode) {
 .quick-strip {
   display: none;
 }
+
+/* Interactive tent, complete outfits, and illustrated China journey. */
+.decor-star-tent {
+  border: 0;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.decor-star-tent:focus-visible {
+  outline: 4px solid #ffffff;
+  outline-offset: 4px;
+}
+
+.room-enter-tent {
+  position: absolute;
+  z-index: 11;
+  top: 16px;
+  left: 94px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 2px solid #ffffff;
+  border-radius: 7px;
+  background: #ffedf2;
+  box-shadow: 0 4px 0 rgba(103, 71, 88, 0.15);
+  color: #9d4964;
+  font-size: 11px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.room-enter-tent[hidden] { display: none; }
+.room-preview .room-enter-tent { left: 16px; }
+
+.pet-shoes[data-item]:not([data-item=""]) {
+  top: 83%;
+  left: 50%;
+  display: block;
+  width: 52%;
+  height: 11%;
+  transform: translateX(-50%);
+}
+
+.pet-shoes[data-item]:not([data-item=""])::before,
+.pet-shoes[data-item]:not([data-item=""])::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 38%;
+  height: 82%;
+  border: 3px solid rgba(71, 71, 91, 0.4);
+  border-radius: 55% 55% 34% 34%;
+  box-shadow: inset 0 4px 0 rgba(255, 255, 255, 0.38);
+}
+
+.pet-shoes[data-item]:not([data-item=""])::before { left: 4%; transform: rotate(7deg); }
+.pet-shoes[data-item]:not([data-item=""])::after { right: 4%; transform: rotate(-7deg); }
+.pet-shoes[data-item="berry-shoes"]::before,
+.pet-shoes[data-item="berry-shoes"]::after { background: #ef7082; }
+.pet-shoes[data-item="sky-sneakers"]::before,
+.pet-shoes[data-item="sky-sneakers"]::after { background: #73b7df; }
+.pet-shoes[data-item="star-slippers"]::before,
+.pet-shoes[data-item="star-slippers"]::after { background: #a58bd4; border-color: #ffe491; }
+.pet-shoes[data-item="rain-boots"]::before,
+.pet-shoes[data-item="rain-boots"]::after { height: 115%; background: #f8d75f; }
+.room-pet[data-pet="snake"] .pet-shoes,
+.room-pet[data-pet="parrot"] .pet-shoes,
+.tent-pet-stage[data-pet="snake"] .pet-shoes,
+.tent-pet-stage[data-pet="parrot"] .pet-shoes { display: none; }
+
+.tent-modal {
+  padding: 18px;
+  background: rgba(39, 50, 64, 0.56);
+}
+
+.tent-panel {
+  width: min(1080px, calc(100vw - 36px));
+  max-height: calc(100dvh - 36px);
+  overflow: hidden;
+  border: 3px solid #ffffff;
+  border-radius: 8px;
+  background: #ffd36d;
+}
+
+.tent-scene {
+  position: relative;
+  width: 100%;
+  height: min(78dvh, 790px);
+  min-height: 620px;
+  overflow: hidden;
+  background: #ffc85f url("assets/tent-interior-v1.png") center / cover no-repeat;
+}
+
+.tent-heading {
+  position: absolute;
+  z-index: 8;
+  top: 18px;
+  right: 18px;
+  left: 18px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.tent-heading > div {
+  padding: 10px 14px;
+  border: 2px solid rgba(75, 68, 71, 0.24);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 4px 5px 0 rgba(93, 64, 59, 0.13);
+}
+
+.tent-heading span {
+  display: block;
+  color: #c95769;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.tent-heading h2 {
+  margin: 2px 0 0;
+  font-size: 25px;
+}
+
+.tent-heading .round-tool {
+  pointer-events: auto;
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.tent-pet-stage {
+  position: absolute;
+  z-index: 4;
+  right: 10%;
+  bottom: 4%;
+  width: min(31%, 300px);
+  aspect-ratio: 1;
+  transform-origin: center bottom;
+  transition: transform 360ms ease;
+}
+
+.tent-pet-stage > img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.tent-pet-stage .pet-ground-shadow { display: block; }
+.tent-pet-stage .pet-outfit { top: 67%; }
+.tent-pet-stage.is-handshaking { animation: tent-handshake 260ms ease-in-out 5 alternate; }
+.tent-pet-stage.is-snacking { animation: tent-snack 420ms ease-in-out 3; }
+.tent-pet-stage.is-sleeping { transform: translate(5%, 4%) rotate(8deg) scale(0.94); }
+.tent-pet-stage.is-sleeping > img,
+.tent-pet-stage.is-sleeping > .pet-wear { filter: saturate(0.8) brightness(0.96); }
+
+@keyframes tent-handshake {
+  to { transform: translateY(-7px) rotate(4deg); }
+}
+
+@keyframes tent-snack {
+  50% { transform: translateY(-8px) scale(1.04); }
+}
+
+.sleep-eyes,
+.sleep-bubble { display: none; }
+
+.tent-pet-stage.is-sleeping .sleep-eyes {
+  position: absolute;
+  z-index: 9;
+  top: 42%;
+  left: 50%;
+  display: flex;
+  width: 35%;
+  justify-content: space-between;
+  transform: translateX(-50%);
+}
+
+.sleep-eyes i {
+  width: 31%;
+  height: 10px;
+  border-bottom: 4px solid #4c4450;
+  border-radius: 50%;
+}
+
+.tent-pet-stage.is-sleeping .sleep-bubble {
+  position: absolute;
+  z-index: 9;
+  top: 12%;
+  right: -3%;
+  display: block;
+  color: #6e4f8e;
+  font-size: 22px;
+  font-weight: 950;
+  animation: tent-zzz 1.3s ease-in-out infinite alternate;
+}
+
+@keyframes tent-zzz {
+  to { transform: translate(10px, -12px) scale(1.08); opacity: 0.55; }
+}
+
+.tent-talk {
+  position: absolute;
+  z-index: 7;
+  top: 27%;
+  left: 32%;
+  width: min(360px, 36%);
+  padding: 13px 16px;
+  border: 2px solid #855f66;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 5px 6px 0 rgba(110, 74, 70, 0.14);
+  color: #533f48;
+  font-size: 14px;
+  font-weight: 850;
+  line-height: 1.55;
+}
+
+.tent-actions {
+  position: absolute;
+  z-index: 8;
+  bottom: 20px;
+  left: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(118px, 1fr));
+  gap: 9px;
+  width: 292px;
+}
+
+.tent-actions button {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  align-items: center;
+  min-height: 48px;
+  padding: 7px 10px;
+  border: 2px solid #805862;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 3px 4px 0 rgba(105, 69, 66, 0.16);
+  color: #513c45;
+  cursor: pointer;
+}
+
+.tent-actions button:active { transform: translateY(2px); box-shadow: 1px 2px 0 rgba(105, 69, 66, 0.16); }
+.tent-actions span { font-size: 22px; }
+.tent-actions strong { font-size: 12px; }
+
+.travel-map {
+  min-height: 610px;
+  background: #fdf5df url("assets/travel-map-china-v1.png") center top / 100% auto no-repeat;
+}
+
+.travel-map::before { display: none; }
+.pin-one { top: 37%; left: 31%; }
+.pin-two { top: 29%; right: 27%; }
+.pin-three { top: 53%; bottom: auto; left: 14%; }
+.pin-four { right: auto; bottom: 8%; left: 35%; }
+.travel-pet-wrap { top: 43%; left: 43%; width: 150px; }
+.travel-pet-wrap img { mix-blend-mode: normal; filter: drop-shadow(0 7px 3px rgba(47, 61, 70, 0.2)); }
+.travel-console { right: 24px; bottom: 24px; left: auto; transform: none; }
+
+@media (max-width: 620px) {
+  .tent-modal { padding: 6px; }
+  .tent-panel { width: calc(100vw - 12px); max-height: calc(100dvh - 12px); }
+  .tent-scene { height: calc(100dvh - 12px); min-height: 620px; background-position: 53% center; }
+  .tent-heading { top: 10px; right: 10px; left: 10px; }
+  .tent-heading > div { padding: 7px 10px; }
+  .tent-heading h2 { font-size: 20px; }
+  .tent-pet-stage { right: 2%; bottom: 16%; width: min(54%, 230px); }
+  .tent-talk { top: 18%; left: 7%; width: 61%; font-size: 12px; }
+  .tent-actions { right: 8px; bottom: 8px; left: 8px; grid-template-columns: repeat(4, minmax(0, 1fr)); width: auto; gap: 6px; }
+  .tent-actions button { grid-template-columns: 1fr; justify-items: center; min-height: 62px; padding: 5px 2px; }
+  .tent-actions span { font-size: 18px; }
+  .tent-actions strong { font-size: 10px; }
+
+  .travel-map { min-height: 590px; background-size: auto 48%; background-position: center top; }
+  .destination-pin { padding: 5px 6px; font-size: 9px; }
+  .pin-one { top: 19%; left: 27%; }
+  .pin-two { top: 15%; right: 20%; }
+  .pin-three { top: 27%; left: 7%; }
+  .pin-four { top: 41%; bottom: auto; left: 31%; }
+  .travel-pet-wrap { top: 25%; left: 38%; width: 115px; }
+  @keyframes pet-travel {
+    0% { transform: translate(0, 0) rotate(-4deg); }
+    100% { transform: translate(96px, 34px) rotate(3deg); }
+  }
+  .travel-console { right: 14px; bottom: 52px; left: 14px; width: auto; }
+}

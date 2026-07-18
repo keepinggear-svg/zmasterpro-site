@@ -20,10 +20,14 @@
   ];
 
   const shopItems = [
-    { id: "berry-shirt", type: "wear", slot: "outfit", name: "草莓小衫", icon: "🍓", price: 2 },
-    { id: "sky-overalls", type: "wear", slot: "outfit", name: "天空背带裤", icon: "☁", price: 2 },
-    { id: "star-pajamas", type: "wear", slot: "outfit", name: "星星睡衣", icon: "★", price: 3 },
-    { id: "lemon-raincoat", type: "wear", slot: "outfit", name: "柠檬雨衣", icon: "●", price: 3 },
+    { id: "berry-shirt", type: "wear", slot: "outfit", name: "草莓郊游套装", icon: "🍓", price: 2, matchingShoes: "berry-shoes" },
+    { id: "sky-overalls", type: "wear", slot: "outfit", name: "天空探险套装", icon: "☁", price: 2, matchingShoes: "sky-sneakers" },
+    { id: "star-pajamas", type: "wear", slot: "outfit", name: "星星晚安套装", icon: "★", price: 3, matchingShoes: "star-slippers" },
+    { id: "lemon-raincoat", type: "wear", slot: "outfit", name: "柠檬雨天套装", icon: "●", price: 3, matchingShoes: "rain-boots" },
+    { id: "berry-shoes", type: "wear", slot: "shoes", name: "草莓小鞋", icon: "●", price: 1 },
+    { id: "sky-sneakers", type: "wear", slot: "shoes", name: "云朵运动鞋", icon: "○", price: 1 },
+    { id: "star-slippers", type: "wear", slot: "shoes", name: "星星软拖鞋", icon: "★", price: 1 },
+    { id: "rain-boots", type: "wear", slot: "shoes", name: "柠檬雨靴", icon: "▰", price: 1 },
     { id: "bow", type: "wear", slot: "head", name: "草莓蝴蝶结", icon: "🎀", price: 1 },
     { id: "cap", type: "wear", slot: "head", name: "探险小帽", icon: "🧢", price: 2 },
     { id: "flower", type: "wear", slot: "head", name: "太阳花发夹", icon: "🌼", price: 1 },
@@ -69,14 +73,14 @@
   ];
 
   const destinations = [
-    { id: "snow", name: "云朵雪山", icon: "🏔️", color: "#dceef7" },
-    { id: "island", name: "蓝莓海岛", icon: "🏝️", color: "#dff5ed" },
-    { id: "forest", name: "萤火森林", icon: "🌲", color: "#e3f1d5" },
-    { id: "city", name: "星光小城", icon: "🌃", color: "#e7e2f6" },
-    { id: "desert", name: "布丁沙漠", icon: "🏜️", color: "#f7e8c3" },
-    { id: "lake", name: "镜子湖", icon: "🛶", color: "#dcecf4" },
-    { id: "garden", name: "糖果花园", icon: "🌷", color: "#f8e0e7" },
-    { id: "space", name: "月亮车站", icon: "🚀", color: "#dfe4f7" }
+    { id: "garden", name: "江南水乡", icon: "🏮", color: "#dff3e7" },
+    { id: "city", name: "西安城墙", icon: "🏯", color: "#f4e4cc" },
+    { id: "forest", name: "成都竹林", icon: "🎋", color: "#e1f0d7" },
+    { id: "island", name: "厦门海边", icon: "⛵", color: "#dceef5" },
+    { id: "lake", name: "杭州西湖", icon: "🛶", color: "#dcecf4" },
+    { id: "desert", name: "敦煌鸣沙山", icon: "🐫", color: "#f7e8c3" },
+    { id: "snow", name: "哈尔滨雪乡", icon: "❄", color: "#e3f1f7" },
+    { id: "space", name: "北京天文馆", icon: "✦", color: "#e5e5f5" }
   ];
 
   const $ = (id) => document.getElementById(id);
@@ -95,6 +99,7 @@
     homeHeadwear: $("homePetHeadwear"),
     homeFacewear: $("homePetFacewear"),
     homeNeckwear: $("homePetNeckwear"),
+    homeShoes: $("homePetShoes"),
     homeRoomWindow: $("homeRoomWindow"),
     homeRoomRug: $("homeRoomRug"),
     homeRoomDecor: $("homeRoomDecor"),
@@ -102,6 +107,7 @@
     roomLock: $("roomLock"),
     roomLockText: $("roomLockText"),
     changePetButton: $("changePetButton"),
+    homeTentButton: $("homeTentButton"),
     missionDate: $("missionDate"),
     missionDone: $("missionDone"),
     missionTotal: $("missionTotal"),
@@ -110,6 +116,7 @@
     missionProgressBar: $("missionProgressBar"),
     startMissionButton: $("startMissionButton"),
     startMissionText: $("startMissionText"),
+    homeImportWordsButton: $("homeImportWordsButton"),
     openTodayReportButton: $("openTodayReportButton"),
     homeTravelHint: $("homeTravelHint"),
     homePostcardHint: $("homePostcardHint"),
@@ -120,8 +127,10 @@
     dictationPet: $("dictationPetImage"),
     dictationOutfit: $("dictationPetOutfit"),
     dictationHeadwear: $("dictationPetHeadwear"),
+    dictationShoes: $("dictationPetShoes"),
     dictationPetText: $("dictationPetText"),
     dictationMeaning: $("dictationMeaning"),
+    wordRewardBadge: $("wordRewardBadge"),
     dictationInput: $("dictationInput"),
     dictationFeedback: $("dictationFeedback"),
     speakWordButton: $("speakWordButton"),
@@ -138,9 +147,11 @@
     shopHeadwear: $("shopPetHeadwear"),
     shopFacewear: $("shopPetFacewear"),
     shopNeckwear: $("shopPetNeckwear"),
+    shopShoes: $("shopPetShoes"),
     shopRoomWindow: $("shopRoomWindow"),
     shopRoomRug: $("shopRoomRug"),
     shopRoomDecor: $("shopRoomDecor"),
+    shopTentButton: $("shopTentButton"),
     friendshipBar: $("friendshipBar"),
     friendshipValue: $("friendshipValue"),
     shopGrid: $("shopGrid"),
@@ -168,6 +179,20 @@
     petNameInput: $("petNameInput"),
     confirmPetButton: $("confirmPetButton"),
     closePetPickerButton: $("closePetPickerButton"),
+    tentModal: $("tentModal"),
+    closeTentButton: $("closeTentButton"),
+    tentPetStage: $("tentPetStage"),
+    tentPet: $("tentPetImage"),
+    tentOutfit: $("tentPetOutfit"),
+    tentHeadwear: $("tentPetHeadwear"),
+    tentFacewear: $("tentPetFacewear"),
+    tentNeckwear: $("tentPetNeckwear"),
+    tentShoes: $("tentPetShoes"),
+    tentTalk: $("tentTalk"),
+    tentSleepButton: $("tentSleepButton"),
+    tentHandshakeButton: $("tentHandshakeButton"),
+    tentChatButton: $("tentChatButton"),
+    tentSnackButton: $("tentSnackButton"),
     parentModal: $("parentModal"),
     closeParentButton: $("closeParentButton"),
     parentGateModal: $("parentGateModal"),
@@ -178,11 +203,14 @@
     confirmParentGateButton: $("confirmParentGateButton"),
     closeParentGateButton: $("closeParentGateButton"),
     dailyTargetInput: $("dailyTargetInput"),
+    parentPackSelect: $("parentPackSelect"),
+    parentPackSummary: $("parentPackSummary"),
     targetMinusButton: $("targetMinusButton"),
     targetPlusButton: $("targetPlusButton"),
     taskModeControl: $("taskModeControl"),
     taskPreviewText: $("taskPreviewText"),
     saveTaskButton: $("saveTaskButton"),
+    parentImportWordsButton: $("parentImportWordsButton"),
     parentEditLibraryButton: $("parentEditLibraryButton"),
     openLegacyCardsButton: $("openLegacyCardsButton"),
     parentReportStatus: $("parentReportStatus"),
@@ -208,13 +236,17 @@
   let currentScreen = "home";
   let selectedPetDraft = state.selectedPet || null;
   let selectedTaskMode = state.taskConfig.mode;
+  let selectedPackDraft = state.taskConfig.packId || null;
   let activeShopTab = "wear";
   let isAdvancing = false;
   let travelTimer = null;
   let toastTimer = null;
   let petWalkTimer = null;
   let petDrag = null;
+  let tentActionTimer = null;
+  let tentChatIndex = 0;
   let parentSessionUnlocked = false;
+  let pendingParentAction = "panel";
   let swipeStartX = null;
   let swipeOffsetX = 0;
 
@@ -239,6 +271,7 @@
         head: null,
         face: null,
         neck: null,
+        shoes: null,
         wall: "wall-cloud",
         floor: "floor-honey",
         window: "window-sunny",
@@ -247,7 +280,10 @@
       placedFurniture: [],
       petPosition: { x: 52, y: 70 },
       parentPinHash: "",
-      taskConfig: { count: 10, mode: "sequential" },
+      taskConfig: { count: 10, mode: "sequential", packId: null },
+      wordProgress: {},
+      masteryCookieMilestone: 0,
+      lastTentSnackDate: null,
       daily: null,
       records: [],
       postcards: [],
@@ -286,6 +322,16 @@
       postcards: Array.isArray(saved.postcards) ? saved.postcards : [],
       records: Array.isArray(saved.records) ? saved.records.slice(-500) : [],
       taskConfig: { ...base.taskConfig, ...(saved.taskConfig || {}) },
+      daily: saved.daily && typeof saved.daily === "object" ? {
+        ...saved.daily,
+        targetCount: Math.max(
+          0,
+          Number(saved.daily.targetCount)
+            || new Set(Array.isArray(saved.daily.wordIds) ? saved.daily.wordIds : []).size
+        )
+      } : null,
+      wordProgress: saved.wordProgress && typeof saved.wordProgress === "object" ? saved.wordProgress : {},
+      masteryCookieMilestone: Math.max(0, Number(saved.masteryCookieMilestone) || 0),
       equipped: {
         ...base.equipped,
         ...savedEquipped,
@@ -293,6 +339,7 @@
         outfit: savedEquipped.outfit || null,
         face: savedEquipped.face || null,
         neck: savedEquipped.neck || null,
+        shoes: savedEquipped.shoes || null,
         wall: savedEquipped.wall || base.equipped.wall,
         floor: savedEquipped.floor || base.equipped.floor,
         window: savedEquipped.window || base.equipped.window,
@@ -349,6 +396,57 @@
     return getWordBank().find((entry) => entry.id === wordId) || null;
   }
 
+  function getAvailablePacks() {
+    if (window.WordPacks && typeof window.WordPacks.getPacks === "function") {
+      return window.WordPacks.getPacks();
+    }
+    return [];
+  }
+
+  function getSelectedPack(packId = state.taskConfig.packId) {
+    const packs = getAvailablePacks();
+    const selected = packs.find((pack) => pack.id === packId);
+    if (selected) return selected;
+    if (window.WordPacks && typeof window.WordPacks.getActivePack === "function") {
+      return window.WordPacks.getActivePack();
+    }
+    return null;
+  }
+
+  function getTaskWordBank(packId = state.taskConfig.packId) {
+    const pack = getSelectedPack(packId);
+    if (pack && window.WordPacks && typeof window.WordPacks.getWordsForPack === "function") {
+      return window.WordPacks.getWordsForPack(pack.id);
+    }
+    return getWordBank();
+  }
+
+  function getWordProgress(wordId) {
+    const saved = state.wordProgress[wordId];
+    return saved && typeof saved === "object" ? saved : { status: "new" };
+  }
+
+  function updateWordProgress(wordId, changes) {
+    state.wordProgress[wordId] = { ...getWordProgress(wordId), ...changes };
+    return state.wordProgress[wordId];
+  }
+
+  function isWordMastered(wordId) {
+    return getWordProgress(wordId).status === "mastered";
+  }
+
+  function getMasteredCount() {
+    return Object.values(state.wordProgress).filter((progress) => progress?.status === "mastered").length;
+  }
+
+  function getWordReward(entry) {
+    if (!entry) return 1;
+    if (Number(entry.difficulty) === 2) return 2;
+    const word = String(entry.word || "").trim();
+    const letterCount = (word.match(/[a-z]/gi) || []).length;
+    return letterCount >= 7 || /[ -]/.test(word) ? 2 : 1;
+  }
+
   function getCurrentDailyWord() {
     if (!state.daily || state.daily.current >= state.daily.wordIds.length) {
       return null;
@@ -359,30 +457,43 @@
   function getMistakeIds() {
     const favoriteIds = typeof favorites !== "undefined" && favorites instanceof Set ? [...favorites] : [];
     const recordIds = state.records.filter((record) => !record.firstTry).map((record) => record.wordId);
-    return [...new Set([...favoriteIds, ...recordIds])];
+    const learningIds = Object.entries(state.wordProgress)
+      .filter(([, progress]) => progress?.status === "learning")
+      .map(([wordId]) => wordId);
+    return [...new Set([...learningIds, ...favoriteIds, ...recordIds])];
   }
 
-  function makeTaskWordIds(count, mode) {
-    const bank = getWordBank();
+  function makeTaskWordIds(count, mode, packId = state.taskConfig.packId) {
+    const bank = getTaskWordBank(packId);
     const actualCount = Math.max(1, Math.min(Number(count) || 10, bank.length || 1));
+    const available = bank.filter((entry) => !isWordMastered(entry.id));
+    const learning = available.filter((entry) => getWordProgress(entry.id).status === "learning");
+    const fresh = available.filter((entry) => getWordProgress(entry.id).status !== "learning");
+    if (!available.length) return [];
     if (mode === "random") {
-      return shuffle(bank.map((entry) => entry.id)).slice(0, actualCount);
+      return shuffle([...learning, ...fresh].map((entry) => entry.id)).slice(0, actualCount);
     }
     if (mode === "mistakes") {
-      const mistakes = getMistakeIds().filter((id) => bank.some((entry) => entry.id === id));
-      const otherIds = bank.map((entry) => entry.id).filter((id) => !mistakes.includes(id));
+      const mistakes = getMistakeIds().filter((id) => available.some((entry) => entry.id === id));
+      const otherIds = available.map((entry) => entry.id).filter((id) => !mistakes.includes(id));
       return [...mistakes, ...otherIds].slice(0, actualCount);
     }
-    return bank.slice(0, actualCount).map((entry) => entry.id);
+    return [...learning, ...fresh].slice(0, actualCount).map((entry) => entry.id);
   }
 
   function createDailyTask(force = false) {
     const today = localDateKey();
-    const bank = getWordBank();
+    const bank = getTaskWordBank();
     if (!bank.length) {
       return;
     }
-    const dailyIsUsable = state.daily && state.daily.date === today && Array.isArray(state.daily.wordIds) && state.daily.wordIds.length > 0;
+    const selectedPack = getSelectedPack();
+    if (!state.taskConfig.packId && selectedPack) state.taskConfig.packId = selectedPack.id;
+    const dailyIsUsable = state.daily
+      && state.daily.date === today
+      && state.daily.packId === (selectedPack?.id || null)
+      && Array.isArray(state.daily.wordIds)
+      && (state.daily.wordIds.length > 0 || state.daily.allMastered);
     if (dailyIsUsable && !force) {
       const validIds = state.daily.wordIds.filter((id) => getWordById(id));
       if (validIds.length === state.daily.wordIds.length) {
@@ -392,13 +503,18 @@
     const wordIds = makeTaskWordIds(state.taskConfig.count, state.taskConfig.mode);
     state.daily = {
       date: today,
+      packId: selectedPack?.id || null,
+      packName: selectedPack?.name || "当前词库",
       wordIds,
+      targetCount: wordIds.length,
       current: 0,
       records: [],
+      retryCounts: {},
       activeAttempt: { wrongAttempts: 0, revealed: false, startedAt: null },
       startedAt: null,
-      finishedAt: null,
-      finished: false,
+      finishedAt: wordIds.length ? null : Date.now(),
+      finished: wordIds.length === 0,
+      allMastered: wordIds.length === 0,
       pointsEarned: 0,
       cookiesEarned: 0
     };
@@ -410,6 +526,7 @@
     if (!state.daily.activeAttempt) {
       state.daily.activeAttempt = { wrongAttempts: 0, revealed: false, startedAt: null };
     }
+    if (!state.daily.retryCounts) state.daily.retryCounts = {};
   }
 
   function getPostcardLevel() {
@@ -515,32 +632,108 @@
     state.placedFurniture.forEach((itemId) => {
       const item = getItem(itemId);
       if (!item) return;
-      const furniture = document.createElement("span");
+      const furniture = document.createElement(item.id === "star-tent" ? "button" : "span");
       furniture.className = `room-decor decor-${item.id}`;
       furniture.dataset.item = item.id;
+      if (item.id === "star-tent") {
+        furniture.type = "button";
+        furniture.setAttribute("aria-label", "进入星星帐篷");
+        furniture.title = "进入星星帐篷";
+        furniture.addEventListener("click", (event) => {
+          event.stopPropagation();
+          openTent();
+        });
+      }
       decorLayer.append(furniture);
     });
   }
 
   function renderPetEverywhere() {
     const pet = getPet();
-    [dom.homePet, dom.dictationPet, dom.shopPet, dom.travelPet, dom.rewardPetImage].forEach((image) => {
+    [dom.homePet, dom.dictationPet, dom.shopPet, dom.travelPet, dom.rewardPetImage, dom.tentPet].forEach((image) => {
       image.src = pet.image;
       image.alt = state.petName ? `${state.petName}，${pet.name}` : pet.name;
     });
     [dom.homePetStage, dom.shopPetStage].forEach((stage) => { stage.dataset.pet = pet.id; });
+    dom.tentPetStage.dataset.pet = pet.id;
     dom.dictationPet.parentElement.dataset.pet = pet.id;
-    [dom.homeOutfit, dom.shopOutfit, dom.dictationOutfit].forEach((element) => setWear(element, "outfit"));
-    [dom.homeHeadwear, dom.shopHeadwear, dom.dictationHeadwear].forEach((element) => setWear(element, "head"));
-    [dom.homeFacewear, dom.shopFacewear].forEach((element) => setWear(element, "face"));
-    [dom.homeNeckwear, dom.shopNeckwear].forEach((element) => setWear(element, "neck"));
+    [dom.homeOutfit, dom.shopOutfit, dom.dictationOutfit, dom.tentOutfit].forEach((element) => setWear(element, "outfit"));
+    [dom.homeHeadwear, dom.shopHeadwear, dom.dictationHeadwear, dom.tentHeadwear].forEach((element) => setWear(element, "head"));
+    [dom.homeFacewear, dom.shopFacewear, dom.tentFacewear].forEach((element) => setWear(element, "face"));
+    [dom.homeNeckwear, dom.shopNeckwear, dom.tentNeckwear].forEach((element) => setWear(element, "neck"));
+    [dom.homeShoes, dom.shopShoes, dom.dictationShoes, dom.tentShoes].forEach((element) => setWear(element, "shoes"));
     renderRoom(dom.petRoom, dom.homeRoomWindow, dom.homeRoomRug, dom.homeRoomDecor);
     renderRoom(dom.shopRoom, dom.shopRoomWindow, dom.shopRoomRug, dom.shopRoomDecor);
+    const tentIsPlaced = state.placedFurniture.includes("star-tent");
+    dom.homeTentButton.hidden = !tentIsPlaced;
+    dom.shopTentButton.hidden = !tentIsPlaced;
     setPetPosition(dom.homePetStage, state.petPosition, false);
     setPetPosition(dom.shopPetStage, state.petPosition, false);
     const name = state.petName || pet.name;
     dom.greeting.textContent = `${name} 正等着和你一起完成挑战`;
     dom.petSpeech.textContent = state.daily && state.daily.finished ? `${name}：来追我呀！` : `${name}：我先在小屋等你完成任务。`;
+  }
+
+  function resetTentAction() {
+    window.clearTimeout(tentActionTimer);
+    dom.tentPetStage.classList.remove("is-sleeping", "is-handshaking", "is-snacking");
+  }
+
+  function openTent() {
+    if (!state.daily || !state.daily.finished) {
+      showToast("完成今天的听写后，帐篷就会打开。", true);
+      return;
+    }
+    resetTentAction();
+    renderPetEverywhere();
+    dom.tentTalk.textContent = `${state.petName || getPet().name}：这里是我们两个的秘密基地！`;
+    dom.tentModal.hidden = false;
+  }
+
+  function closeTent() {
+    resetTentAction();
+    dom.tentModal.hidden = true;
+  }
+
+  function runTentAction(action) {
+    resetTentAction();
+    const name = state.petName || getPet().name;
+    if (action === "sleep") {
+      dom.tentPetStage.classList.add("is-sleeping");
+      dom.tentTalk.textContent = `${name}：今天学得很认真，我们一起安静休息一下。`;
+      tentActionTimer = window.setTimeout(() => {
+        dom.tentPetStage.classList.remove("is-sleeping");
+        dom.tentTalk.textContent = `${name}：睡醒啦，脑袋又有力气了！`;
+      }, 6000);
+      return;
+    }
+    if (action === "handshake") {
+      dom.tentPetStage.classList.add("is-handshaking");
+      dom.tentTalk.textContent = `${name}：击掌也算！今天我们是最佳学习搭档。`;
+      tentActionTimer = window.setTimeout(() => dom.tentPetStage.classList.remove("is-handshaking"), 1500);
+      return;
+    }
+    if (action === "snack") {
+      dom.tentPetStage.classList.add("is-snacking");
+      if (state.lastTentSnackDate !== localDateKey()) {
+        state.lastTentSnackDate = localDateKey();
+        state.friendship += 1;
+        saveState();
+        dom.tentTalk.textContent = `${name}：帐篷点心最好吃！今天的亲密值 +1。`;
+      } else {
+        dom.tentTalk.textContent = `${name}：今天已经一起吃过啦，剩下的留到明天。`;
+      }
+      tentActionTimer = window.setTimeout(() => dom.tentPetStage.classList.remove("is-snacking"), 1600);
+      return;
+    }
+    const messages = [
+      `${name}：今天哪个词最难？难一点也没关系。`,
+      `${name}：你写错的时候没有逃走，这就很厉害。`,
+      `${name}：我们明天也只学一点点，然后再来这里玩。`,
+      `${name}：我记得你真正掌握的每一个词。`
+    ];
+    dom.tentTalk.textContent = messages[tentChatIndex % messages.length];
+    tentChatIndex += 1;
   }
 
   function setPetPosition(stage, position, animate = true) {
@@ -631,10 +824,17 @@
     schedulePetWalk();
   }
 
+  function handleRoomDecorClick(event) {
+    if (event.target.closest('[data-item="star-tent"]')) {
+      event.stopPropagation();
+      openTent();
+    }
+  }
+
   function renderHome() {
     ensureToday();
-    const total = state.daily.wordIds.length;
-    const done = state.daily.records.length;
+    const total = Number(state.daily.targetCount) || state.daily.wordIds.length;
+    const done = Math.min(total, new Set(state.daily.records.map((record) => record.wordId)).size);
     const percent = total ? Math.round((done / total) * 100) : 0;
     dom.missionDate.textContent = formatToday();
     dom.missionDone.textContent = String(done);
@@ -645,7 +845,11 @@
     dom.roomLock.hidden = Boolean(state.daily.finished);
     dom.roomLockText.textContent = `还差 ${Math.max(0, total - done)} 个单词`;
 
-    if (state.daily.finished) {
+    if (state.daily.allMastered) {
+      dom.missionTitle.textContent = "这个词包已经全部掌握";
+      dom.missionSummary.textContent = `${state.daily.packName || "当前词包"}没有可以刷分的旧词啦。`;
+      dom.startMissionText.textContent = "去小屋找伙伴玩";
+    } else if (state.daily.finished) {
       dom.missionTitle.textContent = "今天已经认真完成";
       dom.missionSummary.textContent = `${total} 个词都收进口袋啦，去找伙伴玩吧。`;
       dom.startMissionText.textContent = "去小屋找伙伴玩";
@@ -712,10 +916,14 @@
     }
     const current = state.daily.current;
     const total = state.daily.wordIds.length;
-    dom.sessionProgressText.textContent = `第 ${current + 1} 个，共 ${total} 个`;
+    const round = Math.floor(current / 3) + 1;
+    dom.sessionProgressText.textContent = `第 ${round} 轮 · ${current + 1}/${total}`;
     dom.sessionProgressBar.style.width = `${Math.round((current / total) * 100)}%`;
     dom.sessionScore.textContent = `★ ${state.daily.pointsEarned}`;
     dom.dictationMeaning.textContent = entry.meaning;
+    const reward = getWordReward(entry);
+    const progress = getWordProgress(entry.id);
+    dom.wordRewardBadge.textContent = progress.status === "learning" ? `巩固后可得 ${reward} 积分` : `掌握可得 ${reward} 积分`;
     dom.dictationPetText.textContent = state.daily.activeAttempt.revealed ? "看过答案也没关系，现在自己写对它。" : "慢慢想，我会一直陪着你。";
     resetDictationFields();
     if (state.daily.activeAttempt.revealed) {
@@ -740,6 +948,16 @@
     }
   }
 
+  function scheduleOneRetry(entry) {
+    const retries = Number(state.daily.retryCounts[entry.id]) || 0;
+    if (retries >= 1) return false;
+    const remainingIds = state.daily.wordIds.slice(state.daily.current);
+    if (remainingIds.includes(entry.id)) return false;
+    state.daily.retryCounts[entry.id] = retries + 1;
+    state.daily.wordIds.push(entry.id);
+    return true;
+  }
+
   function submitDictation() {
     if (isAdvancing) return;
     const entry = getCurrentDailyWord();
@@ -754,6 +972,12 @@
 
     if (!kidAnswersMatch(answer, entry.word)) {
       state.daily.activeAttempt.wrongAttempts += 1;
+      const previousProgress = getWordProgress(entry.id);
+      updateWordProgress(entry.id, {
+        status: "learning",
+        wrongCount: (Number(previousProgress.wrongCount) || 0) + 1,
+        lastPracticedAt: Date.now()
+      });
       markCurrentAsMistake(entry);
       saveState();
       dom.dictationInput.classList.add("is-wrong");
@@ -772,15 +996,35 @@
     dom.dictationInput.classList.remove("is-wrong");
     dom.dictationInput.classList.add("is-right");
     const attempt = state.daily.activeAttempt;
+    const firstTry = attempt.wrongAttempts === 0 && !attempt.revealed;
+    const previousProgress = getWordProgress(entry.id);
+    const masteredNow = firstTry && previousProgress.status !== "mastered";
+    const rewardPoints = masteredNow ? getWordReward(entry) : 0;
+    if (masteredNow) {
+      updateWordProgress(entry.id, {
+        status: "mastered",
+        masteredAt: Date.now(),
+        lastPracticedAt: Date.now(),
+        nextReviewAt: Date.now() + 3 * 24 * 60 * 60 * 1000,
+        pointsAwarded: rewardPoints
+      });
+    } else if (previousProgress.status !== "mastered") {
+      updateWordProgress(entry.id, {
+        status: "learning",
+        lastPracticedAt: Date.now()
+      });
+    }
     const record = {
       id: `${Date.now()}-${entry.id}`,
       date: localDateKey(),
       wordId: entry.id,
       word: entry.word,
       meaning: entry.meaning,
-      firstTry: attempt.wrongAttempts === 0 && !attempt.revealed,
+      firstTry,
       wrongAttempts: attempt.wrongAttempts,
       revealed: Boolean(attempt.revealed),
+      masteredNow,
+      pointsAwarded: rewardPoints,
       completedAt: Date.now(),
       durationSeconds: Math.max(1, Math.round((Date.now() - (attempt.startedAt || Date.now())) / 1000))
     };
@@ -788,20 +1032,30 @@
     state.records.push(record);
     state.records = state.records.slice(-500);
     state.daily.current += 1;
-    state.daily.pointsEarned += 1;
-    state.points += 1;
+    if (!masteredNow) scheduleOneRetry(entry);
+    state.daily.pointsEarned += rewardPoints;
+    state.points += rewardPoints;
     state.totalDictations += 1;
     let cookieAwarded = false;
-    if (state.totalDictations % 10 === 0) {
-      state.cookies += 1;
-      state.daily.cookiesEarned += 1;
-      cookieAwarded = true;
+    if (masteredNow) {
+      const milestone = Math.floor(getMasteredCount() / 10);
+      if (milestone > state.masteryCookieMilestone) {
+        const earnedCookies = milestone - state.masteryCookieMilestone;
+        state.masteryCookieMilestone = milestone;
+        state.cookies += earnedCookies;
+        state.daily.cookiesEarned += earnedCookies;
+        cookieAwarded = true;
+      }
     }
     state.daily.activeAttempt = { wrongAttempts: 0, revealed: false, startedAt: Date.now() };
     saveState();
-    dom.dictationFeedback.textContent = record.firstTry ? "一次写对！积分装进口袋啦。" : "重新写对了，这才算真正完成。";
+    dom.points.textContent = String(state.points);
+    dom.cookies.textContent = String(state.cookies);
+    dom.dictationFeedback.textContent = masteredNow
+      ? `一次独立写对，${rewardPoints} 积分装进口袋啦。`
+      : "这次已经订正，稍后会再考一次，独立写对才算掌握。";
     dom.dictationFeedback.className = "dictation-feedback is-right";
-    dom.dictationPetText.textContent = cookieAwarded ? "十次听写完成！还得到一块小饼干。" : "认真写对了，继续保持！";
+    dom.dictationPetText.textContent = cookieAwarded ? "十个不同的新词掌握啦！还得到一块小饼干。" : masteredNow ? "这个词已经真正掌握，继续保持！" : "我把它放到后面，等一下再自己写一次。";
     dom.swipeNextButton.hidden = false;
     dom.dictationBoard.classList.add("is-swipe-ready");
     dom.sessionProgressBar.style.width = `${Math.round((state.daily.current / state.daily.wordIds.length) * 100)}%`;
@@ -855,6 +1109,12 @@
     const entry = getCurrentDailyWord();
     if (!entry || isAdvancing) return;
     state.daily.activeAttempt.revealed = true;
+    const previousProgress = getWordProgress(entry.id);
+    updateWordProgress(entry.id, {
+      status: "learning",
+      revealCount: (Number(previousProgress.revealCount) || 0) + 1,
+      lastPracticedAt: Date.now()
+    });
     markCurrentAsMistake(entry);
     saveState();
     dom.revealedAnswer.hidden = false;
@@ -885,7 +1145,11 @@
     state.daily.finishedAt = Date.now();
     saveState();
     renderHome();
-    dom.rewardSummary.textContent = `${state.daily.wordIds.length} 个单词都已经认真拼完。`;
+    const targetCount = Number(state.daily.targetCount) || new Set(state.daily.wordIds).size;
+    const retryCount = Math.max(0, state.daily.wordIds.length - targetCount);
+    dom.rewardSummary.textContent = retryCount
+      ? `${targetCount} 个新词完成，还认真巩固了 ${retryCount} 次。`
+      : `${targetCount} 个单词都已经认真拼完。`;
     dom.rewardPoints.textContent = `+${state.daily.pointsEarned} 积分`;
     dom.rewardCookies.textContent = `+${state.daily.cookiesEarned} 小饼干`;
     dom.missionCompleteModal.hidden = false;
@@ -981,6 +1245,9 @@
       }
       state.points -= item.price;
       state.ownedItems.push(item.id);
+      if (item.matchingShoes && !state.ownedItems.includes(item.matchingShoes)) {
+        state.ownedItems.push(item.matchingShoes);
+      }
     }
     if (item.type === "furniture") {
       if (state.placedFurniture.includes(item.id)) {
@@ -992,8 +1259,14 @@
       }
     } else if (state.equipped[item.slot] === item.id && item.type === "wear") {
       state.equipped[item.slot] = null;
+      if (item.matchingShoes && state.equipped.shoes === item.matchingShoes) {
+        state.equipped.shoes = null;
+      }
     } else {
       state.equipped[item.slot] = item.id;
+      if (item.matchingShoes && state.ownedItems.includes(item.matchingShoes)) {
+        state.equipped.shoes = item.matchingShoes;
+      }
     }
     saveState();
     renderAll();
@@ -1015,7 +1288,7 @@
       return;
     }
     if (state.cookies < 1) {
-      showToast("还没有小饼干。每完成 10 次听写就会得到 1 块。", true);
+      showToast("还没有小饼干。每掌握 10 个不同的新词就会得到 1 块。", true);
       return;
     }
     const destination = destinations[Math.floor(Math.random() * destinations.length)];
@@ -1082,7 +1355,7 @@
     const firstTryCount = state.records.filter((record) => record.firstTry).length;
     const revealCount = state.records.filter((record) => record.revealed).length;
     const level = getPostcardLevel();
-    dom.totalDictationsStat.textContent = String(state.totalDictations);
+    dom.totalDictationsStat.textContent = String(getMasteredCount());
     dom.firstTryStat.textContent = String(firstTryCount);
     dom.revealedStat.textContent = String(revealCount);
     dom.postcardLevelStat.textContent = `Lv.${level}`;
@@ -1098,7 +1371,7 @@
     if (!state.postcards.length) {
       const empty = document.createElement("div");
       empty.className = "empty-kid-state";
-      empty.textContent = "还没有明信片。完成 10 次听写拿到小饼干，就能让伙伴去旅行。";
+      empty.textContent = "还没有明信片。掌握 10 个不同的新词拿到小饼干，就能让伙伴去旅行。";
       dom.postcardGrid.append(empty);
       return;
     }
@@ -1161,9 +1434,11 @@
     return (hash >>> 0).toString(36);
   }
 
-  function openParent() {
+  function openParent(action = "panel") {
+    pendingParentAction = action;
     if (parentSessionUnlocked) {
-      openParentPanel();
+      if (pendingParentAction === "import" && window.WordPacks) window.WordPacks.openImport();
+      else openParentPanel();
       return;
     }
     const isSetup = !state.parentPinHash;
@@ -1197,14 +1472,45 @@
     }
     parentSessionUnlocked = true;
     dom.parentGateModal.hidden = true;
-    openParentPanel();
+    if (pendingParentAction === "import" && window.WordPacks) window.WordPacks.openImport();
+    else openParentPanel();
+  }
+
+  function renderParentPackOptions() {
+    const packs = getAvailablePacks();
+    dom.parentPackSelect.replaceChildren();
+    if (!packs.length) {
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent = "当前词库";
+      dom.parentPackSelect.append(option);
+      selectedPackDraft = null;
+      dom.parentPackSummary.textContent = `${getWordBank().length} 个词`;
+      return;
+    }
+    if (!packs.some((pack) => pack.id === selectedPackDraft)) {
+      selectedPackDraft = getSelectedPack()?.id || packs[0].id;
+    }
+    packs.forEach((pack) => {
+      const option = document.createElement("option");
+      option.value = pack.id;
+      option.textContent = pack.name;
+      option.selected = pack.id === selectedPackDraft;
+      dom.parentPackSelect.append(option);
+    });
+    const wordCount = getTaskWordBank(selectedPackDraft).length;
+    const remaining = getTaskWordBank(selectedPackDraft).filter((entry) => !isWordMastered(entry.id)).length;
+    dom.parentPackSummary.textContent = `共 ${wordCount} 个词，还有 ${remaining} 个未掌握`;
   }
 
   function openParentPanel() {
     ensureToday();
     selectedTaskMode = state.taskConfig.mode;
-    dom.dailyTargetInput.max = String(Math.min(30, getWordBank().length || 30));
-    dom.dailyTargetInput.value = String(Math.min(state.taskConfig.count, getWordBank().length || state.taskConfig.count));
+    selectedPackDraft = state.taskConfig.packId || getSelectedPack()?.id || null;
+    renderParentPackOptions();
+    const packWordCount = getTaskWordBank(selectedPackDraft).length;
+    dom.dailyTargetInput.max = String(Math.min(30, packWordCount || 30));
+    dom.dailyTargetInput.value = String(Math.min(state.taskConfig.count, packWordCount || state.taskConfig.count));
     updateTaskModeButtons();
     updateTaskPreview();
     renderParentReport();
@@ -1218,13 +1524,14 @@
   }
 
   function updateTaskPreview() {
-    const count = Math.max(1, Math.min(Number(dom.dailyTargetInput.value) || 10, getWordBank().length || 1));
-    const preview = makeTaskWordIds(count, selectedTaskMode).map(getWordById).filter(Boolean);
-    dom.taskPreviewText.textContent = preview.map((entry) => entry.word).join("、") || "词库里还没有单词";
+    const bank = getTaskWordBank(selectedPackDraft);
+    const count = Math.max(1, Math.min(Number(dom.dailyTargetInput.value) || 10, bank.length || 1));
+    const preview = makeTaskWordIds(count, selectedTaskMode, selectedPackDraft).map(getWordById).filter(Boolean);
+    dom.taskPreviewText.textContent = preview.map((entry) => entry.word).join("、") || "这个词包已经全部掌握";
   }
 
   function adjustTarget(delta) {
-    const max = Math.min(30, getWordBank().length || 30);
+    const max = Math.min(30, getTaskWordBank(selectedPackDraft).length || 30);
     dom.dailyTargetInput.value = String(Math.max(1, Math.min(max, (Number(dom.dailyTargetInput.value) || 10) + delta)));
     updateTaskPreview();
   }
@@ -1234,8 +1541,11 @@
     if (hadProgress && !window.confirm("今天已经有听写记录。重新设置会重新开始今天的任务，原记录仍保留在成长足迹中。确定继续吗？")) {
       return;
     }
-    state.taskConfig.count = Math.max(1, Math.min(Number(dom.dailyTargetInput.value) || 10, getWordBank().length || 1));
+    const bank = getTaskWordBank(selectedPackDraft);
+    state.taskConfig.count = Math.max(1, Math.min(Number(dom.dailyTargetInput.value) || 10, bank.length || 1));
     state.taskConfig.mode = selectedTaskMode;
+    state.taskConfig.packId = selectedPackDraft;
+    if (selectedPackDraft && window.WordPacks) window.WordPacks.setActivePack(selectedPackDraft, "task");
     createDailyTask(true);
     saveState();
     renderAll();
@@ -1248,7 +1558,9 @@
     const records = state.daily.records || [];
     const firstTryCount = records.filter((record) => record.firstTry).length;
     const helpCount = records.filter((record) => record.revealed).length;
-    dom.parentCompletedStat.textContent = `${records.length}/${state.daily.wordIds.length}`;
+    const targetCount = Number(state.daily.targetCount) || state.daily.wordIds.length;
+    const completedCount = Math.min(targetCount, new Set(records.map((record) => record.wordId)).size);
+    dom.parentCompletedStat.textContent = `${completedCount}/${targetCount}`;
     dom.parentFirstTryStat.textContent = String(firstTryCount);
     dom.parentHelpStat.textContent = String(helpCount);
     dom.parentReportStatus.textContent = state.daily.finished ? "已完成" : records.length ? "进行中" : "还没开始";
@@ -1311,14 +1623,18 @@
     document.querySelectorAll("[data-nav]").forEach((button) => button.addEventListener("click", () => navigate(button.dataset.nav)));
     document.querySelectorAll("[data-go]").forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
     dom.homeButton.addEventListener("click", () => navigate("home"));
-    dom.parentButton.addEventListener("click", openParent);
+    dom.parentButton.addEventListener("click", () => openParent("panel"));
+    dom.homeImportWordsButton.addEventListener("click", () => openParent("import"));
     dom.changePetButton.addEventListener("click", openPetPicker);
     dom.chooseAnotherPetButton.addEventListener("click", openPetPicker);
+    dom.homeTentButton.addEventListener("click", openTent);
+    dom.shopTentButton.addEventListener("click", openTent);
     [dom.homePetStage, dom.shopPetStage].forEach((stage) => stage.addEventListener("pointerdown", beginPetDrag));
     window.addEventListener("pointermove", movePetDrag);
     window.addEventListener("pointerup", endPetDrag);
     window.addEventListener("pointercancel", endPetDrag);
     [dom.petRoom, dom.shopRoom].forEach((room) => room.addEventListener("click", movePetFromRoomTap));
+    [dom.homeRoomDecor, dom.shopRoomDecor].forEach((layer) => layer.addEventListener("click", handleRoomDecorClick));
     dom.startMissionButton.addEventListener("click", startOrResumeMission);
     dom.leaveMissionButton.addEventListener("click", () => {
       saveState();
@@ -1353,6 +1669,11 @@
       dom.confirmPetButton.disabled = !selectedPetDraft;
     });
     dom.closePetPickerButton.addEventListener("click", () => { dom.petPickerModal.hidden = true; });
+    dom.closeTentButton.addEventListener("click", closeTent);
+    dom.tentSleepButton.addEventListener("click", () => runTentAction("sleep"));
+    dom.tentHandshakeButton.addEventListener("click", () => runTentAction("handshake"));
+    dom.tentChatButton.addEventListener("click", () => runTentAction("chat"));
+    dom.tentSnackButton.addEventListener("click", () => runTentAction("snack"));
     dom.closeParentButton.addEventListener("click", () => {
       dom.parentModal.hidden = true;
       parentSessionUnlocked = false;
@@ -1370,6 +1691,14 @@
     dom.targetMinusButton.addEventListener("click", () => adjustTarget(-1));
     dom.targetPlusButton.addEventListener("click", () => adjustTarget(1));
     dom.dailyTargetInput.addEventListener("input", updateTaskPreview);
+    dom.parentPackSelect.addEventListener("change", () => {
+      selectedPackDraft = dom.parentPackSelect.value || null;
+      const max = Math.min(30, getTaskWordBank(selectedPackDraft).length || 30);
+      dom.dailyTargetInput.max = String(max);
+      dom.dailyTargetInput.value = String(Math.max(1, Math.min(max, Number(dom.dailyTargetInput.value) || state.taskConfig.count)));
+      renderParentPackOptions();
+      updateTaskPreview();
+    });
     dom.taskModeControl.querySelectorAll("[data-task-mode]").forEach((button) => {
       button.addEventListener("click", () => {
         selectedTaskMode = button.dataset.taskMode;
@@ -1378,6 +1707,10 @@
       });
     });
     dom.saveTaskButton.addEventListener("click", saveTaskSettings);
+    dom.parentImportWordsButton.addEventListener("click", () => {
+      dom.parentModal.hidden = true;
+      if (window.WordPacks) window.WordPacks.openImport();
+    });
     dom.parentEditLibraryButton.addEventListener("click", () => {
       dom.parentModal.hidden = true;
       if (typeof openLibrary === "function") openLibrary();
@@ -1391,10 +1724,11 @@
       renderAll();
       navigate("pet", { ignoreLock: true });
     });
-    [dom.petPickerModal, dom.parentModal, dom.parentGateModal, dom.todayReportModal].forEach((modal) => {
+    [dom.petPickerModal, dom.tentModal, dom.parentModal, dom.parentGateModal, dom.todayReportModal].forEach((modal) => {
       modal.addEventListener("click", (event) => {
         if (event.target === modal && (modal !== dom.petPickerModal || state.selectedPet)) {
-          modal.hidden = true;
+          if (modal === dom.tentModal) closeTent();
+          else modal.hidden = true;
           if (modal === dom.parentModal) parentSessionUnlocked = false;
         }
       });
@@ -1402,6 +1736,7 @@
     document.addEventListener("keydown", (event) => {
       if (event.key !== "Escape") return;
       if (!dom.todayReportModal.hidden) dom.todayReportModal.hidden = true;
+      else if (!dom.tentModal.hidden) closeTent();
       else if (!dom.parentModal.hidden) {
         dom.parentModal.hidden = true;
         parentSessionUnlocked = false;
@@ -1414,6 +1749,16 @@
         state = loadState();
         renderAll();
       }
+    });
+    window.addEventListener("wordpackschange", (event) => {
+      const packId = event.detail?.activePackId || window.WordPacks?.getActivePack()?.id || null;
+      if (!packId) return;
+      state.taskConfig.packId = packId;
+      selectedPackDraft = packId;
+      createDailyTask(true);
+      saveState();
+      renderAll();
+      showToast(`已切换到“${event.detail?.pack?.name || "新词包"}”。`);
     });
     window.addEventListener("beforeunload", saveState);
   }

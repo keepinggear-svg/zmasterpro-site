@@ -1,10 +1,14 @@
-const CACHE_NAME = "word-flashcards-pwa-v15";
+const CACHE_NAME = "word-flashcards-pwa-v22";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./kid-game.css?v=15",
-  "./kid-game.js?v=15",
+  "./kid-game.css?v=22",
+  "./word-packs.css?v=22",
+  "./word-packs.js?v=22",
+  "./kid-game.js?v=22",
   "./manifest.webmanifest",
+  "./assets/travel-map-china-v1.png",
+  "./assets/tent-interior-v1.png",
   "./assets/pets-v2/rabbit.png",
   "./assets/pets-v2/dino.png",
   "./assets/pets-v2/kitten.png",

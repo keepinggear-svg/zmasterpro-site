@@ -11,7 +11,8 @@
   <title>词语星球 - 宠物听写</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-  <link rel="stylesheet" href="kid-game.css?v=15">
+  <link rel="stylesheet" href="kid-game.css?v=22">
+  <link rel="stylesheet" href="word-packs.css?v=22">
   <style>
     :root {
       --bg: #f5f7f8;
@@ -907,8 +908,9 @@
             <div class="room-sky" aria-hidden="true"></div>
             <div class="room-window room-window-sunny" id="homeRoomWindow" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
             <div class="room-rug" id="homeRoomRug" aria-hidden="true"></div>
-            <div class="room-decor-layer" id="homeRoomDecor" aria-hidden="true"></div>
+            <div class="room-decor-layer" id="homeRoomDecor"></div>
             <button class="room-change-pet" id="changePetButton" type="button">换伙伴</button>
+            <button class="room-enter-tent" id="homeTentButton" type="button" hidden><span aria-hidden="true">△</span>进帐篷</button>
             <div class="pet-stage room-pet" id="homePetStage" role="button" tabindex="0" aria-label="拖动小伙伴在房间里走动">
               <span class="pet-ground-shadow" aria-hidden="true"></span>
               <img id="homePetImage" src="assets/pets-v2/rabbit.png" alt="我的小伙伴" draggable="false">
@@ -916,6 +918,7 @@
               <span class="pet-wear pet-headwear" id="homePetHeadwear" aria-hidden="true"></span>
               <span class="pet-wear pet-facewear" id="homePetFacewear" aria-hidden="true"></span>
               <span class="pet-wear pet-neckwear" id="homePetNeckwear" aria-hidden="true"></span>
+              <span class="pet-wear pet-shoes" id="homePetShoes" aria-hidden="true"></span>
             </div>
             <span class="room-play-hint">拖一拖，它会跟着你走</span>
             <div class="pet-speech" id="petSpeech">先给我取个名字吧！</div>
@@ -947,6 +950,13 @@
               <span id="startMissionText">开始今天的 10 个词</span>
             </button>
             <button class="text-tool" id="openTodayReportButton" type="button">查看今天的听写记录</button>
+            <button class="home-import-entry" id="homeImportWordsButton" type="button">
+              <span class="home-import-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M4 7h3l1.5-2h7L17 7h3v12H4Z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>
+              </span>
+              <span><strong>导入本周词语</strong><small>拍教材词汇页，或粘贴老师发来的词表</small></span>
+              <svg class="home-import-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+            </button>
           </div>
         </div>
 
@@ -982,10 +992,12 @@
             <img id="dictationPetImage" src="assets/pets-v2/rabbit.png" alt="陪你听写的小伙伴">
             <span class="pet-wear pet-outfit" id="dictationPetOutfit" aria-hidden="true"></span>
             <span class="pet-wear pet-headwear" id="dictationPetHeadwear" aria-hidden="true"></span>
+            <span class="pet-wear pet-shoes" id="dictationPetShoes" aria-hidden="true"></span>
             <p id="dictationPetText">我会一直陪着你。</p>
           </div>
           <div class="dictation-board">
             <span class="question-label">根据中文，拼出英文单词</span>
+            <span class="word-reward-badge" id="wordRewardBadge">掌握可得 1 积分</span>
             <h2 id="dictationMeaning">书</h2>
             <button class="listen-button" id="speakWordButton" type="button">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4Z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18 6a9 9 0 0 1 0 12"></path></svg>
@@ -1021,7 +1033,8 @@
             <div class="room-sky" aria-hidden="true"></div>
             <div class="room-window room-window-sunny" id="shopRoomWindow" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
             <div class="room-rug" id="shopRoomRug" aria-hidden="true"></div>
-            <div class="room-decor-layer" id="shopRoomDecor" aria-hidden="true"></div>
+            <div class="room-decor-layer" id="shopRoomDecor"></div>
+            <button class="room-enter-tent" id="shopTentButton" type="button" hidden><span aria-hidden="true">△</span>进帐篷</button>
             <div class="shop-pet-stage room-pet" id="shopPetStage">
               <span class="pet-ground-shadow" aria-hidden="true"></span>
               <img id="shopPetImage" src="assets/pets-v2/rabbit.png" alt="正在装扮的小伙伴" draggable="false">
@@ -1029,6 +1042,7 @@
               <span class="pet-wear pet-headwear" id="shopPetHeadwear" aria-hidden="true"></span>
               <span class="pet-wear pet-facewear" id="shopPetFacewear" aria-hidden="true"></span>
               <span class="pet-wear pet-neckwear" id="shopPetNeckwear" aria-hidden="true"></span>
+              <span class="pet-wear pet-shoes" id="shopPetShoes" aria-hidden="true"></span>
             </div>
             <div class="friendship-meter"><span>亲密值</span><div><i id="friendshipBar"></i></div><strong id="friendshipValue">0</strong></div>
           </div>
@@ -1046,15 +1060,14 @@
 
       <section class="kid-screen" id="travelScreen" data-screen="travel">
         <header class="screen-heading">
-          <div><span>POSTCARD JOURNEY</span><h2>小伙伴去旅行</h2><p>每完成 10 次听写得到 1 块小饼干，旅行回来会带回明信片。</p></div>
+          <div><span>POSTCARD JOURNEY</span><h2>小伙伴去旅行</h2><p>每掌握 10 个不同的新词得到 1 块小饼干，旅行回来会带回明信片。</p></div>
         </header>
         <div class="travel-map">
-          <div class="map-route" aria-hidden="true"></div>
           <div class="travel-pet-wrap" id="travelPetWrap"><img id="travelPetImage" src="assets/pets-v2/rabbit.png" alt="旅行中的小伙伴"></div>
-          <div class="destination-pin pin-one">雪山</div>
-          <div class="destination-pin pin-two">海岛</div>
-          <div class="destination-pin pin-three">森林</div>
-          <div class="destination-pin pin-four">星光城</div>
+          <div class="destination-pin pin-one">江南水乡</div>
+          <div class="destination-pin pin-two">西安城墙</div>
+          <div class="destination-pin pin-three">成都竹林</div>
+          <div class="destination-pin pin-four">厦门海边</div>
           <div class="travel-console">
             <div id="travelIdle">
               <span class="console-eyebrow">下一站会去哪里？</span>
@@ -1078,7 +1091,7 @@
           <button class="secondary-tool" id="openNotebookFromKidButton" type="button">查看错词本</button>
         </header>
         <div class="growth-summary">
-          <div><span>累计听写</span><strong id="totalDictationsStat">0</strong><small>个单词</small></div>
+          <div><span>真正掌握</span><strong id="totalDictationsStat">0</strong><small>个单词</small></div>
           <div><span>一次写对</span><strong id="firstTryStat">0</strong><small>个单词</small></div>
           <div><span>看过答案</span><strong id="revealedStat">0</strong><small>次记录</small></div>
           <div><span>明信片等级</span><strong id="postcardLevelStat">Lv.0</strong><small id="dailyIncomeStat">每天 +0 积分</small></div>
@@ -1273,6 +1286,37 @@
     </section>
   </div>
 
+  <div class="kid-modal tent-modal" id="tentModal" hidden>
+    <section class="kid-modal-panel tent-panel" role="dialog" aria-modal="true" aria-labelledby="tentTitle">
+      <div class="tent-scene">
+        <header class="tent-heading">
+          <div><span>秘密小天地</span><h2 id="tentTitle">星星帐篷</h2></div>
+          <button class="round-tool" id="closeTentButton" type="button" aria-label="离开帐篷">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+          </button>
+        </header>
+        <div class="tent-pet-stage" id="tentPetStage">
+          <span class="pet-ground-shadow" aria-hidden="true"></span>
+          <img id="tentPetImage" src="assets/pets-v2/rabbit.png" alt="帐篷里的小伙伴" draggable="false">
+          <span class="pet-wear pet-outfit" id="tentPetOutfit" aria-hidden="true"></span>
+          <span class="pet-wear pet-headwear" id="tentPetHeadwear" aria-hidden="true"></span>
+          <span class="pet-wear pet-facewear" id="tentPetFacewear" aria-hidden="true"></span>
+          <span class="pet-wear pet-neckwear" id="tentPetNeckwear" aria-hidden="true"></span>
+          <span class="pet-wear pet-shoes" id="tentPetShoes" aria-hidden="true"></span>
+          <span class="sleep-eyes" aria-hidden="true"><i></i><i></i></span>
+          <span class="sleep-bubble" aria-hidden="true">Zzz</span>
+        </div>
+        <div class="tent-talk" id="tentTalk" aria-live="polite">这里是我们两个的秘密基地！</div>
+        <div class="tent-actions" aria-label="和小伙伴互动">
+          <button id="tentSleepButton" type="button"><span aria-hidden="true">☾</span><strong>睡一会</strong></button>
+          <button id="tentHandshakeButton" type="button"><span aria-hidden="true">♡</span><strong>握握手</strong></button>
+          <button id="tentChatButton" type="button"><span aria-hidden="true">···</span><strong>聊一聊</strong></button>
+          <button id="tentSnackButton" type="button"><span aria-hidden="true">●</span><strong>吃点心</strong></button>
+        </div>
+      </div>
+    </section>
+  </div>
+
   <div class="kid-modal" id="parentModal" hidden>
     <section class="kid-modal-panel parent-panel" role="dialog" aria-modal="true" aria-labelledby="parentTitle">
       <header class="kid-modal-heading">
@@ -1284,6 +1328,9 @@
       <div class="parent-layout">
         <div class="parent-settings">
           <h3>今日任务</h3>
+          <label class="setting-label" for="parentPackSelect">使用哪个词包</label>
+          <select class="parent-pack-select" id="parentPackSelect"></select>
+          <p class="parent-pack-summary" id="parentPackSummary"></p>
           <label class="setting-label" for="dailyTargetInput">每天听写几个词</label>
           <div class="target-stepper">
             <button id="targetMinusButton" type="button" aria-label="减少一个">−</button>
@@ -1298,6 +1345,10 @@
           </div>
           <div class="task-preview"><strong>本次会听写</strong><p id="taskPreviewText"></p></div>
           <button class="parent-save" id="saveTaskButton" type="button">保存今天的任务</button>
+          <button class="parent-import" id="parentImportWordsButton" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3v12H4Z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>
+            拍照或粘贴新词
+          </button>
           <button class="parent-link" id="parentEditLibraryButton" type="button">编辑或导入词库</button>
           <button class="parent-link" id="openLegacyCardsButton" type="button">打开自由练习卡片</button>
         </div>
@@ -1355,6 +1406,73 @@
       <p id="rewardSummary">10 个单词都已经认真拼完。</p>
       <div class="reward-chips"><span id="rewardPoints">+10 积分</span><span id="rewardCookies">+1 小饼干</span></div>
       <button id="unlockRoomButton" type="button">去找小伙伴玩</button>
+    </section>
+  </div>
+
+  <div class="kid-modal word-import-modal" id="wordImportModal" hidden>
+    <section class="kid-modal-panel word-import-panel" role="dialog" aria-modal="true" aria-labelledby="wordImportTitle">
+      <header class="kid-modal-heading word-import-heading">
+        <div><span>PARENT WORD PACK</span><h2 id="wordImportTitle">导入本周词语</h2><p>按教材和课次收好，孩子只练这一包里的新词。</p></div>
+        <button class="round-tool" id="closeWordImportButton" type="button" aria-label="关闭导入词语">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        </button>
+      </header>
+
+      <div class="word-import-layout">
+        <div class="word-import-workspace">
+          <div class="pack-meta-grid">
+            <label><span>来自哪里</span><select id="packSourceSelect"><option value="new-concept-1">新概念英语第一册</option><option value="new-concept-2">新概念英语第二册</option><option value="new-concept-3">新概念英语第三册</option><option value="new-concept-4">新概念英语第四册</option><option value="school">学校英语</option><option value="teacher">老师词表</option><option value="custom">自定义</option></select></label>
+            <label><span>课次或单元</span><input id="packLessonInput" type="text" maxlength="30" placeholder="例如 Lesson 35"></label>
+            <label class="pack-name-field"><span>词包名称</span><input id="packNameInput" type="text" maxlength="50" placeholder="会自动生成，也可以修改"></label>
+          </div>
+
+          <div class="import-method-tabs" role="tablist" aria-label="导入方式">
+            <button class="is-active" type="button" data-import-method="photo">拍照识别</button>
+            <button type="button" data-import-method="paste">粘贴词表</button>
+            <button type="button" data-import-method="manual">手动添加</button>
+          </div>
+
+          <section class="import-method-panel is-active" data-import-panel="photo">
+            <input id="wordPhotoInput" type="file" accept="image/*" capture="environment" hidden>
+            <label class="photo-dropzone" for="wordPhotoInput" id="wordPhotoDropzone">
+              <span class="photo-drop-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h3l1.5-2h7L17 7h3v12H4Z"></path><circle cx="12" cy="13" r="3.5"></circle></svg></span>
+              <strong>拍教材词汇页</strong>
+              <small>也可以从相册选择。请尽量拍正、拍清楚，只拍单词表区域。</small>
+            </label>
+            <div class="photo-scan-preview" id="photoScanPreview" hidden>
+              <div class="scan-image-wrap"><img id="wordPhotoPreview" alt="准备识别的教材照片"><span class="scan-line" id="wordScanLine"></span></div>
+              <div class="scan-progress"><span id="wordScanStatus">照片已经准备好</span><div><i id="wordScanProgress"></i></div></div>
+              <button class="scan-photo-button" id="scanWordPhotoButton" type="button">开始识别照片</button>
+            </div>
+          </section>
+
+          <section class="import-method-panel" data-import-panel="paste" hidden>
+            <label class="import-text-label" for="packImportText">把老师发来的词表粘贴到这里</label>
+            <textarea id="packImportText" spellcheck="false" placeholder="suddenly 突然&#10;slip 滑倒&#10;guest | /ɡest/ | n. | 客人"></textarea>
+            <button class="parse-words-button" id="parsePackWordsButton" type="button">整理成词条</button>
+          </section>
+
+          <section class="import-method-panel" data-import-panel="manual" hidden>
+            <div class="manual-word-row">
+              <label><span>英文</span><input id="manualPackWord" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="suddenly"></label>
+              <label><span>中文释义</span><input id="manualPackMeaning" type="text" autocomplete="off" placeholder="突然"></label>
+              <button id="addManualPackWord" type="button">加入待确认</button>
+            </div>
+          </section>
+
+          <div class="import-message" id="wordImportMessage" aria-live="polite"></div>
+          <section class="import-review" id="importReview" hidden>
+            <div class="import-review-head"><div><h3>确认识别结果</h3><p>不确定的内容请在保存前直接修改。</p></div><span id="importReviewCount">0 个词</span></div>
+            <div class="import-review-list" id="importReviewList"></div>
+            <button class="save-word-pack" id="saveWordPackButton" type="button">保存词包并设为今日任务</button>
+          </section>
+        </div>
+
+        <aside class="pack-library-panel">
+          <div class="pack-library-heading"><div><span>WORD PACKS</span><h3>我的词包</h3></div><span id="packLibraryCount">0 个</span></div>
+          <div class="pack-library-list" id="packLibraryList"></div>
+        </aside>
+      </div>
     </section>
   </div>
 
@@ -1715,6 +1833,8 @@
         meaning: String(entry.meaning || "待补充释义").trim() || "待补充释义",
         note: String(entry.note || (source === "自定义" ? "来自自定义词库。" : "")).trim(),
         source,
+        packId: String(entry.packId || "").trim(),
+        difficulty: Number(entry.difficulty) === 2 ? 2 : 1,
         id: createWordId(word)
       };
     }
@@ -1737,7 +1857,9 @@
         part: entry.part,
         meaning: entry.meaning,
         note: entry.note,
-        source: entry.source
+        source: entry.source,
+        packId: entry.packId || "",
+        difficulty: Number(entry.difficulty) === 2 ? 2 : 1
       };
     }
 
@@ -2430,6 +2552,7 @@
       });
     }
   </script>
-  <script src="kid-game.js?v=15"></script>
+  <script src="word-packs.js?v=22"></script>
+  <script src="kid-game.js?v=22"></script>
 </body>
 </html>
