@@ -5,30 +5,67 @@
   const TRAVEL_DURATION_MS = 5 * 60 * 1000;
 
   const pets = [
-    { id: "rabbit", name: "软糖兔", image: "assets/pets/rabbit.webp" },
-    { id: "dino", name: "芽芽龙", image: "assets/pets/dino.webp" },
-    { id: "kitten", name: "奶油猫", image: "assets/pets/kitten.webp" },
-    { id: "capybara", name: "卡皮巴拉", image: "assets/pets/capybara.webp" },
-    { id: "sadcat", name: "心心猫", image: "assets/pets/sadcat.webp" },
-    { id: "puppy", name: "团团狗", image: "assets/pets/puppy.webp" },
-    { id: "hamster", name: "栗子仓鼠", image: "assets/pets/hamster.webp" },
-    { id: "parrot", name: "彩虹鹦鹉", image: "assets/pets/parrot.webp" },
-    { id: "snake", name: "青团小蛇", image: "assets/pets/snake.webp" }
+    { id: "rabbit", name: "软糖兔", image: "assets/pets-v2/rabbit.png" },
+    { id: "dino", name: "芽芽龙", image: "assets/pets-v2/dino.png" },
+    { id: "kitten", name: "奶油猫", image: "assets/pets-v2/kitten.png" },
+    { id: "capybara", name: "卡皮巴拉", image: "assets/pets-v2/capybara.png" },
+    { id: "sadcat", name: "心心猫", image: "assets/pets-v2/sadcat.png" },
+    { id: "puppy", name: "团团狗", image: "assets/pets-v2/puppy.png" },
+    { id: "hamster", name: "栗子仓鼠", image: "assets/pets-v2/hamster.png" },
+    { id: "parrot", name: "彩虹鹦鹉", image: "assets/pets-v2/parrot.png" },
+    { id: "snake", name: "青团小蛇", image: "assets/pets-v2/snake.png" },
+    { id: "redpanda", name: "莓莓小熊猫", image: "assets/pets-v2/redpanda.png" },
+    { id: "penguin", name: "泡泡企鹅", image: "assets/pets-v2/penguin.png" },
+    { id: "panda", name: "糯米熊猫", image: "assets/pets-v2/panda.png" }
   ];
 
   const shopItems = [
-    { id: "bow", type: "clothes", name: "草莓蝴蝶结", icon: "🎀", price: 2 },
-    { id: "cap", type: "clothes", name: "探险小帽", icon: "🧢", price: 3 },
-    { id: "scarf", type: "clothes", name: "暖暖围巾", icon: "🧣", price: 3 },
-    { id: "crown", type: "clothes", name: "星星皇冠", icon: "👑", price: 5 },
+    { id: "berry-shirt", type: "wear", slot: "outfit", name: "草莓小衫", icon: "🍓", price: 2 },
+    { id: "sky-overalls", type: "wear", slot: "outfit", name: "天空背带裤", icon: "☁", price: 2 },
+    { id: "star-pajamas", type: "wear", slot: "outfit", name: "星星睡衣", icon: "★", price: 3 },
+    { id: "lemon-raincoat", type: "wear", slot: "outfit", name: "柠檬雨衣", icon: "●", price: 3 },
+    { id: "bow", type: "wear", slot: "head", name: "草莓蝴蝶结", icon: "🎀", price: 1 },
+    { id: "cap", type: "wear", slot: "head", name: "探险小帽", icon: "🧢", price: 2 },
+    { id: "flower", type: "wear", slot: "head", name: "太阳花发夹", icon: "🌼", price: 1 },
+    { id: "crown", type: "wear", slot: "head", name: "星星皇冠", icon: "👑", price: 3 },
+    { id: "glasses", type: "wear", slot: "face", name: "圆圆眼镜", icon: "◉", price: 2 },
+    { id: "scarf", type: "wear", slot: "neck", name: "彩虹围巾", icon: "🧣", price: 2 },
     { id: "apple", type: "food", name: "脆脆苹果", icon: "🍎", price: 1, friendship: 1 },
     { id: "carrot", type: "food", name: "甜甜胡萝卜", icon: "🥕", price: 1, friendship: 1 },
     { id: "berry", type: "food", name: "莓果小碗", icon: "🍓", price: 2, friendship: 2 },
     { id: "cake", type: "food", name: "庆祝蛋糕", icon: "🧁", price: 3, friendship: 3 },
-    { id: "plant", type: "furniture", name: "窗边绿植", icon: "🪴", price: 2 },
-    { id: "cushion", type: "furniture", name: "软软坐垫", icon: "🛋️", price: 3 },
-    { id: "lamp", type: "furniture", name: "月亮小灯", icon: "💡", price: 3 },
-    { id: "bookshelf", type: "furniture", name: "故事书架", icon: "📚", price: 4 }
+    { id: "banana", type: "food", name: "月亮香蕉", icon: "🍌", price: 1, friendship: 1 },
+    { id: "corn", type: "food", name: "香香玉米", icon: "🌽", price: 1, friendship: 1 },
+    { id: "milk", type: "food", name: "晚安牛奶", icon: "🥛", price: 2, friendship: 2 },
+    { id: "cookie", type: "food", name: "星星曲奇", icon: "🍪", price: 2, friendship: 2 },
+    { id: "watermelon", type: "food", name: "西瓜小船", icon: "🍉", price: 2, friendship: 2 },
+    { id: "sandwich", type: "food", name: "野餐三明治", icon: "🥪", price: 3, friendship: 3 },
+    { id: "pink-sofa", type: "furniture", slot: "leftLarge", name: "草莓云朵沙发", icon: "🛋", price: 2 },
+    { id: "blue-bed", type: "furniture", slot: "rightLarge", name: "蓝莓小床", icon: "▰", price: 3 },
+    { id: "rainbow-shelf", type: "furniture", slot: "wall", name: "彩虹故事书架", icon: "▤", price: 2 },
+    { id: "moon-lamp", type: "furniture", slot: "rightSmall", name: "月亮落地灯", icon: "☾", price: 2 },
+    { id: "candy-plant", type: "furniture", slot: "leftSmall", name: "糖果绿植", icon: "♣", price: 1 },
+    { id: "tea-table", type: "furniture", slot: "center", name: "花朵小圆桌", icon: "●", price: 2 },
+    { id: "toy-box", type: "furniture", slot: "center", name: "积木玩具箱", icon: "◇", price: 2 },
+    { id: "rainbow-piano", type: "furniture", slot: "rightLarge", name: "彩虹小钢琴", icon: "♫", price: 4 },
+    { id: "star-tent", type: "furniture", slot: "leftLarge", name: "星星游戏帐篷", icon: "△", price: 3 },
+    { id: "flower-mirror", type: "furniture", slot: "wall", name: "花朵穿衣镜", icon: "✿", price: 2 },
+    { id: "wall-cloud", type: "room", slot: "wall", name: "云朵墙纸", icon: "☁", price: 0 },
+    { id: "wall-peach", type: "room", slot: "wall", name: "蜜桃墙纸", icon: "●", price: 1 },
+    { id: "wall-rainbow", type: "room", slot: "wall", name: "彩虹墙纸", icon: "⌒", price: 2 },
+    { id: "wall-space", type: "room", slot: "wall", name: "星空墙纸", icon: "✦", price: 3 },
+    { id: "floor-honey", type: "room", slot: "floor", name: "蜂蜜木地板", icon: "▥", price: 0 },
+    { id: "floor-mint", type: "room", slot: "floor", name: "薄荷地砖", icon: "▦", price: 1 },
+    { id: "floor-checker", type: "room", slot: "floor", name: "糖果棋盘砖", icon: "▦", price: 2 },
+    { id: "floor-star", type: "room", slot: "floor", name: "星星软地板", icon: "★", price: 2 },
+    { id: "window-sunny", type: "room", slot: "window", name: "晴天方窗", icon: "☀", price: 0 },
+    { id: "window-flower", type: "room", slot: "window", name: "花朵圆窗", icon: "✿", price: 2 },
+    { id: "window-rain", type: "room", slot: "window", name: "雨滴飘窗", icon: "☂", price: 2 },
+    { id: "window-night", type: "room", slot: "window", name: "月夜星窗", icon: "☾", price: 3 },
+    { id: "rug-cloud", type: "room", slot: "rug", name: "白云地毯", icon: "☁", price: 1 },
+    { id: "rug-rainbow", type: "room", slot: "rug", name: "彩虹地毯", icon: "⌒", price: 2 },
+    { id: "rug-strawberry", type: "room", slot: "rug", name: "草莓地毯", icon: "🍓", price: 2 },
+    { id: "rug-ocean", type: "room", slot: "rug", name: "海浪地毯", icon: "≈", price: 2 }
   ];
 
   const destinations = [
@@ -51,9 +88,16 @@
     pointsPocket: $("pointsPocket"),
     parentButton: $("parentButton"),
     homeButton: $("kidHomeButton"),
+    petRoom: $("petRoom"),
+    homePetStage: $("homePetStage"),
     homePet: $("homePetImage"),
-    homeAccessory: $("homePetAccessory"),
-    roomFurniture: $("roomFurniture"),
+    homeOutfit: $("homePetOutfit"),
+    homeHeadwear: $("homePetHeadwear"),
+    homeFacewear: $("homePetFacewear"),
+    homeNeckwear: $("homePetNeckwear"),
+    homeRoomWindow: $("homeRoomWindow"),
+    homeRoomRug: $("homeRoomRug"),
+    homeRoomDecor: $("homeRoomDecor"),
     petSpeech: $("petSpeech"),
     roomLock: $("roomLock"),
     roomLockText: $("roomLockText"),
@@ -74,7 +118,8 @@
     sessionProgressBar: $("sessionProgressBar"),
     sessionScore: $("sessionScore"),
     dictationPet: $("dictationPetImage"),
-    dictationAccessory: $("dictationPetAccessory"),
+    dictationOutfit: $("dictationPetOutfit"),
+    dictationHeadwear: $("dictationPetHeadwear"),
     dictationPetText: $("dictationPetText"),
     dictationMeaning: $("dictationMeaning"),
     dictationInput: $("dictationInput"),
@@ -86,9 +131,16 @@
     dictationBoard: document.querySelector(".dictation-board"),
     revealedAnswer: $("revealedAnswer"),
     revealedWord: $("revealedWord"),
+    shopRoom: $("shopRoomPreview"),
+    shopPetStage: $("shopPetStage"),
     shopPet: $("shopPetImage"),
-    shopAccessory: $("shopPetAccessory"),
-    shopFurniture: $("shopRoomFurniture"),
+    shopOutfit: $("shopPetOutfit"),
+    shopHeadwear: $("shopPetHeadwear"),
+    shopFacewear: $("shopPetFacewear"),
+    shopNeckwear: $("shopPetNeckwear"),
+    shopRoomWindow: $("shopRoomWindow"),
+    shopRoomRug: $("shopRoomRug"),
+    shopRoomDecor: $("shopRoomDecor"),
     friendshipBar: $("friendshipBar"),
     friendshipValue: $("friendshipValue"),
     shopGrid: $("shopGrid"),
@@ -118,6 +170,13 @@
     closePetPickerButton: $("closePetPickerButton"),
     parentModal: $("parentModal"),
     closeParentButton: $("closeParentButton"),
+    parentGateModal: $("parentGateModal"),
+    parentGateTitle: $("parentGateTitle"),
+    parentGateCopy: $("parentGateCopy"),
+    parentPinInput: $("parentPinInput"),
+    parentGateMessage: $("parentGateMessage"),
+    confirmParentGateButton: $("confirmParentGateButton"),
+    closeParentGateButton: $("closeParentGateButton"),
     dailyTargetInput: $("dailyTargetInput"),
     targetMinusButton: $("targetMinusButton"),
     targetPlusButton: $("targetPlusButton"),
@@ -149,10 +208,13 @@
   let currentScreen = "home";
   let selectedPetDraft = state.selectedPet || null;
   let selectedTaskMode = state.taskConfig.mode;
-  let activeShopTab = "clothes";
+  let activeShopTab = "wear";
   let isAdvancing = false;
   let travelTimer = null;
   let toastTimer = null;
+  let petWalkTimer = null;
+  let petDrag = null;
+  let parentSessionUnlocked = false;
   let swipeStartX = null;
   let swipeOffsetX = 0;
 
@@ -171,8 +233,20 @@
       cookies: 0,
       totalDictations: 0,
       friendship: 0,
-      ownedItems: [],
-      equipped: { clothes: null, furniture: null },
+      ownedItems: ["wall-cloud", "floor-honey", "window-sunny"],
+      equipped: {
+        outfit: null,
+        head: null,
+        face: null,
+        neck: null,
+        wall: "wall-cloud",
+        floor: "floor-honey",
+        window: "window-sunny",
+        rug: null
+      },
+      placedFurniture: [],
+      petPosition: { x: 52, y: 70 },
+      parentPinHash: "",
       taskConfig: { count: 10, mode: "sequential" },
       daily: null,
       records: [],
@@ -187,6 +261,12 @@
     if (!saved || typeof saved !== "object") {
       return base;
     }
+    const savedEquipped = saved.equipped && typeof saved.equipped === "object" ? saved.equipped : {};
+    const migratedHeadwear = savedEquipped.head || savedEquipped.clothes || null;
+    const ownedItems = Array.isArray(saved.ownedItems) ? saved.ownedItems : [];
+    ["wall-cloud", "floor-honey", "window-sunny"].forEach((itemId) => {
+      if (!ownedItems.includes(itemId)) ownedItems.push(itemId);
+    });
     return {
       ...base,
       ...saved,
@@ -194,11 +274,30 @@
       cookies: Math.max(0, Number(saved.cookies) || 0),
       totalDictations: Math.max(0, Number(saved.totalDictations) || 0),
       friendship: Math.max(0, Number(saved.friendship) || 0),
-      ownedItems: Array.isArray(saved.ownedItems) ? saved.ownedItems : [],
+      ownedItems,
+      placedFurniture: Array.isArray(saved.placedFurniture)
+        ? saved.placedFurniture.filter((id) => getItem(id)?.type === "furniture")
+        : (typeof savedEquipped.furniture === "string" ? [savedEquipped.furniture] : []),
+      petPosition: {
+        x: Math.max(14, Math.min(86, Number(saved.petPosition?.x) || base.petPosition.x)),
+        y: Math.max(58, Math.min(80, Number(saved.petPosition?.y) || base.petPosition.y))
+      },
+      parentPinHash: typeof saved.parentPinHash === "string" ? saved.parentPinHash : "",
       postcards: Array.isArray(saved.postcards) ? saved.postcards : [],
       records: Array.isArray(saved.records) ? saved.records.slice(-500) : [],
       taskConfig: { ...base.taskConfig, ...(saved.taskConfig || {}) },
-      equipped: { ...base.equipped, ...(saved.equipped || {}) }
+      equipped: {
+        ...base.equipped,
+        ...savedEquipped,
+        head: migratedHeadwear,
+        outfit: savedEquipped.outfit || null,
+        face: savedEquipped.face || null,
+        neck: savedEquipped.neck || null,
+        wall: savedEquipped.wall || base.equipped.wall,
+        floor: savedEquipped.floor || base.equipped.floor,
+        window: savedEquipped.window || base.equipped.window,
+        rug: savedEquipped.rug || null
+      }
     };
   }
 
@@ -394,25 +493,142 @@
     if (screen === "pet") renderShop();
     if (screen === "travel") renderTravel();
     if (screen === "growth") renderGrowth();
+    schedulePetWalk();
+  }
+
+  function setWear(element, slot) {
+    if (!element) return;
+    element.dataset.item = state.equipped[slot] || "";
+  }
+
+  function renderRoom(room, windowElement, rugElement, decorLayer) {
+    if (!room) return;
+    const wall = state.equipped.wall || "wall-cloud";
+    const floor = state.equipped.floor || "floor-honey";
+    const windowStyle = state.equipped.window || "window-sunny";
+    room.dataset.wall = wall.replace("wall-", "");
+    room.dataset.floor = floor.replace("floor-", "");
+    room.dataset.window = windowStyle.replace("window-", "");
+    windowElement.className = `room-window room-${windowStyle}`;
+    rugElement.dataset.rug = (state.equipped.rug || "").replace("rug-", "");
+    decorLayer.replaceChildren();
+    state.placedFurniture.forEach((itemId) => {
+      const item = getItem(itemId);
+      if (!item) return;
+      const furniture = document.createElement("span");
+      furniture.className = `room-decor decor-${item.id}`;
+      furniture.dataset.item = item.id;
+      decorLayer.append(furniture);
+    });
   }
 
   function renderPetEverywhere() {
     const pet = getPet();
-    const accessory = getItem(state.equipped.clothes);
-    const furniture = getItem(state.equipped.furniture);
     [dom.homePet, dom.dictationPet, dom.shopPet, dom.travelPet, dom.rewardPetImage].forEach((image) => {
       image.src = pet.image;
       image.alt = state.petName ? `${state.petName}，${pet.name}` : pet.name;
     });
-    [dom.homeAccessory, dom.dictationAccessory, dom.shopAccessory].forEach((element) => {
-      element.textContent = accessory ? accessory.icon : "";
-    });
-    [dom.roomFurniture, dom.shopFurniture].forEach((element) => {
-      element.textContent = furniture ? furniture.icon : "";
-    });
+    [dom.homePetStage, dom.shopPetStage].forEach((stage) => { stage.dataset.pet = pet.id; });
+    dom.dictationPet.parentElement.dataset.pet = pet.id;
+    [dom.homeOutfit, dom.shopOutfit, dom.dictationOutfit].forEach((element) => setWear(element, "outfit"));
+    [dom.homeHeadwear, dom.shopHeadwear, dom.dictationHeadwear].forEach((element) => setWear(element, "head"));
+    [dom.homeFacewear, dom.shopFacewear].forEach((element) => setWear(element, "face"));
+    [dom.homeNeckwear, dom.shopNeckwear].forEach((element) => setWear(element, "neck"));
+    renderRoom(dom.petRoom, dom.homeRoomWindow, dom.homeRoomRug, dom.homeRoomDecor);
+    renderRoom(dom.shopRoom, dom.shopRoomWindow, dom.shopRoomRug, dom.shopRoomDecor);
+    setPetPosition(dom.homePetStage, state.petPosition, false);
+    setPetPosition(dom.shopPetStage, state.petPosition, false);
     const name = state.petName || pet.name;
     dom.greeting.textContent = `${name} 正等着和你一起完成挑战`;
-    dom.petSpeech.textContent = state.daily && state.daily.finished ? `${name}：今天可以一起玩啦！` : `${name}：我陪你学完，再一起去玩！`;
+    dom.petSpeech.textContent = state.daily && state.daily.finished ? `${name}：来追我呀！` : `${name}：我先在小屋等你完成任务。`;
+  }
+
+  function setPetPosition(stage, position, animate = true) {
+    if (!stage) return;
+    stage.classList.toggle("has-motion", animate);
+    stage.style.setProperty("--pet-x", `${position.x}%`);
+    stage.style.setProperty("--pet-y", `${position.y}%`);
+    stage.style.setProperty("--pet-scale", String(0.82 + ((position.y - 58) / 22) * 0.22));
+  }
+
+  function activeRoomPet() {
+    if (currentScreen === "pet") return { stage: dom.shopPetStage, room: dom.shopRoom };
+    if (currentScreen === "home") return { stage: dom.homePetStage, room: dom.petRoom };
+    return null;
+  }
+
+  function walkPetTo(position, save = true) {
+    const active = activeRoomPet();
+    if (!active) return;
+    const next = {
+      x: Math.max(14, Math.min(86, position.x)),
+      y: Math.max(58, Math.min(80, position.y))
+    };
+    active.stage.classList.toggle("faces-left", next.x < state.petPosition.x);
+    active.stage.classList.add("is-walking");
+    state.petPosition = next;
+    setPetPosition(active.stage, next, true);
+    const mirrorStage = active.stage === dom.homePetStage ? dom.shopPetStage : dom.homePetStage;
+    setPetPosition(mirrorStage, next, false);
+    window.setTimeout(() => {
+      active.stage.classList.remove("is-walking");
+      if (save) saveState();
+    }, 2500);
+  }
+
+  function schedulePetWalk() {
+    window.clearTimeout(petWalkTimer);
+    if (!activeRoomPet() || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    petWalkTimer = window.setTimeout(() => {
+      if (petDrag) return;
+      walkPetTo({ x: 17 + Math.random() * 66, y: 60 + Math.random() * 18 });
+      schedulePetWalk();
+    }, 3500 + Math.random() * 3500);
+  }
+
+  function roomPositionFromPointer(event, room) {
+    const rect = room.getBoundingClientRect();
+    return {
+      x: ((event.clientX - rect.left) / rect.width) * 100,
+      y: ((event.clientY - rect.top) / rect.height) * 100
+    };
+  }
+
+  function beginPetDrag(event) {
+    const stage = event.currentTarget;
+    const room = stage.closest(".room-world");
+    if (!room) return;
+    event.preventDefault();
+    window.clearTimeout(petWalkTimer);
+    petDrag = { stage, room, pointerId: event.pointerId };
+    stage.classList.add("is-dragging");
+    stage.setPointerCapture?.(event.pointerId);
+  }
+
+  function movePetDrag(event) {
+    if (!petDrag || petDrag.pointerId !== event.pointerId) return;
+    const next = roomPositionFromPointer(event, petDrag.room);
+    state.petPosition = {
+      x: Math.max(14, Math.min(86, next.x)),
+      y: Math.max(58, Math.min(80, next.y))
+    };
+    setPetPosition(petDrag.stage, state.petPosition, false);
+  }
+
+  function endPetDrag(event) {
+    if (!petDrag || petDrag.pointerId !== event.pointerId) return;
+    petDrag.stage.classList.remove("is-dragging");
+    setPetPosition(dom.homePetStage, state.petPosition, false);
+    setPetPosition(dom.shopPetStage, state.petPosition, false);
+    petDrag = null;
+    saveState();
+    schedulePetWalk();
+  }
+
+  function movePetFromRoomTap(event) {
+    if (event.target.closest("button, .room-pet, .room-lock")) return;
+    walkPetTo(roomPositionFromPointer(event, event.currentTarget));
+    schedulePetWalk();
   }
 
   function renderHome() {
@@ -687,7 +903,7 @@
       button.addEventListener("click", () => {
         selectedPetDraft = pet.id;
         if (!dom.petNameInput.value.trim()) {
-          dom.petNameInput.value = pet.name.replace(/兔|龙|猫|狗|仓鼠|鹦鹉|小蛇|卡皮巴拉/g, "") || pet.name;
+          dom.petNameInput.value = pet.name.replace(/兔|龙|猫|狗|仓鼠|鹦鹉|小蛇|卡皮巴拉|小熊猫|企鹅|熊猫/g, "") || pet.name;
         }
         dom.confirmPetButton.disabled = false;
         renderPetPicker();
@@ -723,13 +939,21 @@
     dom.shopGrid.replaceChildren();
     shopItems.filter((item) => item.type === activeShopTab).forEach((item) => {
       const owned = state.ownedItems.includes(item.id);
-      const equipped = state.equipped[item.type] === item.id;
+      const equipped = item.type === "furniture"
+        ? state.placedFurniture.includes(item.id)
+        : item.type !== "food" && state.equipped[item.slot] === item.id;
       const row = document.createElement("article");
       row.className = "shop-item";
-      const actionText = item.type === "food" ? `喂给它 · ★${item.price}` : equipped ? "正在使用" : owned ? "使用" : `购买 · ★${item.price}`;
+      row.dataset.item = item.id;
+      const actionText = item.type === "food"
+        ? `喂给它 · ★${item.price}`
+        : equipped
+          ? (item.type === "furniture" || item.type === "wear" ? "收起来" : "正在使用")
+          : owned ? (item.type === "furniture" ? "摆进房间" : "换上") : item.price === 0 ? "免费领取" : `购买 · ★${item.price}`;
+      const ownedCopy = item.type === "furniture" ? "可以摆进房间" : item.type === "room" ? "已经拥有" : "衣柜里已经有了";
       row.innerHTML = `
-        <span class="shop-item-icon" aria-hidden="true">${item.icon}</span>
-        <div><strong>${item.name}</strong><small>${item.type === "food" ? `亲密值 +${item.friendship}` : owned ? "已经拥有" : "完成几个词就能带回家"}</small><button type="button" ${equipped ? "disabled" : ""} class="${owned ? "is-owned" : ""}">${actionText}</button></div>
+        <span class="shop-item-icon catalog-${item.type}" aria-hidden="true">${item.icon}</span>
+        <div><strong>${item.name}</strong><small>${item.type === "food" ? `亲密值 +${item.friendship}` : owned ? ownedCopy : item.price === 0 ? "第一件免费" : "完成几个词就能带回家"}</small><button type="button" ${equipped && item.type === "room" ? "disabled" : ""} class="${owned ? "is-owned" : ""}">${actionText}</button></div>
       `;
       row.querySelector("button").addEventListener("click", () => useShopItem(item));
       dom.shopGrid.append(row);
@@ -758,10 +982,27 @@
       state.points -= item.price;
       state.ownedItems.push(item.id);
     }
-    state.equipped[item.type] = item.id;
+    if (item.type === "furniture") {
+      if (state.placedFurniture.includes(item.id)) {
+        state.placedFurniture = state.placedFurniture.filter((id) => id !== item.id);
+      } else {
+        const sameSlotIds = shopItems.filter((entry) => entry.type === "furniture" && entry.slot === item.slot).map((entry) => entry.id);
+        state.placedFurniture = state.placedFurniture.filter((id) => !sameSlotIds.includes(id));
+        state.placedFurniture.push(item.id);
+      }
+    } else if (state.equipped[item.slot] === item.id && item.type === "wear") {
+      state.equipped[item.slot] = null;
+    } else {
+      state.equipped[item.slot] = item.id;
+    }
     saveState();
     renderAll();
-    showToast(alreadyOwned ? `已经换上${item.name}` : `买到${item.name}，马上用起来了！`);
+    const isNowVisible = item.type === "furniture" ? state.placedFurniture.includes(item.id) : state.equipped[item.slot] === item.id;
+    if (item.type === "wear") {
+      showToast(isNowVisible ? `${item.name}已经穿好啦！` : `${item.name}已经收进衣柜。`);
+    } else {
+      showToast(isNowVisible ? `${item.name}已经布置好啦！` : `${item.name}已经收好。`);
+    }
   }
 
   function startTravel() {
@@ -911,7 +1152,55 @@
     return String(value).replace(/[&<>"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[character]));
   }
 
+  function pinHash(pin) {
+    let hash = 2166136261;
+    for (const character of pin) {
+      hash ^= character.charCodeAt(0);
+      hash = Math.imul(hash, 16777619);
+    }
+    return (hash >>> 0).toString(36);
+  }
+
   function openParent() {
+    if (parentSessionUnlocked) {
+      openParentPanel();
+      return;
+    }
+    const isSetup = !state.parentPinHash;
+    dom.parentGateTitle.textContent = isSetup ? "设置家长密码" : "家长验证";
+    dom.parentGateCopy.textContent = isSetup
+      ? "请设置一个孩子不知道的四位数字。以后修改每日单词数，都需要先输入它。"
+      : "输入四位家长密码，才能修改每日任务和词库。";
+    dom.confirmParentGateButton.textContent = isSetup ? "设置密码并进入" : "验证并进入";
+    dom.parentPinInput.value = "";
+    dom.parentGateMessage.textContent = "";
+    dom.parentGateMessage.classList.remove("is-error");
+    dom.parentGateModal.hidden = false;
+    window.setTimeout(() => dom.parentPinInput.focus(), 80);
+  }
+
+  function confirmParentGate() {
+    const pin = dom.parentPinInput.value.replace(/\D/g, "");
+    if (pin.length !== 4) {
+      dom.parentGateMessage.textContent = "请输入完整的四位数字。";
+      dom.parentGateMessage.classList.add("is-error");
+      return;
+    }
+    if (!state.parentPinHash) {
+      state.parentPinHash = pinHash(pin);
+      saveState();
+    } else if (pinHash(pin) !== state.parentPinHash) {
+      dom.parentGateMessage.textContent = "密码不正确，请再试一次。";
+      dom.parentGateMessage.classList.add("is-error");
+      dom.parentPinInput.select();
+      return;
+    }
+    parentSessionUnlocked = true;
+    dom.parentGateModal.hidden = true;
+    openParentPanel();
+  }
+
+  function openParentPanel() {
     ensureToday();
     selectedTaskMode = state.taskConfig.mode;
     dom.dailyTargetInput.max = String(Math.min(30, getWordBank().length || 30));
@@ -1025,6 +1314,11 @@
     dom.parentButton.addEventListener("click", openParent);
     dom.changePetButton.addEventListener("click", openPetPicker);
     dom.chooseAnotherPetButton.addEventListener("click", openPetPicker);
+    [dom.homePetStage, dom.shopPetStage].forEach((stage) => stage.addEventListener("pointerdown", beginPetDrag));
+    window.addEventListener("pointermove", movePetDrag);
+    window.addEventListener("pointerup", endPetDrag);
+    window.addEventListener("pointercancel", endPetDrag);
+    [dom.petRoom, dom.shopRoom].forEach((room) => room.addEventListener("click", movePetFromRoomTap));
     dom.startMissionButton.addEventListener("click", startOrResumeMission);
     dom.leaveMissionButton.addEventListener("click", () => {
       saveState();
@@ -1059,7 +1353,20 @@
       dom.confirmPetButton.disabled = !selectedPetDraft;
     });
     dom.closePetPickerButton.addEventListener("click", () => { dom.petPickerModal.hidden = true; });
-    dom.closeParentButton.addEventListener("click", () => { dom.parentModal.hidden = true; });
+    dom.closeParentButton.addEventListener("click", () => {
+      dom.parentModal.hidden = true;
+      parentSessionUnlocked = false;
+    });
+    dom.closeParentGateButton.addEventListener("click", () => { dom.parentGateModal.hidden = true; });
+    dom.confirmParentGateButton.addEventListener("click", confirmParentGate);
+    dom.parentPinInput.addEventListener("input", () => {
+      dom.parentPinInput.value = dom.parentPinInput.value.replace(/\D/g, "").slice(0, 4);
+      dom.parentGateMessage.textContent = "";
+      dom.parentGateMessage.classList.remove("is-error");
+    });
+    dom.parentPinInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") confirmParentGate();
+    });
     dom.targetMinusButton.addEventListener("click", () => adjustTarget(-1));
     dom.targetPlusButton.addEventListener("click", () => adjustTarget(1));
     dom.dailyTargetInput.addEventListener("input", updateTaskPreview);
@@ -1084,17 +1391,22 @@
       renderAll();
       navigate("pet", { ignoreLock: true });
     });
-    [dom.petPickerModal, dom.parentModal, dom.todayReportModal].forEach((modal) => {
+    [dom.petPickerModal, dom.parentModal, dom.parentGateModal, dom.todayReportModal].forEach((modal) => {
       modal.addEventListener("click", (event) => {
         if (event.target === modal && (modal !== dom.petPickerModal || state.selectedPet)) {
           modal.hidden = true;
+          if (modal === dom.parentModal) parentSessionUnlocked = false;
         }
       });
     });
     document.addEventListener("keydown", (event) => {
       if (event.key !== "Escape") return;
       if (!dom.todayReportModal.hidden) dom.todayReportModal.hidden = true;
-      else if (!dom.parentModal.hidden) dom.parentModal.hidden = true;
+      else if (!dom.parentModal.hidden) {
+        dom.parentModal.hidden = true;
+        parentSessionUnlocked = false;
+      }
+      else if (!dom.parentGateModal.hidden) dom.parentGateModal.hidden = true;
       else if (!dom.petPickerModal.hidden && state.selectedPet) dom.petPickerModal.hidden = true;
     });
     window.addEventListener("storage", (event) => {

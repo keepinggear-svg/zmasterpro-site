@@ -15,6 +15,822 @@
   --kid-shadow: 0 18px 44px rgba(55, 65, 72, 0.13);
 }
 
+/* V13: a real, layered room instead of a static square pet portrait. */
+.home-band {
+  grid-template-columns: minmax(0, 1.5fr) minmax(330px, 0.5fr);
+  min-height: 650px;
+}
+
+.room-world {
+  --pet-x: 52%;
+  --pet-y: 70%;
+  --pet-scale: 1;
+  position: relative;
+  min-height: 650px;
+  isolation: isolate;
+  overflow: hidden;
+  background: #d9f2fb;
+  user-select: none;
+}
+
+.room-world::before,
+.room-world::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  height: 36%;
+  opacity: 1;
+  border-top: 6px solid rgba(255, 255, 255, 0.92);
+  background: #efcc8d;
+}
+
+.room-world::after {
+  z-index: 2;
+  border-top: 0;
+  background: repeating-linear-gradient(90deg, transparent 0 70px, rgba(126, 82, 38, 0.16) 70px 73px);
+  pointer-events: none;
+}
+
+.room-sky {
+  position: absolute;
+  inset: 0 0 36%;
+  z-index: 0;
+}
+
+.room-world[data-wall="cloud"] .room-sky {
+  background: repeating-linear-gradient(0deg, #dff7ff 0 58px, #c9edf8 58px 61px);
+}
+
+.room-world[data-wall="peach"] .room-sky {
+  background: repeating-linear-gradient(90deg, #ffd8d3 0 62px, #ffc9c5 62px 66px);
+}
+
+.room-world[data-wall="rainbow"] .room-sky {
+  background: repeating-linear-gradient(135deg, #ffd8df 0 42px, #fff0b5 42px 84px, #ccefdc 84px 126px, #cce9fb 126px 168px);
+}
+
+.room-world[data-wall="space"] .room-sky {
+  background-color: #3e467b;
+  background-image: radial-gradient(circle at 18px 22px, #fff4a7 0 2px, transparent 2.5px), radial-gradient(circle at 60px 52px, #d7edff 0 1.5px, transparent 2px);
+  background-size: 82px 72px;
+}
+
+.room-world[data-floor="mint"]::before {
+  background: #a9dfce;
+}
+
+.room-world[data-floor="mint"]::after {
+  background: linear-gradient(90deg, rgba(255,255,255,.34) 2px, transparent 2px), linear-gradient(rgba(255,255,255,.34) 2px, transparent 2px);
+  background-size: 58px 58px;
+}
+
+.room-world[data-floor="checker"]::before {
+  background: #ffd9db;
+}
+
+.room-world[data-floor="checker"]::after {
+  background: conic-gradient(from 90deg, rgba(255,255,255,.55) 25%, transparent 0 50%, rgba(255,255,255,.55) 0 75%, transparent 0);
+  background-size: 56px 56px;
+}
+
+.room-world[data-floor="star"]::before {
+  background: #a9c8ef;
+}
+
+.room-world[data-floor="star"]::after {
+  background: radial-gradient(circle at 28px 28px, #fff7b7 0 4px, transparent 4.5px);
+  background-size: 56px 56px;
+}
+
+.room-window {
+  z-index: 2;
+  overflow: visible;
+  box-shadow: 0 10px 0 rgba(64, 92, 114, 0.11), 0 0 0 3px rgba(255,255,255,.4);
+}
+
+.room-window-sunny {
+  background: #8fd8f2;
+}
+
+.room-window-flower {
+  width: 136px;
+  height: 136px;
+  border-width: 9px;
+  border-color: #fff4b8;
+  border-radius: 50%;
+  background: #a5e2f3;
+  transform: rotate(3deg);
+}
+
+.room-window-rain {
+  width: 180px;
+  height: 118px;
+  border-color: #c6e8ff;
+  background: repeating-linear-gradient(115deg, #a8d4ea 0 11px, #8fc7df 11px 14px);
+}
+
+.room-window-night {
+  border-color: #fff3b1;
+  background: #4b568e;
+}
+
+.room-window-night::after {
+  content: "☾";
+  color: #fff2a8;
+}
+
+.room-window-rain::after {
+  content: "☂";
+  color: #ffffff;
+}
+
+.room-window-flower::after {
+  content: "✿";
+  color: #ff8ca0;
+}
+
+.room-rug {
+  position: absolute;
+  z-index: 2;
+  bottom: 3%;
+  left: 50%;
+  width: min(58%, 430px);
+  height: 18%;
+  border: 4px solid rgba(255,255,255,.78);
+  border-radius: 50%;
+  box-shadow: 0 8px 0 rgba(75, 76, 91, 0.1);
+  transform: translateX(-50%);
+}
+
+.room-rug:not([data-rug]),
+.room-rug[data-rug=""] {
+  display: none;
+}
+
+.room-rug[data-rug="cloud"] { background: #fffdf7; }
+.room-rug[data-rug="rainbow"] { background: repeating-linear-gradient(90deg, #ff9ca8 0 16%, #ffd871 16% 32%, #7fd3ae 32% 48%, #83b9e9 48% 64%, #c4a6e9 64% 80%, #ffb6d0 80% 100%); }
+.room-rug[data-rug="strawberry"] { background: #f58b96; box-shadow: 0 8px 0 rgba(75,76,91,.1), inset 0 0 0 12px #ffd4d8; }
+.room-rug[data-rug="ocean"] { background: repeating-linear-gradient(0deg, #68bdd4 0 17px, #b7eef1 17px 28px); }
+
+.room-decor-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.room-decor {
+  position: absolute;
+  display: block;
+  filter: drop-shadow(0 8px 3px rgba(52, 60, 69, 0.16));
+}
+
+.decor-pink-sofa {
+  bottom: 14%;
+  left: 2%;
+  width: 32%;
+  height: 21%;
+  border: 4px solid #ca6578;
+  border-radius: 28px 28px 10px 10px;
+  background: #f49bab;
+}
+
+.decor-pink-sofa::before {
+  content: "";
+  position: absolute;
+  inset: 30% 7% 13%;
+  border: 3px solid #d76c7f;
+  border-radius: 16px;
+  background: #ffc0ca;
+  box-shadow: inset 50px 0 0 rgba(255,255,255,.14);
+}
+
+.decor-pink-sofa::after {
+  content: "";
+  position: absolute;
+  right: 12%;
+  bottom: -13px;
+  left: 12%;
+  height: 15px;
+  border-right: 12px solid #8c5a62;
+  border-left: 12px solid #8c5a62;
+}
+
+.decor-blue-bed {
+  right: 2%;
+  bottom: 12%;
+  width: 35%;
+  height: 17%;
+  border: 4px solid #4779a7;
+  border-radius: 12px 12px 7px 7px;
+  background: #75b7e7;
+}
+
+.decor-blue-bed::before {
+  content: "";
+  position: absolute;
+  top: -22%;
+  right: 6%;
+  left: 20%;
+  height: 55%;
+  border: 3px solid #5a82ad;
+  border-radius: 18px 18px 4px 4px;
+  background: #e9f7ff;
+}
+
+.decor-blue-bed::after {
+  content: "★  ★  ★";
+  position: absolute;
+  right: 0;
+  bottom: 16%;
+  left: 0;
+  color: #fff3a9;
+  font-size: clamp(10px, 2vw, 18px);
+  text-align: center;
+}
+
+.decor-rainbow-shelf {
+  top: 17%;
+  right: 4%;
+  width: 20%;
+  height: 31%;
+  border: 7px solid #9f6a4e;
+  border-radius: 15px 15px 5px 5px;
+  background: repeating-linear-gradient(90deg, #f28f8f 0 13%, #f5c65f 13% 25%, #68bda4 25% 39%, #78aee0 39% 53%, #b899df 53% 67%, #ffffff 67% 73%);
+  box-shadow: inset 0 -8px 0 #c58b63, inset 0 -38px 0 rgba(255,255,255,.35), inset 0 -45px 0 #9f6a4e;
+}
+
+.decor-moon-lamp {
+  right: 24%;
+  bottom: 22%;
+  width: 9px;
+  height: 24%;
+  border-radius: 6px;
+  background: #6d7991;
+}
+
+.decor-moon-lamp::before {
+  content: "☾";
+  position: absolute;
+  top: -46px;
+  left: -27px;
+  color: #ffe17a;
+  font-size: 58px;
+  text-shadow: 0 0 16px rgba(255,225,122,.8);
+}
+
+.decor-moon-lamp::after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  left: -24px;
+  width: 58px;
+  height: 13px;
+  border-radius: 50%;
+  background: #59647b;
+}
+
+.decor-candy-plant {
+  bottom: 18%;
+  left: 4%;
+  width: 10%;
+  height: 14%;
+  border: 4px solid #d87868;
+  border-radius: 8px 8px 22px 22px;
+  background: #ff9f8d;
+}
+
+.decor-candy-plant::before {
+  content: "";
+  position: absolute;
+  top: -80%;
+  left: -35%;
+  width: 70%;
+  height: 92%;
+  border-radius: 70% 15% 70% 20%;
+  background: #5fbd7c;
+  box-shadow: 34px 5px 0 #75cd8f, 17px -18px 0 #3fa36b;
+}
+
+.decor-tea-table {
+  bottom: 9%;
+  left: 39%;
+  width: 22%;
+  height: 10%;
+  border: 4px solid #bb6d72;
+  border-radius: 50%;
+  background: #ffd1d0;
+}
+
+.decor-tea-table::before {
+  content: "✿";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  color: #ef7183;
+  font-size: 34px;
+  transform: translate(-50%, -50%);
+}
+
+.decor-tea-table::after {
+  content: "";
+  position: absolute;
+  top: 80%;
+  left: 47%;
+  width: 9%;
+  height: 95%;
+  border-radius: 5px;
+  background: #a05e67;
+}
+
+.decor-toy-box {
+  bottom: 12%;
+  left: 38%;
+  width: 24%;
+  height: 12%;
+  border: 4px solid #b27139;
+  border-radius: 8px;
+  background: repeating-linear-gradient(90deg, #f28b78 0 25%, #f7d467 25% 50%, #72c5a3 50% 75%, #6faee2 75% 100%);
+}
+
+.decor-toy-box::before {
+  content: "◆  ●  ▲";
+  position: absolute;
+  top: -30px;
+  left: 9%;
+  color: #7357ad;
+  font-size: clamp(15px, 2.8vw, 28px);
+}
+
+.decor-rainbow-piano {
+  right: 2%;
+  bottom: 13%;
+  width: 35%;
+  height: 24%;
+  border: 5px solid #665282;
+  border-radius: 18px 18px 6px 6px;
+  background: #a78bd3;
+}
+
+.decor-rainbow-piano::before {
+  content: "";
+  position: absolute;
+  right: 6%;
+  bottom: 20%;
+  left: 6%;
+  height: 29%;
+  border: 3px solid #665282;
+  background: repeating-linear-gradient(90deg, #fff 0 10%, #4e425f 10% 13%);
+}
+
+.decor-rainbow-piano::after {
+  content: "♫";
+  position: absolute;
+  top: 8%;
+  left: 43%;
+  color: #ffe17a;
+  font-size: 35px;
+}
+
+.decor-star-tent {
+  bottom: 12%;
+  left: 2%;
+  width: 33%;
+  height: 34%;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  background: #f2a4b8;
+}
+
+.decor-star-tent::before {
+  content: "";
+  position: absolute;
+  top: 36%;
+  left: 36%;
+  width: 28%;
+  height: 64%;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  background: #8d6689;
+}
+
+.decor-star-tent::after {
+  content: "★";
+  position: absolute;
+  top: 30%;
+  left: 45%;
+  color: #fff3a5;
+  font-size: 27px;
+}
+
+.decor-flower-mirror {
+  top: 15%;
+  right: 5%;
+  width: 18%;
+  height: 31%;
+  border: 10px solid #f4a4b6;
+  border-radius: 50% 50% 42% 42%;
+  background: #bfe7f2;
+  box-shadow: 0 0 0 5px #ffe690;
+}
+
+.room-pet {
+  position: absolute;
+  z-index: 6;
+  top: var(--pet-y);
+  bottom: auto;
+  left: var(--pet-x);
+  width: clamp(185px, 31%, 270px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) scale(var(--pet-scale));
+  transform-origin: center bottom;
+  cursor: grab;
+  touch-action: none;
+}
+
+.room-pet.has-motion {
+  transition: top 2.4s ease-in-out, left 2.4s ease-in-out, transform 2.4s ease-in-out;
+}
+
+.room-pet.is-dragging {
+  z-index: 8;
+  cursor: grabbing;
+  transition: none;
+}
+
+.room-pet img,
+.shop-pet-stage img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: normal;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.pet-ground-shadow {
+  position: absolute;
+  z-index: 0;
+  right: 19%;
+  bottom: 8%;
+  left: 19%;
+  height: 10%;
+  border-radius: 50%;
+  background: rgba(62, 68, 78, 0.17);
+  filter: blur(4px);
+}
+
+.room-pet.faces-left img,
+.room-pet.faces-left .pet-wear {
+  transform: scaleX(-1);
+}
+
+.room-pet.is-walking img,
+.room-pet.is-walking .pet-wear {
+  animation: pet-step 360ms ease-in-out infinite alternate;
+}
+
+@keyframes pet-step {
+  to { translate: 0 -7px; }
+}
+
+.pet-wear {
+  position: absolute;
+  z-index: 3;
+  display: none;
+  pointer-events: none;
+}
+
+.pet-outfit[data-item]:not([data-item=""]) {
+  top: 55%;
+  left: 50%;
+  display: block;
+  width: 47%;
+  height: 27%;
+  border: 3px solid rgba(91, 72, 90, 0.42);
+  border-radius: 42% 42% 28% 28%;
+  transform: translateX(-50%);
+}
+
+.pet-outfit[data-item="berry-shirt"] { background: #ef6f7e; box-shadow: inset 0 8px 0 #ffd6db; }
+.pet-outfit[data-item="berry-shirt"]::after { content: "•••"; position: absolute; inset: 30% 0 auto; color: #fff1a2; text-align: center; }
+.pet-outfit[data-item="sky-overalls"] { background: #73b7df; box-shadow: inset 0 -8px 0 #4b8ebc; }
+.pet-outfit[data-item="sky-overalls"]::before { content: ""; position: absolute; top: -29%; right: 13%; left: 13%; height: 42%; border-right: 8px solid #4b8ebc; border-left: 8px solid #4b8ebc; }
+.pet-outfit[data-item="star-pajamas"] { background: #a58bd4; }
+.pet-outfit[data-item="star-pajamas"]::after { content: "★  ★"; position: absolute; inset: 28% 0 auto; color: #ffe894; text-align: center; }
+.pet-outfit[data-item="lemon-raincoat"] { background: #f8d75f; box-shadow: inset 0 0 0 6px #fff1a7; }
+.pet-outfit[data-item="lemon-raincoat"]::after { content: "●\A●"; white-space: pre; position: absolute; top: 13%; left: 47%; color: #e88a4c; font-size: 9px; line-height: 1.4; }
+
+.pet-headwear[data-item]:not([data-item=""]) { display: block; }
+.pet-headwear[data-item="bow"] { top: 12%; left: 50%; width: 14%; height: 12%; border-radius: 50%; background: #f25f7c; transform: translateX(-50%) rotate(-8deg); box-shadow: -18px 1px 0 4px #ff87a0, 18px 1px 0 4px #ff87a0; }
+.pet-headwear[data-item="cap"] { top: 13%; left: 50%; width: 45%; height: 17%; border: 3px solid #316f9c; border-radius: 55% 55% 20% 20%; background: #5da5d2; transform: translateX(-50%) rotate(-3deg); }
+.pet-headwear[data-item="cap"]::after { content: ""; position: absolute; right: -24%; bottom: -17%; width: 42%; height: 32%; border-radius: 50%; background: #316f9c; }
+.pet-headwear[data-item="flower"] { top: 22%; left: 65%; width: 12%; height: 12%; border-radius: 50%; background: #f5c84d; box-shadow: 0 -11px 0 #fff09b, 0 11px 0 #fff09b, 11px 0 0 #fff09b, -11px 0 0 #fff09b; }
+.pet-headwear[data-item="crown"] { top: 8%; left: 50%; width: 39%; height: 24%; background: #ffd85d; clip-path: polygon(0 82%, 6% 18%, 29% 53%, 50% 0, 72% 53%, 95% 18%, 100% 82%); transform: translateX(-50%) rotate(-2deg); filter: drop-shadow(0 4px 0 #d9a53b); }
+
+.pet-facewear[data-item="glasses"] { top: 39%; left: 50%; display: block; width: 54%; height: 19%; border-top: 4px solid #5b5571; transform: translateX(-50%); }
+.pet-facewear[data-item="glasses"]::before,
+.pet-facewear[data-item="glasses"]::after { content: ""; position: absolute; top: -7px; width: 35%; aspect-ratio: 1; border: 5px solid #5b5571; border-radius: 50%; background: rgba(216,242,255,.16); }
+.pet-facewear[data-item="glasses"]::before { left: 0; }
+.pet-facewear[data-item="glasses"]::after { right: 0; }
+
+.pet-neckwear[data-item="scarf"] { top: 61%; left: 50%; display: block; width: 47%; height: 11%; border: 3px solid #b85666; border-radius: 50%; background: repeating-linear-gradient(90deg, #f47d8e 0 13px, #ffd666 13px 26px, #69bfa3 26px 39px, #6da7dc 39px 52px); transform: translateX(-50%) rotate(2deg); }
+.pet-neckwear[data-item="scarf"]::after { content: ""; position: absolute; top: 60%; right: 8%; width: 18%; height: 145%; border-radius: 4px; background: #f47d8e; transform: rotate(-12deg); }
+
+.room-pet[data-pet="snake"] .pet-outfit,
+.room-pet[data-pet="parrot"] .pet-outfit { top: 52%; width: 34%; height: 22%; }
+.room-pet[data-pet="capybara"] .pet-outfit { left: 55%; width: 42%; }
+
+.room-change-pet,
+.room-play-hint {
+  position: absolute;
+  z-index: 10;
+  min-height: 34px;
+  padding: 7px 11px;
+  border: 2px solid #ffffff;
+  border-radius: 7px;
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 4px 0 rgba(54,84,102,.13);
+  color: #496579;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.room-change-pet { top: 16px; left: 16px; cursor: pointer; }
+.room-play-hint { right: 14px; bottom: 12px; pointer-events: none; }
+.pet-room:has(.room-lock:not([hidden])) .room-play-hint { display: none; }
+
+.pet-speech {
+  top: 18px;
+  right: 18px;
+  max-width: 220px;
+}
+
+.room-lock {
+  inset: auto auto 14px 14px;
+  width: min(280px, calc(100% - 28px));
+  pointer-events: none;
+}
+
+.pet-customizer {
+  display: block;
+  overflow: visible;
+}
+
+.room-preview {
+  min-height: 650px;
+  border-bottom: 1px solid var(--kid-line);
+}
+
+.shop-pet-stage {
+  top: var(--pet-y);
+  bottom: auto;
+  left: var(--pet-x);
+  width: clamp(185px, 27%, 260px);
+  transform: translate(-50%, -50%) scale(var(--pet-scale));
+}
+
+.shop-panel {
+  background: #ffffff;
+}
+
+.shop-tabs {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.shop-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.shop-item {
+  min-height: 122px;
+  border-color: #d6e2e8;
+  background: #ffffff;
+  box-shadow: 0 5px 0 rgba(56,85,105,.08);
+}
+
+.shop-item-icon {
+  width: 62px;
+  height: 62px;
+  border: 2px solid rgba(255,255,255,.8);
+  background: #eaf4fb;
+  box-shadow: 0 4px 0 rgba(49,84,106,.1);
+  color: #4d86b8;
+}
+
+.catalog-wear { background: #ffe1e5; color: #d85168; }
+.catalog-food { background: #fff1bd; }
+.catalog-furniture { background: #dff3e8; color: #327a63; }
+.catalog-room { background: #e4e1fa; color: #6f62a8; }
+
+.shop-item button {
+  min-height: 34px;
+  font-size: 12px;
+}
+
+.parent-gate-panel {
+  width: min(430px, 100%);
+}
+
+.parent-gate-body {
+  display: grid;
+  gap: 12px;
+  justify-items: stretch;
+  padding: 28px;
+  text-align: center;
+}
+
+.parent-gate-lock {
+  display: grid;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 4px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff0bd;
+  color: #d66c39;
+}
+
+.parent-gate-lock svg {
+  width: 36px;
+  height: 36px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.parent-gate-body label {
+  color: var(--kid-muted);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.parent-gate-body input {
+  width: min(220px, 100%);
+  height: 58px;
+  margin: 0 auto;
+  border: 2px solid #b8d9ee;
+  border-radius: 8px;
+  background: #f6fbff;
+  color: var(--kid-ink);
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 12px;
+  text-align: center;
+  outline: none;
+}
+
+.parent-gate-body input:focus {
+  border-color: #4d86b8;
+  box-shadow: 0 0 0 4px rgba(77,134,184,.14);
+}
+
+.parent-gate-body p {
+  min-height: 20px;
+  margin: 0;
+  color: #4c7a66;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.parent-gate-body p.is-error { color: #d25748; }
+.parent-gate-body .parent-save { min-height: 50px; }
+
+@media (max-width: 920px) {
+  .home-band {
+    display: block;
+  }
+
+  .pet-room,
+  .room-preview {
+    min-height: 560px;
+  }
+
+  .shop-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .pet-room,
+  .room-preview {
+    min-height: min(58dvh, 500px);
+  }
+
+  .pet-room {
+    border-radius: 8px 8px 0 0;
+  }
+
+  .room-world::before,
+  .room-world::after {
+    height: 38%;
+  }
+
+  .room-sky {
+    bottom: 38%;
+  }
+
+  .room-pet,
+  .shop-pet-stage {
+    width: clamp(160px, 48%, 210px);
+  }
+
+  .room-window {
+    top: 60px;
+    left: 18px;
+    width: 92px;
+    height: 82px;
+  }
+
+  .room-window-flower {
+    width: 94px;
+    height: 94px;
+  }
+
+  .room-window-rain {
+    width: 122px;
+    height: 82px;
+  }
+
+  .pet-speech {
+    top: 17px;
+    right: 12px;
+    max-width: 176px;
+  }
+
+  .room-change-pet {
+    top: 13px;
+    left: 12px;
+  }
+
+  .room-play-hint {
+    right: 9px;
+    bottom: 9px;
+    min-height: 28px;
+    padding: 5px 8px;
+    font-size: 9px;
+  }
+
+  .room-lock {
+    right: auto;
+    bottom: 10px;
+    left: 10px;
+    width: min(250px, calc(100% - 20px));
+  }
+
+  .daily-mission {
+    border-radius: 0 0 8px 8px;
+  }
+
+  .shop-panel {
+    padding-top: 12px;
+  }
+
+  .shop-tabs {
+    position: sticky;
+    top: 70px;
+    z-index: 12;
+    margin: 0 10px;
+    border: 1px solid #d9e4e9;
+    border-radius: 8px;
+    background: rgba(255,255,255,.96);
+    box-shadow: 0 5px 16px rgba(49,79,100,.09);
+  }
+
+  .shop-tabs button {
+    min-width: 0;
+    padding: 0 3px;
+    font-size: 12px;
+  }
+
+  .shop-grid {
+    grid-auto-columns: min(78vw, 300px);
+  }
+
+  .shop-item {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+
+  .decor-rainbow-shelf,
+  .decor-flower-mirror {
+    top: 22%;
+  }
+
+  .parent-gate-panel {
+    align-self: center;
+    border-radius: 8px;
+  }
+
+  .parent-gate-body {
+    padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+  }
+}
+
 body:not(.legacy-mode) {
   background: #f7f4ec;
 }
@@ -2432,4 +3248,259 @@ body:not(.legacy-mode) {
   .postcard-card {
     scroll-snap-align: start;
   }
+}
+
+/* Keep the V13 room rules last so legacy card styles cannot shrink the scene. */
+.home-band {
+  grid-template-columns: minmax(0, 1.5fr) minmax(330px, 0.5fr);
+  min-height: 650px;
+}
+
+.pet-room.room-world,
+.room-preview.room-world {
+  position: relative;
+  min-height: 650px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #d9f2fb;
+}
+
+.pet-room.room-world::before,
+.pet-room.room-world::after,
+.room-preview.room-world::before,
+.room-preview.room-world::after {
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 36%;
+  opacity: 1;
+}
+
+.pet-room.room-world::before,
+.room-preview.room-world::before {
+  z-index: 1;
+  border-top: 6px solid rgba(255,255,255,.92);
+}
+
+.pet-room.room-world::after,
+.room-preview.room-world::after {
+  z-index: 2;
+  border-top: 0;
+}
+
+.room-world .room-sky {
+  position: absolute;
+  inset: 0 0 36%;
+  z-index: 0;
+}
+
+.room-world .room-window {
+  z-index: 2;
+  overflow: visible;
+}
+
+.room-world .room-window-sunny { background: #8fd8f2; }
+
+.room-world .room-window-flower {
+  width: 136px;
+  height: 136px;
+  border-width: 9px;
+  border-color: #fff4b8;
+  border-radius: 50%;
+  background: #a5e2f3;
+}
+
+.room-world .room-window-rain {
+  width: 180px;
+  height: 118px;
+  border-color: #c6e8ff;
+  background: repeating-linear-gradient(115deg, #a8d4ea 0 11px, #8fc7df 11px 14px);
+}
+
+.room-world .room-window-night {
+  border-color: #fff3b1;
+  background: #4b568e;
+}
+
+.room-world .room-rug { z-index: 2; }
+.room-world .room-decor-layer { z-index: 3; }
+
+.room-world .room-pet,
+.room-world .shop-pet-stage {
+  position: absolute;
+  z-index: 6;
+  top: var(--pet-y);
+  bottom: auto;
+  left: var(--pet-x);
+  width: clamp(185px, 31%, 270px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) scale(var(--pet-scale));
+  transform-origin: center bottom;
+}
+
+.room-world .room-pet img,
+.room-world .shop-pet-stage img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: normal;
+}
+
+.room-world .room-pet.has-motion,
+.room-world .shop-pet-stage.has-motion {
+  transition: top 2.4s ease-in-out, left 2.4s ease-in-out, transform 2.4s ease-in-out;
+}
+
+.room-world .pet-ground-shadow { display: block; }
+
+.pet-customizer {
+  display: block;
+  overflow: visible;
+}
+
+.room-preview.room-world {
+  border-bottom: 1px solid var(--kid-line);
+}
+
+.shop-pet-stage.room-pet {
+  width: clamp(185px, 27%, 260px);
+}
+
+.shop-tabs {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.shop-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.room-world .room-lock {
+  inset: auto auto 14px 14px;
+  width: min(280px, calc(100% - 28px));
+}
+
+@media (max-width: 920px) {
+  .home-band { display: block; }
+
+  .pet-room.room-world,
+  .room-preview.room-world {
+    min-height: 560px;
+  }
+
+  .shop-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 620px) {
+  .home-band {
+    display: block;
+    min-height: 0;
+  }
+
+  .pet-room.room-world,
+  .room-preview.room-world {
+    min-height: min(58dvh, 500px);
+  }
+
+  .pet-room.room-world::before,
+  .pet-room.room-world::after,
+  .room-preview.room-world::before,
+  .room-preview.room-world::after {
+    height: 38%;
+  }
+
+  .room-world .room-sky { bottom: 38%; }
+
+  .room-world .room-pet,
+  .room-world .shop-pet-stage {
+    top: var(--pet-y);
+    bottom: auto;
+    left: var(--pet-x);
+    width: clamp(160px, 48%, 210px);
+    transform: translate(-50%, -50%) scale(var(--pet-scale));
+  }
+
+  .room-world .room-window {
+    top: 60px;
+    left: 18px;
+    width: 92px;
+    height: 82px;
+  }
+
+  .room-world .room-window-flower {
+    width: 94px;
+    height: 94px;
+  }
+
+  .room-world .room-window-rain {
+    width: 122px;
+    height: 82px;
+  }
+
+  .room-world .room-furniture { display: none; }
+
+  .shop-tabs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0 10px;
+  }
+
+  .shop-grid {
+    display: grid;
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: min(78vw, 300px);
+  }
+
+  .room-world .room-lock {
+    inset: auto auto 10px 10px;
+    width: min(250px, calc(100% - 20px));
+  }
+}
+
+.pet-outfit[data-item]:not([data-item=""]) {
+  top: 67%;
+  width: 40%;
+  height: 18%;
+  border-radius: 18% 18% 28% 28%;
+  clip-path: polygon(14% 0, 33% 8%, 50% 0, 67% 8%, 86% 0, 100% 25%, 87% 44%, 82% 100%, 18% 100%, 13% 44%, 0 25%);
+}
+
+.room-pet[data-pet="rabbit"] .pet-outfit,
+.room-pet[data-pet="kitten"] .pet-outfit,
+.room-pet[data-pet="sadcat"] .pet-outfit,
+.room-pet[data-pet="puppy"] .pet-outfit,
+.room-pet[data-pet="hamster"] .pet-outfit,
+.room-pet[data-pet="redpanda"] .pet-outfit,
+.room-pet[data-pet="penguin"] .pet-outfit,
+.room-pet[data-pet="panda"] .pet-outfit {
+  top: 72%;
+  height: 17%;
+}
+
+.dictation-pet[data-pet] .pet-outfit {
+  top: 70%;
+  width: 42%;
+  height: 17%;
+}
+
+.friendship-meter {
+  top: 14px;
+  right: auto;
+  bottom: auto;
+  left: 50%;
+  width: min(210px, 56%);
+  transform: translateX(-50%);
+}
+
+@media (max-width: 620px) {
+  .room-world .room-pet,
+  .room-world .shop-pet-stage {
+    width: clamp(170px, 55%, 225px);
+  }
+}
+
+.quick-strip {
+  display: none;
 }

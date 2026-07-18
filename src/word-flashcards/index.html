@@ -11,7 +11,7 @@
   <title>词语星球 - 宠物听写</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-  <link rel="stylesheet" href="kid-game.css?v=12">
+  <link rel="stylesheet" href="kid-game.css?v=15">
   <style>
     :root {
       --bg: #f5f7f8;
@@ -903,13 +903,21 @@
     <main class="kid-main">
       <section class="kid-screen is-active" id="homeScreen" data-screen="home">
         <div class="home-band">
-          <div class="pet-room" id="petRoom">
-            <div class="room-window" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-            <div class="room-furniture" id="roomFurniture" aria-hidden="true"></div>
-            <button class="pet-stage" id="changePetButton" type="button" aria-label="更换小伙伴">
-              <img id="homePetImage" src="assets/pets/rabbit.webp" alt="我的小伙伴">
-              <span class="pet-accessory" id="homePetAccessory" aria-hidden="true"></span>
-            </button>
+          <div class="pet-room room-world" id="petRoom" data-wall="cloud" data-floor="honey" data-window="sunny">
+            <div class="room-sky" aria-hidden="true"></div>
+            <div class="room-window room-window-sunny" id="homeRoomWindow" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            <div class="room-rug" id="homeRoomRug" aria-hidden="true"></div>
+            <div class="room-decor-layer" id="homeRoomDecor" aria-hidden="true"></div>
+            <button class="room-change-pet" id="changePetButton" type="button">换伙伴</button>
+            <div class="pet-stage room-pet" id="homePetStage" role="button" tabindex="0" aria-label="拖动小伙伴在房间里走动">
+              <span class="pet-ground-shadow" aria-hidden="true"></span>
+              <img id="homePetImage" src="assets/pets-v2/rabbit.png" alt="我的小伙伴" draggable="false">
+              <span class="pet-wear pet-outfit" id="homePetOutfit" aria-hidden="true"></span>
+              <span class="pet-wear pet-headwear" id="homePetHeadwear" aria-hidden="true"></span>
+              <span class="pet-wear pet-facewear" id="homePetFacewear" aria-hidden="true"></span>
+              <span class="pet-wear pet-neckwear" id="homePetNeckwear" aria-hidden="true"></span>
+            </div>
+            <span class="room-play-hint">拖一拖，它会跟着你走</span>
             <div class="pet-speech" id="petSpeech">先给我取个名字吧！</div>
             <div class="room-lock" id="roomLock">
               <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
@@ -971,8 +979,9 @@
         </div>
         <div class="dictation-workspace">
           <div class="dictation-pet">
-            <img id="dictationPetImage" src="assets/pets/rabbit.webp" alt="陪你听写的小伙伴">
-            <span class="pet-accessory" id="dictationPetAccessory" aria-hidden="true"></span>
+            <img id="dictationPetImage" src="assets/pets-v2/rabbit.png" alt="陪你听写的小伙伴">
+            <span class="pet-wear pet-outfit" id="dictationPetOutfit" aria-hidden="true"></span>
+            <span class="pet-wear pet-headwear" id="dictationPetHeadwear" aria-hidden="true"></span>
             <p id="dictationPetText">我会一直陪着你。</p>
           </div>
           <div class="dictation-board">
@@ -1008,17 +1017,27 @@
           <button class="secondary-tool" id="chooseAnotherPetButton" type="button">更换伙伴</button>
         </header>
         <div class="pet-customizer">
-          <div class="room-preview" id="shopRoomPreview">
-            <div class="room-window" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-            <div class="room-furniture" id="shopRoomFurniture" aria-hidden="true"></div>
-            <div class="shop-pet-stage"><img id="shopPetImage" src="assets/pets/rabbit.webp" alt="正在装扮的小伙伴"><span class="pet-accessory" id="shopPetAccessory" aria-hidden="true"></span></div>
+          <div class="room-preview room-world" id="shopRoomPreview" data-wall="cloud" data-floor="honey" data-window="sunny">
+            <div class="room-sky" aria-hidden="true"></div>
+            <div class="room-window room-window-sunny" id="shopRoomWindow" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            <div class="room-rug" id="shopRoomRug" aria-hidden="true"></div>
+            <div class="room-decor-layer" id="shopRoomDecor" aria-hidden="true"></div>
+            <div class="shop-pet-stage room-pet" id="shopPetStage">
+              <span class="pet-ground-shadow" aria-hidden="true"></span>
+              <img id="shopPetImage" src="assets/pets-v2/rabbit.png" alt="正在装扮的小伙伴" draggable="false">
+              <span class="pet-wear pet-outfit" id="shopPetOutfit" aria-hidden="true"></span>
+              <span class="pet-wear pet-headwear" id="shopPetHeadwear" aria-hidden="true"></span>
+              <span class="pet-wear pet-facewear" id="shopPetFacewear" aria-hidden="true"></span>
+              <span class="pet-wear pet-neckwear" id="shopPetNeckwear" aria-hidden="true"></span>
+            </div>
             <div class="friendship-meter"><span>亲密值</span><div><i id="friendshipBar"></i></div><strong id="friendshipValue">0</strong></div>
           </div>
           <div class="shop-panel">
             <div class="shop-tabs" role="tablist">
-              <button class="is-active" type="button" data-shop="clothes">衣服</button>
+              <button class="is-active" type="button" data-shop="wear">穿搭</button>
               <button type="button" data-shop="food">粮食</button>
               <button type="button" data-shop="furniture">家具</button>
+              <button type="button" data-shop="room">房间</button>
             </div>
             <div class="shop-grid" id="shopGrid"></div>
           </div>
@@ -1031,7 +1050,7 @@
         </header>
         <div class="travel-map">
           <div class="map-route" aria-hidden="true"></div>
-          <div class="travel-pet-wrap" id="travelPetWrap"><img id="travelPetImage" src="assets/pets/rabbit.webp" alt="旅行中的小伙伴"></div>
+          <div class="travel-pet-wrap" id="travelPetWrap"><img id="travelPetImage" src="assets/pets-v2/rabbit.png" alt="旅行中的小伙伴"></div>
           <div class="destination-pin pin-one">雪山</div>
           <div class="destination-pin pin-two">海岛</div>
           <div class="destination-pin pin-three">森林</div>
@@ -1257,7 +1276,7 @@
   <div class="kid-modal" id="parentModal" hidden>
     <section class="kid-modal-panel parent-panel" role="dialog" aria-modal="true" aria-labelledby="parentTitle">
       <header class="kid-modal-heading">
-        <div><span>FOR GROWN-UPS</span><h2 id="parentTitle">家长区</h2><p>设置今天的任务，也可以核对真实的听写过程。</p></div>
+        <div><span>FOR GROWN-UPS</span><h2 id="parentTitle">家长区</h2><p>每日任务由家长密码保护，孩子无法自行减少单词数。</p></div>
         <button class="round-tool" id="closeParentButton" type="button" aria-label="关闭家长区">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
         </button>
@@ -1295,6 +1314,26 @@
     </section>
   </div>
 
+  <div class="kid-modal" id="parentGateModal" hidden>
+    <section class="kid-modal-panel parent-gate-panel" role="dialog" aria-modal="true" aria-labelledby="parentGateTitle">
+      <header class="kid-modal-heading">
+        <div><span>ONLY FOR GROWN-UPS</span><h2 id="parentGateTitle">设置家长密码</h2><p id="parentGateCopy">请设置一个孩子不知道的四位数字。以后修改每日单词数，都需要先输入它。</p></div>
+        <button class="round-tool" id="closeParentGateButton" type="button" aria-label="关闭家长验证">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        </button>
+      </header>
+      <div class="parent-gate-body">
+        <div class="parent-gate-lock" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+        </div>
+        <label for="parentPinInput">四位家长密码</label>
+        <input id="parentPinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="••••">
+        <p id="parentGateMessage" aria-live="polite"></p>
+        <button class="parent-save" id="confirmParentGateButton" type="button">设置密码并进入</button>
+      </div>
+    </section>
+  </div>
+
   <div class="kid-modal" id="todayReportModal" hidden>
     <section class="kid-modal-panel report-panel" role="dialog" aria-modal="true" aria-labelledby="todayReportTitle">
       <header class="kid-modal-heading">
@@ -1310,7 +1349,7 @@
   <div class="kid-modal reward-modal" id="missionCompleteModal" hidden>
     <section class="kid-modal-panel reward-panel" role="dialog" aria-modal="true" aria-labelledby="rewardTitle">
       <div class="reward-burst" aria-hidden="true"><span>★</span><span>★</span><span>★</span></div>
-      <img id="rewardPetImage" src="assets/pets/rabbit.webp" alt="为你庆祝的小伙伴">
+      <img id="rewardPetImage" src="assets/pets-v2/rabbit.png" alt="为你庆祝的小伙伴">
       <span class="reward-kicker">TODAY COMPLETE</span>
       <h2 id="rewardTitle">今天的任务完成啦！</h2>
       <p id="rewardSummary">10 个单词都已经认真拼完。</p>
@@ -2391,6 +2430,6 @@
       });
     }
   </script>
-  <script src="kid-game.js?v=12"></script>
+  <script src="kid-game.js?v=15"></script>
 </body>
 </html>
