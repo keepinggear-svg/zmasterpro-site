@@ -12,7 +12,7 @@ SRC = ROOT / "src"
 CONTENT = ROOT / "content"
 DIST = ROOT / "dist"
 BASE_URL = "https://www.zmasterpro.com"
-ASSET_VERSION = "20260719-brand-refresh"
+ASSET_VERSION = "20260719-cinematic-studio"
 BRAND = "支先森制造"
 BRAND_ALT = "ZMaster Pro"
 DEFAULT_CONTACT = {
@@ -358,6 +358,10 @@ def layout(page: dict, main: str, extra_ld: list[dict] | None = None) -> str:
     if extra_ld:
         ld_items.extend(extra_ld)
     keywords = ", ".join(KEYWORDS + page.get("keywords", []))
+    body_class = h(page.get("body_class", ""))
+    script_tags = "\n  ".join(
+        f'<script src="{h(src)}?v={ASSET_VERSION}" defer></script>' for src in page.get("scripts", [])
+    )
     return f"""<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -385,7 +389,7 @@ def layout(page: dict, main: str, extra_ld: list[dict] | None = None) -> str:
   <link rel="stylesheet" href="/assets/styles.css?v={ASSET_VERSION}">
   {json_ld_tags(ld_items)}
 </head>
-<body>
+<body class="{body_class}">
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="/" aria-label="支先森制造首页">
@@ -407,6 +411,7 @@ def layout(page: dict, main: str, extra_ld: list[dict] | None = None) -> str:
     <a href="/contact">微信报价</a>
     <a href="tel:{CONTACT["phone"]}">电话咨询</a>
   </div>
+  {script_tags}
 </body>
 </html>
 """
@@ -488,6 +493,8 @@ def home_page() -> dict:
         "title": "支先森制造｜街舞机构与街头品牌定制生产伙伴｜ZMaster Pro",
         "description": "支先森制造服务街舞机构、赛事活动与街头品牌，支持机构校服、老师工作服、赛事服、T 恤卫衣、潮牌小单、品牌周边和服装 OEM/ODM，从款式企划、打样到大货生产一站式交付。",
         "keywords": ["街舞校服定制", "潮牌小单定制", "队服定制", "班服定制"],
+        "body_class": "studio-home",
+        "scripts": ["/assets/studio-home.js"],
     }
 
 
@@ -534,43 +541,70 @@ def render_home() -> str:
     )
     page = home_page()
     main = f"""<main>
-  <section class="hero">
-    <img class="hero-backdrop" src="/images/hero-production.jpg" alt="支先森制造街舞机构服装定制、打样与生产现场" width="1672" height="941" fetchpriority="high" decoding="async">
-    <div class="hero-shade" aria-hidden="true"></div>
-    <div class="container hero-stage">
-      <div class="hero-copy">
+  <section class="cinematic-hero" aria-labelledby="home-hero-title">
+    <div class="cinematic-frame">
+      <video class="cinematic-video" autoplay loop muted playsinline preload="metadata" poster="/images/hero-production.jpg" aria-hidden="true">
+        <source src="/media/zmaster-cinematic-studio.mp4" type="video/mp4">
+      </video>
+      <div class="cinematic-noise" aria-hidden="true"></div>
+      <div class="cinematic-shade" aria-hidden="true"></div>
+      <div class="cinematic-topline" aria-hidden="true">
+        <span>服装定制与制造服务</span>
+        <span>DESIGN · SAMPLE · PRODUCTION · DELIVERY</span>
+      </div>
+      <div class="cinematic-bottom">
+        <div class="cinematic-title" data-reveal>
         {breadcrumbs_html("/", "首页")}
-        <span class="eyebrow">ZMASTER PRO · NANCHANG</span>
-        <h1><span>支先森制造</span><small>街舞机构与街头品牌<br>定制生产伙伴</small></h1>
-        <p class="lead">支先森制造把街舞审美、服装工艺和工厂交付放到一条链路里，服务机构校服、赛事活动、老师团队、潮牌小单、IP 周边和长期补货项目。</p>
-        <div class="hero-actions">
-          <a class="button" href="/contact">发需求快速报价</a>
-          <a class="button secondary" href="/cases">先看案例方向</a>
+          <span class="cinematic-kicker">支先森制造 · 定制服装解决方案</span>
+          <h1 id="home-hero-title"><span>支先森</span><span>制造<sup>®</sup></span></h1>
         </div>
-        <div class="hero-proof">
-          <div><strong>机构 · 赛事 · 潮牌 · 周边</strong><span>四类真实业务场景</span></div>
-          <div><strong>企划 · 打样 · 生产 · 补货</strong><span>一条完整交付链路</span></div>
-          <div><strong>南昌制造 · 服务全国</strong><span>线上沟通与项目交付</span></div>
+        <div class="cinematic-intro" data-reveal>
+          <p>我们为街舞机构、企业团队、学校社团和品牌方提供服装定制、来图打样、生产交付与工艺建议服务。</p>
+          <div class="cinematic-actions">
+            <a class="cinematic-primary" href="/contact"><span>获取定制方案</span><i aria-hidden="true">&rarr;</i></a>
+            <a class="cinematic-secondary" href="/cases">查看案例方向</a>
+          </div>
         </div>
       </div>
     </div>
   </section>
-  <section class="brand-ribbon" aria-label="支先森制造品牌识别">
-    <div class="container brand-ribbon-inner">
-      <img src="/images/brand/zmaster-logo-lockup.png" alt="支先森制造 ZMASTER 品牌标志" width="3212" height="850">
-      <p>设计建议 · 来图打样 · 工艺落地 · 稳定交付</p>
+  <section class="cinematic-about" aria-labelledby="cinematic-about-title">
+    <div class="container cinematic-about-inner">
+      <span class="cinematic-label">支先森讲定制 / BRAND APPROACH</span>
+      <h2 id="cinematic-about-title" data-reveal>我们不是单纯卖衣服，<em>而是把设计、工艺和交付<br>做成一套服装定制解决方案。</em></h2>
+      <p class="cinematic-about-text" data-progress-text>街舞机构需要校服既有统一识别，也愿意让老师和孩子长期穿；品牌客户需要从一张设计图走到可打样、可生产、可补货。支先森制造把这些容易出错的细节提前拆清楚，让一件衣服从想法真正走到交付。</p>
     </div>
   </section>
-  <section class="section light studio-section">
-    <div class="container">
-      <div class="section-title">
-        <h2>不是简单印 logo，而是做一套可传播的穿着系统</h2>
-        <p>街舞机构要的是统一形象、招生展示、活动识别和长期补货；潮牌客户要的是款式感、工艺稳定和小单试错。我们把这两种需求放在同一个生产体系里解决。</p>
+  <section class="cinematic-capabilities" aria-labelledby="capabilities-title">
+    <div class="cinematic-capabilities-noise" aria-hidden="true"></div>
+    <div class="container cinematic-capabilities-inner">
+      <div class="cinematic-capabilities-title" data-reveal>
+        <span>从模糊需求到可以生产的方案</span>
+        <h2 id="capabilities-title">懂场景，也懂服装落地。<small>让每一个确认动作都为最终交付服务。</small></h2>
       </div>
-      <div class="grid three">
-        {card("机构品牌感", "让校服、老师服、赛事服和周边形成同一套视觉语言，日常训练也能成为品牌曝光。")}
-        {card("工艺落地力", "根据预算和穿着强度选择纯棉、速干、高克重、丝网印、刺绣、烫画、包装辅料。")}
-        {card("长期补货思路", "保留版型、颜色、尺码、图案和工艺资料，让机构复购不从零开始沟通。")}
+      <div class="cinematic-feature-grid">
+        <article class="cinematic-feature cinematic-feature-visual" data-card-reveal>
+          <img src="/images/case-collection.jpg" alt="支先森制造服装系列与品牌周边方向" width="1254" height="1254" loading="lazy" decoding="async">
+          <div><span>00 / CREATIVE CANVAS</span><h3>从品牌和穿着场景开始。</h3></div>
+        </article>
+        <article class="cinematic-feature" data-card-reveal>
+          <span class="cinematic-feature-number">01</span>
+          <h3>需求与款式企划</h3>
+          <ul><li>客户场景与目标人群</li><li>品类、版型与配色方向</li><li>数量、预算与交期拆解</li><li>图案位置与尺码体系</li></ul>
+          <a href="/services">了解定制服务 <span aria-hidden="true">&nearr;</span></a>
+        </article>
+        <article class="cinematic-feature" data-card-reveal>
+          <span class="cinematic-feature-number">02</span>
+          <h3>打样与工艺确认</h3>
+          <ul><li>面料克重与手感选择</li><li>印花、刺绣与辅料建议</li><li>样衣上身与细节修改</li><li>大货标准确认与留档</li></ul>
+          <a href="/oem-odm">查看 OEM / ODM <span aria-hidden="true">&nearr;</span></a>
+        </article>
+        <article class="cinematic-feature" data-card-reveal>
+          <span class="cinematic-feature-number">03</span>
+          <h3>生产与持续交付</h3>
+          <ul><li>排期、跟单与节点沟通</li><li>大货生产与质量检查</li><li>分包、物流与交付确认</li><li>款式资料与长期补货</li></ul>
+          <a href="#custom-process">查看交付流程 <span aria-hidden="true">&nearr;</span></a>
+        </article>
       </div>
     </div>
   </section>
@@ -594,7 +628,7 @@ def render_home() -> str:
       </div>
     </div>
   </section>
-  <section class="section light">
+  <section class="section light" id="custom-process">
     <div class="container">
       <div class="section-title"><h2>从一句需求，到能交付的大货方案</h2><p>把模糊想法变成可报价、可打样、可生产的清单，减少来回沟通和踩坑成本。</p></div>
       <div class="process-timeline">{process_cards}</div>
@@ -1093,6 +1127,7 @@ def build() -> None:
     (DIST / "assets").mkdir(parents=True)
     (DIST / "images").mkdir(parents=True)
     shutil.copy2(SRC / "styles.css", DIST / "assets" / "styles.css")
+    shutil.copy2(SRC / "studio-home.js", DIST / "assets" / "studio-home.js")
     image_paths = [
         path
         for path in (SRC / "images").rglob("*")
@@ -1102,6 +1137,11 @@ def build() -> None:
         target = DIST / "images" / image_path.relative_to(SRC / "images")
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(image_path, target)
+    media_paths = [path for path in (SRC / "media").rglob("*") if path.is_file()]
+    for media_path in media_paths:
+        target = DIST / "media" / media_path.relative_to(SRC / "media")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(media_path, target)
 
     write(page_file("/"), render_home())
     write(page_file("/about"), render_about())
