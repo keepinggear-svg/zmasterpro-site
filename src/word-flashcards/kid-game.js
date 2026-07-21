@@ -133,6 +133,7 @@
     dictationMeaning: $("dictationMeaning"),
     wordRewardBadge: $("wordRewardBadge"),
     dictationInput: $("dictationInput"),
+    dictationLetterGrid: $("dictationLetterGrid"),
     dictationFeedback: $("dictationFeedback"),
     speakWordButton: $("speakWordButton"),
     submitDictationButton: $("submitDictationButton"),
@@ -869,6 +870,178 @@
     renderPetEverywhere();
   }
 
+  function getDictationLetterSlots() {
+    return [...dom.dictationLetterGrid.querySelectorAll(".dictation-letter-slot")];
+  }
+
+  function syncDictationAnswer() {
+    const entry = getCurrentDailyWord();
+    if (!entry) {
+      dom.dictationInput.value = "";
+      return "";
+    }
+    const slots = getDictationLetterSlots();
+    let slotIndex = 0;
+    dom.dictationInput.value = Array.from(entry.word).map((character) => {
+      if (!/[a-z0-9]/i.test(character)) return character;
+      const value = slots[slotIndex]?.value || "";
+      slotIndex += 1;
+      return value;
+    }).join("");
+    return dom.dictationInput.value;
+  }
+
+  function focusDictationSlot(preferWrong = false) {
+    const slots = getDictationLetterSlots();
+    const target = preferWrong
+      ? slots.find((slot) => slot.classList.contains("is-letter-wrong"))
+      : slots.find((slot) => !slot.value);
+    const fallback = slots[slots.length - 1];
+    const next = target || fallback;
+    next?.focus();
+    next?.select();
+  }
+
+  function clearDictationSlots() {
+    getDictationLetterSlots().forEach((slot) => {
+      slot.value = "";
+      slot.disabled = false;
+      slot.classList.remove("is-letter-wrong");
+    });
+    dom.dictationInput.value = "";
+    dom.dictationLetterGrid.classList.remove("is-wrong", "is-right");
+  }
+
+  function setDictationSlotsDisabled(disabled) {
+    getDictationLetterSlots().forEach((slot) => { slot.disabled = disabled; });
+  }
+
+  function markWrongDictationSlots(entry) {
+    const targetLetters = Array.from(entry.word.toLowerCase()).filter((character) => /[a-z0-9]/.test(character));
+    const slots = getDictationLetterSlots();
+    slots.forEach((slot, index) => {
+      slot.classList.toggle("is-letter-wrong", slot.value.toLowerCase() !== targetLetters[index]);
+    });
+    dom.dictationLetterGrid.classList.add("is-wrong");
+    focusDictationSlot(true);
+  }
+
+  function handleLetterSlotBeforeInput(event) {
+    const inserted = String(event.data || "").replace(/[^a-z0-9]/gi, "");
+    if (["insertFromPaste", "insertFromDrop"].includes(event.inputType) || inserted.length > 1) {
+      event.preventDefault();
+    }
+  }
+
+  function handleLetterSlotInput(event) {
+    const slot = event.currentTarget;
+    const letter = (slot.value.match(/[a-z0-9]/i) || [""])[0].toLowerCase();
+    slot.value = letter;
+    slot.classList.remove("is-letter-wrong");
+    if (!dom.dictationLetterGrid.querySelector(".is-letter-wrong")) {
+      dom.dictationLetterGrid.classList.remove("is-wrong");
+    }
+    syncDictationAnswer();
+    if (!letter) return;
+    const slots = getDictationLetterSlots();
+    const index = slots.indexOf(slot);
+    const next = slots[index + 1];
+    if (next) {
+      next.focus();
+      next.select();
+    }
+  }
+
+  function handleLetterSlotKeydown(event) {
+    const slot = event.currentTarget;
+    const slots = getDictationLetterSlots();
+    const index = slots.indexOf(slot);
+    if (event.key === "Enter") {
+      event.preventDefault();
+      submitDictation();
+      return;
+    }
+    if (event.key === "Backspace" && !slot.value && index > 0) {
+      event.preventDefault();
+      slots[index - 1].value = "";
+      slots[index - 1].classList.remove("is-letter-wrong");
+      if (!dom.dictationLetterGrid.querySelector(".is-letter-wrong")) {
+        dom.dictationLetterGrid.classList.remove("is-wrong");
+      }
+      slots[index - 1].focus();
+      syncDictationAnswer();
+      return;
+    }
+    if (event.key === "ArrowLeft" && index > 0) {
+      event.preventDefault();
+      slots[index - 1].focus();
+      return;
+    }
+    if (event.key === "ArrowRight" && index < slots.length - 1) {
+      event.preventDefault();
+      slots[index + 1].focus();
+    }
+  }
+
+  function buildDictationLetterGrid(word) {
+    dom.dictationLetterGrid.replaceChildren();
+    const characters = Array.from(String(word));
+    const totalLetters = characters.filter((character) => /[a-z0-9]/i.test(character)).length;
+    const rows = [];
+    let row = [];
+    let rowLetterCount = 0;
+    characters.forEach((character) => {
+      if (/[a-z0-9]/i.test(character) && rowLetterCount >= 8) {
+        rows.push(row);
+        row = [];
+        rowLetterCount = 0;
+      }
+      row.push(character);
+      if (/[a-z0-9]/i.test(character)) rowLetterCount += 1;
+    });
+    if (row.length) rows.push(row);
+
+    let letterIndex = 0;
+    rows.forEach((charactersInRow) => {
+      const rowElement = document.createElement("div");
+      rowElement.className = "dictation-letter-row";
+      charactersInRow.forEach((character) => {
+        if (!/[a-z0-9]/i.test(character)) {
+          const separator = document.createElement("span");
+          separator.className = `dictation-letter-separator${/\s/.test(character) ? " is-space" : ""}`;
+          separator.textContent = /\s/.test(character) ? "" : character;
+          separator.setAttribute("aria-hidden", "true");
+          rowElement.append(separator);
+          return;
+        }
+        const slot = document.createElement("input");
+        slot.type = "text";
+        slot.className = "dictation-letter-slot";
+        slot.maxLength = 1;
+        slot.inputMode = "text";
+        slot.pattern = "[A-Za-z0-9]";
+        slot.autocomplete = "off";
+        slot.autocapitalize = "none";
+        slot.spellcheck = false;
+        slot.setAttribute("autocorrect", "off");
+        slot.setAttribute("aria-autocomplete", "none");
+        slot.setAttribute("data-1p-ignore", "true");
+        slot.setAttribute("data-lpignore", "true");
+        slot.setAttribute("enterkeyhint", letterIndex === totalLetters - 1 ? "done" : "next");
+        slot.setAttribute("aria-label", `第 ${letterIndex + 1} 个字母，共 ${totalLetters} 个`);
+        slot.addEventListener("beforeinput", handleLetterSlotBeforeInput);
+        slot.addEventListener("input", handleLetterSlotInput);
+        slot.addEventListener("keydown", handleLetterSlotKeydown);
+        slot.addEventListener("paste", (event) => event.preventDefault());
+        slot.addEventListener("drop", (event) => event.preventDefault());
+        slot.addEventListener("focus", () => slot.select());
+        rowElement.append(slot);
+        letterIndex += 1;
+      });
+      dom.dictationLetterGrid.append(rowElement);
+    });
+  }
+
   function startOrResumeMission() {
     ensureToday();
     if (state.daily.finished) {
@@ -884,13 +1057,13 @@
     saveState();
     navigate("dictation");
     if (window.innerWidth > 620) {
-      window.setTimeout(() => dom.dictationInput.focus(), 150);
+      window.setTimeout(() => focusDictationSlot(), 150);
     }
   }
 
-  function resetDictationFields() {
-    dom.dictationInput.value = "";
-    dom.dictationInput.classList.remove("is-wrong", "is-right");
+  function resetDictationFields(entry) {
+    buildDictationLetterGrid(entry.word);
+    clearDictationSlots();
     dom.dictationFeedback.textContent = "";
     dom.dictationFeedback.classList.remove("is-wrong", "is-right");
     dom.revealedAnswer.hidden = true;
@@ -926,7 +1099,7 @@
     const progress = getWordProgress(entry.id);
     dom.wordRewardBadge.textContent = progress.status === "learning" ? `巩固后可得 ${reward} 积分` : `掌握可得 ${reward} 积分`;
     dom.dictationPetText.textContent = state.daily.activeAttempt.revealed ? "看过答案也没关系，现在自己写对它。" : "慢慢想，我会一直陪着你。";
-    resetDictationFields();
+    resetDictationFields(entry);
     if (state.daily.activeAttempt.revealed) {
       dom.revealedAnswer.hidden = false;
       dom.revealedWord.textContent = entry.word;
@@ -963,11 +1136,12 @@
     if (isAdvancing) return;
     const entry = getCurrentDailyWord();
     if (!entry) return;
-    const answer = dom.dictationInput.value.trim();
-    if (!answer) {
-      dom.dictationFeedback.textContent = "先把你想到的拼法写下来。";
+    const emptyCount = getDictationLetterSlots().filter((slot) => !slot.value).length;
+    const answer = syncDictationAnswer().trim();
+    if (emptyCount > 0) {
+      dom.dictationFeedback.textContent = `还差 ${emptyCount} 个字母，写完再检查。`;
       dom.dictationFeedback.className = "dictation-feedback is-wrong";
-      dom.dictationInput.focus();
+      focusDictationSlot();
       return;
     }
 
@@ -981,12 +1155,11 @@
       });
       markCurrentAsMistake(entry);
       saveState();
-      dom.dictationInput.classList.add("is-wrong");
+      markWrongDictationSlots(entry);
       dom.dictationFeedback.textContent = "这次还没写对，记录下来了。再试一次吧。";
       dom.dictationFeedback.className = "dictation-feedback is-wrong";
       dom.dictationPetText.textContent = "不会没关系，认真再想一次就好。";
       playTone("wrong");
-      dom.dictationInput.select();
       return;
     }
 
@@ -994,8 +1167,9 @@
     dom.submitDictationButton.disabled = true;
     dom.revealDictationButton.disabled = true;
     dom.speakWordButton.disabled = true;
-    dom.dictationInput.classList.remove("is-wrong");
-    dom.dictationInput.classList.add("is-right");
+    dom.dictationLetterGrid.classList.remove("is-wrong");
+    dom.dictationLetterGrid.classList.add("is-right");
+    setDictationSlotsDisabled(true);
     const attempt = state.daily.activeAttempt;
     const firstTry = attempt.wrongAttempts === 0 && !attempt.revealed;
     const previousProgress = getWordProgress(entry.id);
@@ -1075,7 +1249,7 @@
       } else {
         renderDictation();
         if (window.innerWidth > 620) {
-          dom.dictationInput.focus();
+          focusDictationSlot();
         }
       }
     }, 260);
@@ -1120,12 +1294,11 @@
     saveState();
     dom.revealedAnswer.hidden = false;
     dom.revealedWord.textContent = entry.word;
-    dom.dictationInput.value = "";
-    dom.dictationInput.classList.remove("is-wrong", "is-right");
+    clearDictationSlots();
     dom.dictationFeedback.textContent = "看答案已经记入记录。现在请自己重新拼写。";
     dom.dictationFeedback.className = "dictation-feedback is-wrong";
     dom.dictationPetText.textContent = "看清楚了吗？现在靠自己写一遍。";
-    dom.dictationInput.focus();
+    focusDictationSlot();
   }
 
   function speakCurrentWord() {
@@ -1651,9 +1824,6 @@
     dom.dictationBoard.addEventListener("pointerup", endCardSwipe);
     dom.dictationBoard.addEventListener("pointercancel", endCardSwipe);
     dom.speakWordButton.addEventListener("click", speakCurrentWord);
-    dom.dictationInput.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") submitDictation();
-    });
     document.querySelectorAll("[data-shop]").forEach((button) => {
       button.addEventListener("click", () => {
         activeShopTab = button.dataset.shop;

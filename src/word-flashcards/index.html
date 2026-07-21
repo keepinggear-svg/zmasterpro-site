@@ -20,8 +20,8 @@
   <title>词语星球 - 宠物听写</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-  <link rel="stylesheet" href="kid-game.css?v=25">
-  <link rel="stylesheet" href="word-packs.css?v=25">
+  <link rel="stylesheet" href="kid-game.css?v=28">
+  <link rel="stylesheet" href="word-packs.css?v=28">
   <style>
     :root {
       --bg: #f5f7f8;
@@ -1015,10 +1015,11 @@
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4Z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18 6a9 9 0 0 1 0 12"></path></svg>
               听一听
             </button>
-            <label class="dictation-input-wrap">
-              <span class="sr-only">输入英文单词</span>
-              <input id="dictationInput" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="在这里拼写">
-            </label>
+            <div class="dictation-input-wrap">
+              <span class="sr-only" id="dictationInputLabel">逐个输入英文字母</span>
+              <input id="dictationInput" type="hidden" autocomplete="off">
+              <div class="dictation-letter-grid" id="dictationLetterGrid" role="group" aria-labelledby="dictationInputLabel"></div>
+            </div>
             <p class="dictation-feedback" id="dictationFeedback" aria-live="polite"></p>
             <div class="revealed-answer" id="revealedAnswer" hidden>
               <span>答案</span><strong id="revealedWord"></strong><small>现在看着它，自己重新拼写一遍才能过关。</small>
@@ -2609,8 +2610,8 @@
       });
     }
   </script>
-  <script src="word-packs.js?v=25"></script>
-  <script src="kid-game.js?v=25"></script>
-  <script src="pwa-install.js?v=25"></script>
+  <script src="word-packs.js?v=28"></script>
+  <script src="kid-game.js?v=28"></script>
+  <script src="pwa-install.js?v=28"></script>
 </body>
 </html>
