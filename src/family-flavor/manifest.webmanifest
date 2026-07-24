@@ -1,0 +1,50 @@
+{
+  "id": "/family-flavor/",
+  "name": "FAMILY FLAVOR 家味点菜",
+  "short_name": "家味点菜",
+  "description": "孩子看图点菜，家长完成搭配，一起记住家的味道。",
+  "start_url": "/family-flavor/",
+  "scope": "/family-flavor/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#fbf5e9",
+  "theme_color": "#153a32",
+  "categories": ["food", "lifestyle", "family"],
+  "lang": "zh-CN",
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "开始点菜",
+      "short_name": "点菜",
+      "url": "/family-flavor/#menu",
+      "icons": [
+        {
+          "src": "./icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
