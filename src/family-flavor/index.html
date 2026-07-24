@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="FAMILY FLAVOR 家味点菜：孩子看图点菜，家长完成搭配，记录一家人的真实味道。">
+  <meta name="theme-color" content="#153a32">
+  <meta name="application-name" content="FAMILY FLAVOR">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="家味点菜">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="format-detection" content="telephone=no">
+  <title>FAMILY FLAVOR｜家味点菜</title>
+  <link rel="canonical" href="https://www.zmasterpro.com/family-flavor/">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="icon" href="./icons/icon-192.png" sizes="192x192">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="FAMILY FLAVOR｜家味点菜">
+  <meta property="og:description" content="今晚看图点菜，明天照着做。一家人的菜单、做法与成长记录。">
+  <meta property="og:url" content="https://www.zmasterpro.com/family-flavor/">
+  <meta property="og:image" content="https://www.zmasterpro.com/family-flavor/og-family-flavor.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="./styles.css?v=1">
+</head>
+<body>
+  <div class="page-loader" id="pageLoader" aria-live="polite">
+    <span class="loader-seal">家</span>
+    <strong>正在摆好今晚的菜单</strong>
+  </div>
+
+  <div class="app-shell" id="appShell" hidden>
+    <header class="topbar">
+      <a class="brand-lockup" href="./" aria-label="FAMILY FLAVOR 首页">
+        <span class="brand-seal">家</span>
+        <span><b>FAMILY FLAVOR</b><small>家味点菜 · BY ZMASTER</small></span>
+      </a>
+      <div class="topbar-actions">
+        <button class="sync-pill" id="syncButton" type="button" title="检查菜单更新">
+          <i></i><span id="syncLabel">菜单已同步</span>
+        </button>
+        <button class="install-button" id="installAppButton" type="button">添加到桌面</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <img class="hero-image" src="./dishes/078.jpg" alt="白灼虾家庭餐桌" width="900" height="900">
+        <div class="hero-shade"></div>
+        <div class="hero-content">
+          <div class="hero-kicker"><span>今晚点 · 明天做</span><i></i><span id="dishCountLabel">151 道家庭菜单</span></div>
+          <h1>今天吃什么，<br><em>让家人自己选。</em></h1>
+          <p>孩子负责看图点菜，爸爸妈妈负责营养搭配。每一次选择，都是家的味道。</p>
+          <div class="hero-actions">
+            <a href="#menu">开始点菜</a>
+            <button type="button" data-open-order>查看已选 <span data-order-count>0</span></button>
+          </div>
+        </div>
+        <div class="hero-note">
+          <span>本周推荐</span>
+          <strong>酸汤鱼 · 咖喱虾 · 口水鸡</strong>
+          <small>向左滑，看看更多</small>
+        </div>
+      </section>
+
+      <section class="featured-section" aria-labelledby="featuredTitle">
+        <div class="section-heading">
+          <div><span>CHEF'S CHOICE</span><h2 id="featuredTitle">今晚优先看</h2></div>
+          <p>先挑最想吃的，搭配交给大人</p>
+        </div>
+        <div class="featured-row" id="featuredRow" aria-live="polite"></div>
+      </section>
+
+      <section class="menu-section" id="menu" aria-labelledby="menuTitle">
+        <div class="section-heading menu-heading">
+          <div><span>FAMILY MENU</span><h2 id="menuTitle">全部菜单</h2></div>
+          <b id="resultCount">151 道</b>
+        </div>
+
+        <div class="menu-tools" id="menuTools">
+          <label class="search-box">
+            <span aria-hidden="true"></span>
+            <input id="searchInput" type="search" inputmode="search" autocomplete="off" placeholder="搜索想吃的菜、菜系或分类" aria-label="搜索菜品">
+            <button id="clearSearchButton" type="button" aria-label="清空搜索" hidden>×</button>
+          </label>
+          <div class="filter-row" id="categoryFilters" aria-label="菜品分类"></div>
+          <div class="filter-row cuisine-row" id="cuisineFilters" aria-label="菜系风味"></div>
+          <div class="quick-filters">
+            <button id="childFriendlyButton" type="button" aria-pressed="false"><span>亲</span>只看孩子友好</button>
+            <button id="ratedButton" type="button" aria-pressed="false"><span>♥</span>只看喜欢的</button>
+          </div>
+        </div>
+
+        <div class="dish-grid" id="dishGrid" aria-live="polite"></div>
+        <div class="empty-state" id="emptyState" hidden>
+          <span class="empty-seal">空</span>
+          <h3>暂时没找到这道菜</h3>
+          <p>换一个关键词，或者看看全部菜单。</p>
+          <button id="resetFiltersButton" type="button">查看全部菜单</button>
+        </div>
+      </section>
+
+      <section class="family-rule">
+        <div class="family-rule-seal">家</div>
+        <div>
+          <span>FAMILY FLAVOR METHOD</span>
+          <h2>孩子选择期待，<br>大人守住结构。</h2>
+          <p>一份主食、一至两道主菜、一份蔬菜，再加一碗汤。点菜不是让孩子包办一餐，而是让他真正参与家庭生活。</p>
+        </div>
+        <ol>
+          <li><b>01</b><span>每个孩子选一道</span></li>
+          <li><b>02</b><span>大人补齐蔬菜与汤</span></li>
+          <li><b>03</b><span>吃完留下红心评价</span></li>
+        </ol>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-brand">
+        <span class="brand-seal">家</span>
+        <div><strong>FAMILY FLAVOR</strong><small>一起选 · 一起吃 · 一起记住家的味道</small></div>
+      </div>
+      <div class="footer-meta">
+        <span>支先森制造 · ZMASTER</span>
+        <span id="menuVersion">菜单持续更新</span>
+      </div>
+    </footer>
+
+    <nav class="mobile-nav" aria-label="手机端主要导航">
+      <a href="#home" class="is-active"><i class="nav-home"></i><span>首页</span></a>
+      <a href="#menu"><i class="nav-menu"></i><span>菜单</span></a>
+      <button type="button" data-open-order><i class="nav-order"></i><span>已选</span><b data-order-count>0</b></button>
+      <button type="button" id="mobileInstallButton"><i class="nav-install"></i><span>桌面</span></button>
+    </nav>
+
+    <aside class="order-dock" id="orderDock" hidden>
+      <div>
+        <span><b data-order-count>0</b> 道已选</span>
+        <small id="orderDockNames">再选一道喜欢的菜吧</small>
+      </div>
+      <button type="button" data-open-order>生成明日菜单</button>
+    </aside>
+  </div>
+
+  <div class="modal-backdrop" id="detailBackdrop" hidden>
+    <article class="detail-sheet" id="detailSheet" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+      <button class="floating-close" type="button" data-close-detail aria-label="关闭菜品详情">×</button>
+      <div class="detail-hero">
+        <img id="detailImage" src="" alt="">
+        <div class="detail-hero-overlay">
+          <div id="detailTags"></div>
+          <h2 id="detailTitle"></h2>
+          <p id="detailSummary"></p>
+        </div>
+      </div>
+      <div class="detail-content">
+        <div class="recipe-facts">
+          <div><span>用时</span><strong id="detailDuration"></strong></div>
+          <div><span>难度</span><strong id="detailDifficulty"></strong></div>
+          <div><span>适合</span><strong id="detailAudience"></strong></div>
+        </div>
+        <section>
+          <div class="detail-section-title"><span>01</span><h3>准备食材</h3></div>
+          <ul class="ingredient-list" id="detailIngredients"></ul>
+        </section>
+        <section>
+          <div class="detail-section-title"><span>02</span><h3>制作流程</h3></div>
+          <ol class="step-list" id="detailSteps"></ol>
+        </section>
+        <aside class="cooking-tip"><span>家味提醒</span><p id="detailTip"></p></aside>
+        <div class="detail-rating">
+          <span>吃完以后，给这道菜打个分</span>
+          <div id="detailRating" aria-label="红心评价"></div>
+        </div>
+      </div>
+      <div class="detail-actions">
+        <button class="secondary" type="button" data-close-detail>继续看看</button>
+        <button class="primary" id="detailSelectButton" type="button">选进明日菜单</button>
+      </div>
+    </article>
+  </div>
+
+  <div class="modal-backdrop" id="orderBackdrop" hidden>
+    <section class="order-sheet" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
+      <div class="sheet-handle"></div>
+      <header>
+        <div><span>今晚点 · 明天做</span><h2 id="orderTitle">明日菜单</h2></div>
+        <button type="button" data-close-order aria-label="关闭明日菜单">×</button>
+      </header>
+      <div class="selected-list" id="selectedList"></div>
+      <div class="order-empty" id="orderEmpty">
+        <span>选</span>
+        <strong>还没有选择菜品</strong>
+        <p>建议先让两个孩子各选一道，再由大人补蔬菜和汤。</p>
+      </div>
+      <div class="balance-card" id="balanceCard">
+        <span>家庭搭配完成度</span>
+        <div class="balance-track"><i id="balanceProgress"></i></div>
+        <p id="balanceText">还没开始搭配</p>
+      </div>
+      <div class="order-actions">
+        <button class="primary" id="copyOrderButton" type="button">复制明日菜单</button>
+        <button class="secondary" id="clearOrderButton" type="button">清空</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="installGuideModal" hidden>
+    <section class="install-modal" role="dialog" aria-modal="true" aria-labelledby="installTitle">
+      <header>
+        <div><span>像 App 一样打开</span><h2 id="installTitle">添加到手机桌面</h2></div>
+        <button id="closeInstallGuideButton" type="button" aria-label="关闭安装说明">×</button>
+      </header>
+      <p class="install-lead">添加后会在桌面生成“家味点菜”图标，不需要每次再找网址。</p>
+      <div class="install-tabs" role="tablist">
+        <button type="button" data-install-tab="ios" role="tab">iPhone / iPad</button>
+        <button type="button" data-install-tab="android" role="tab">安卓</button>
+        <button type="button" data-install-tab="huawei" role="tab">华为</button>
+      </div>
+      <div class="install-panel" data-install-panel="ios">
+        <ol><li><b>1</b><span>用 Safari 打开本页面</span></li><li><b>2</b><span>点底部“分享”按钮</span></li><li><b>3</b><span>选择“添加到主屏幕”</span></li><li><b>4</b><span>点右上角“添加”</span></li></ol>
+      </div>
+      <div class="install-panel" data-install-panel="android">
+        <ol><li><b>1</b><span>用 Chrome 或系统浏览器打开</span></li><li><b>2</b><span>点浏览器右上角菜单</span></li><li><b>3</b><span>选择“安装应用”或“添加到主屏幕”</span></li></ol>
+      </div>
+      <div class="install-panel" data-install-panel="huawei">
+        <ol><li><b>1</b><span>用华为浏览器打开本页面</span></li><li><b>2</b><span>点右下角四点菜单</span></li><li><b>3</b><span>选择“添加至桌面”并允许创建</span></li></ol>
+      </div>
+      <button class="native-install-button" id="nativeInstallButton" type="button" hidden>立即安装到桌面</button>
+      <small>如果正在微信或抖音内打开，请先点右上角，选择“在浏览器打开”。</small>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+  <script src="./app.js?v=1" defer></script>
+</body>
+</html>
