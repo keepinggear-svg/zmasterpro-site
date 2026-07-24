@@ -2,9 +2,14 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "trailingSlash": false,
-  "buildCommand": "python3 scripts/build_site.py && python3 scripts/copy_flashcards.py",
+  "buildCommand": "python3 scripts/build_site.py && python3 scripts/copy_flashcards.py && python3 scripts/copy_family_flavor.py",
   "outputDirectory": "dist",
   "redirects": [
+    {
+      "source": "/menu",
+      "destination": "/family-flavor/",
+      "permanent": true
+    },
     {
       "source": "/:path*",
       "has": [
@@ -18,6 +23,15 @@
     }
   ],
   "headers": [
+    {
+      "source": "/family-flavor/menu-data.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
     {
       "source": "/(.*)",
       "headers": [
