@@ -24,6 +24,7 @@ python3 scripts/build_site.py
 - `dist/robots.txt`
 - `dist/sitemap.xml`
 - `dist/llms.txt`
+- `dist/family-flavor/index.html`（FAMILY FLAVOR 家庭点菜 PWA）
 
 ## 内容维护
 
@@ -35,6 +36,9 @@ python3 scripts/build_site.py
 详细说明见：
 
 - `docs/网站内容维护指南.md`
+
+家庭菜单只需要维护 `content/family-flavor-menu.json`。执行构建后，
+`/family-flavor/` 会读取最新版菜单；已打开页面也会在切回前台或定时检查时同步更新。
 
 ## 本地预览
 
