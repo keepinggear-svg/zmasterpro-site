@@ -1,7 +1,8 @@
 (() => {
   "use strict";
 
-  const MENU_URL = "./menu-data.json";
+  const APP_ROOT = "/family-flavor";
+  const MENU_URL = `${APP_ROOT}/menu-data.json`;
   const SELECTED_KEY = "family-flavor-selected-v1";
   const HEART_KEY = "family-flavor-hearts-v1";
   const FILTER_KEY = "family-flavor-filter-v1";
@@ -649,7 +650,9 @@
   async function registerServiceWorker() {
     if (!("serviceWorker" in navigator)) return;
     try {
-      const registration = await navigator.serviceWorker.register("./sw.js", { scope: "./" });
+      const registration = await navigator.serviceWorker.register(`${APP_ROOT}/sw.js`, {
+        scope: `${APP_ROOT}/`
+      });
       registration.update();
     } catch (error) {
       console.warn("Service worker registration failed", error);
