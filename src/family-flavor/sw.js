@@ -1,20 +1,21 @@
-const CACHE_NAME = "family-flavor-v1";
+const CACHE_NAME = "family-flavor-v2";
+const APP_ROOT = "/family-flavor";
+const MENU_DATA = `${APP_ROOT}/menu-data.json`;
 const SHELL = [
-  "./",
-  "./index.html",
-  "./styles.css?v=1",
-  "./app.js?v=1",
-  "./manifest.webmanifest",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png",
-  "./icons/maskable-512.png",
-  "./icons/apple-touch-icon.png",
-  "./dishes/031.jpg",
-  "./dishes/063.jpg",
-  "./dishes/078.jpg",
-  "./dishes/128.jpg",
-  "./dishes/140.jpg",
-  "./dishes/151.jpg"
+  APP_ROOT,
+  `${APP_ROOT}/styles.css?v=2`,
+  `${APP_ROOT}/app.js?v=2`,
+  `${APP_ROOT}/manifest.webmanifest`,
+  `${APP_ROOT}/icons/icon-192.png`,
+  `${APP_ROOT}/icons/icon-512.png`,
+  `${APP_ROOT}/icons/maskable-512.png`,
+  `${APP_ROOT}/icons/apple-touch-icon.png`,
+  `${APP_ROOT}/dishes/031.jpg`,
+  `${APP_ROOT}/dishes/063.jpg`,
+  `${APP_ROOT}/dishes/078.jpg`,
+  `${APP_ROOT}/dishes/128.jpg`,
+  `${APP_ROOT}/dishes/140.jpg`,
+  `${APP_ROOT}/dishes/151.jpg`
 ];
 
 self.addEventListener("install", (event) => {
@@ -41,7 +42,10 @@ self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
   const url = new URL(event.request.url);
-  if (url.origin !== self.location.origin || !url.pathname.startsWith("/family-flavor")) return;
+  if (
+    url.origin !== self.location.origin ||
+    (url.pathname !== APP_ROOT && !url.pathname.startsWith(`${APP_ROOT}/`))
+  ) return;
 
   if (url.pathname.endsWith("/menu-data.json")) {
     event.respondWith(
@@ -49,11 +53,11 @@ self.addEventListener("fetch", (event) => {
         .then((response) => {
           if (response.ok) {
             const copy = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put("./menu-data.json", copy));
+            caches.open(CACHE_NAME).then((cache) => cache.put(MENU_DATA, copy));
           }
           return response;
         })
-        .catch(() => caches.match("./menu-data.json"))
+        .catch(() => caches.match(MENU_DATA))
     );
     return;
   }
@@ -63,10 +67,10 @@ self.addEventListener("fetch", (event) => {
       fetch(event.request)
         .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put("./index.html", copy));
+          caches.open(CACHE_NAME).then((cache) => cache.put(APP_ROOT, copy));
           return response;
         })
-        .catch(() => caches.match("./index.html"))
+        .catch(() => caches.match(APP_ROOT))
     );
     return;
   }
