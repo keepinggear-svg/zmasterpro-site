@@ -193,7 +193,8 @@
         !query ||
         dish.name.toLocaleLowerCase("zh-CN").includes(query) ||
         dish.category.toLocaleLowerCase("zh-CN").includes(query) ||
-        (dish.cuisine || "").toLocaleLowerCase("zh-CN").includes(query);
+        (dish.cuisine || "").toLocaleLowerCase("zh-CN").includes(query) ||
+        (dish.aliases || []).join(" ").toLocaleLowerCase("zh-CN").includes(query);
       const childMatch = !state.childOnly || dish.audience === "亲子";
       const ratedMatch = !state.ratedOnly || Number(state.hearts[dish.id] || 0) > 0;
       return categoryMatch && cuisineMatch && queryMatch && childMatch && ratedMatch;

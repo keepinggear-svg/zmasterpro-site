@@ -1,21 +1,20 @@
-const CACHE_NAME = "family-flavor-v2";
+const CACHE_NAME = "family-flavor-v3";
 const APP_ROOT = "/family-flavor";
 const MENU_DATA = `${APP_ROOT}/menu-data.json`;
 const SHELL = [
   APP_ROOT,
-  `${APP_ROOT}/styles.css?v=2`,
-  `${APP_ROOT}/app.js?v=2`,
+  `${APP_ROOT}/styles.css?v=3`,
+  `${APP_ROOT}/app.js?v=3`,
   `${APP_ROOT}/manifest.webmanifest`,
   `${APP_ROOT}/icons/icon-192.png`,
   `${APP_ROOT}/icons/icon-512.png`,
   `${APP_ROOT}/icons/maskable-512.png`,
   `${APP_ROOT}/icons/apple-touch-icon.png`,
-  `${APP_ROOT}/dishes/031.jpg`,
-  `${APP_ROOT}/dishes/063.jpg`,
-  `${APP_ROOT}/dishes/078.jpg`,
-  `${APP_ROOT}/dishes/128.jpg`,
-  `${APP_ROOT}/dishes/140.jpg`,
-  `${APP_ROOT}/dishes/151.jpg`
+  `${APP_ROOT}/dishes/153.jpg`,
+  `${APP_ROOT}/dishes/154.jpg`,
+  `${APP_ROOT}/dishes/155.jpg`,
+  `${APP_ROOT}/dishes/160.jpg`,
+  `${APP_ROOT}/dishes/163.jpg`
 ];
 
 self.addEventListener("install", (event) => {

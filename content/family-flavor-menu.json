@@ -5,7 +5,7 @@
     "owner": "支先森制造 · ZMASTER",
     "slogan": "一起选，一起吃，一起记住家的味道"
   },
-  "version": "2026-07-24T15:14:01.459Z",
+  "version": "2026-07-26T12:13:43+08:00",
   "refreshSeconds": 60,
   "maxSelections": 6,
   "categoryOrder": [
@@ -14,7 +14,7 @@
     "猪肉与排骨",
     "牛肉与羊肉",
     "鸡肉与鸭肉",
-    "鱼虾与海鲜",
+    "鱼虾蟹与水产",
     "鸡蛋与豆腐",
     "蔬菜菌菇与薯类",
     "汤羹与瓦罐",
@@ -24,17 +24,18 @@
   ],
   "cuisineOrder": [
     "全部风味",
+    "湘菜",
     "云贵川渝",
     "泰式",
     "韩式",
     "日式"
   ],
   "featuredIds": [
-    31,
-    63,
-    128,
-    140,
-    151
+    153,
+    154,
+    155,
+    160,
+    163
   ],
   "dishes": [
     {
@@ -820,11 +821,11 @@
     {
       "id": 31,
       "name": "贵州酸汤鱼",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "成人",
       "cuisine": "云贵川渝",
       "seasonal": false,
-      "featured": true,
+      "featured": false,
       "image": "/family-flavor/dishes/031.jpg",
       "summary": "云贵川渝风味，35分钟完成的鱼虾与海鲜家庭做法。",
       "duration": "35分钟",
@@ -1340,7 +1341,7 @@
     {
       "id": 51,
       "name": "泰式柠檬鱼",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "全家",
       "cuisine": "泰式",
       "seasonal": false,
@@ -1652,11 +1653,11 @@
     {
       "id": 63,
       "name": "泰式咖喱虾",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "全家",
       "cuisine": "泰式",
       "seasonal": false,
-      "featured": true,
+      "featured": false,
       "image": "/family-flavor/dishes/063.jpg",
       "summary": "泰式风味，25分钟完成的鱼虾与海鲜家庭做法。",
       "duration": "25分钟",
@@ -1834,7 +1835,7 @@
     {
       "id": 70,
       "name": "油条虾滑",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "亲子",
       "cuisine": "",
       "seasonal": false,
@@ -1860,7 +1861,7 @@
     {
       "id": 71,
       "name": "芥末虾球",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "成人",
       "cuisine": "",
       "seasonal": false,
@@ -1886,7 +1887,7 @@
     {
       "id": 72,
       "name": "爆炒鱿鱼",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "成人",
       "cuisine": "",
       "seasonal": false,
@@ -1912,7 +1913,7 @@
     {
       "id": 73,
       "name": "豆腐虾蒸蛋",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "亲子",
       "cuisine": "",
       "seasonal": false,
@@ -1938,7 +1939,7 @@
     {
       "id": 74,
       "name": "蒜蓉粉丝蒸虾",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "全家",
       "cuisine": "",
       "seasonal": false,
@@ -1964,7 +1965,7 @@
     {
       "id": 75,
       "name": "清蒸鲈鱼",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "全家",
       "cuisine": "",
       "seasonal": false,
@@ -1990,7 +1991,7 @@
     {
       "id": 76,
       "name": "水煮鱼",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "成人",
       "cuisine": "",
       "seasonal": false,
@@ -2016,7 +2017,7 @@
     {
       "id": 77,
       "name": "酸菜鱼",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "成人",
       "cuisine": "",
       "seasonal": false,
@@ -2042,7 +2043,7 @@
     {
       "id": 78,
       "name": "油焖大虾",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "全家",
       "cuisine": "",
       "seasonal": false,
@@ -2068,7 +2069,7 @@
     {
       "id": 79,
       "name": "白灼虾",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "全家",
       "cuisine": "",
       "seasonal": false,
@@ -2094,7 +2095,7 @@
     {
       "id": 80,
       "name": "椒盐虾",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "全家",
       "cuisine": "",
       "seasonal": false,
@@ -2120,7 +2121,7 @@
     {
       "id": 81,
       "name": "虾仁滑蛋",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "亲子",
       "cuisine": "",
       "seasonal": false,
@@ -2146,7 +2147,7 @@
     {
       "id": 82,
       "name": "番茄虾滑汤",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "亲子",
       "cuisine": "",
       "seasonal": false,
@@ -2172,7 +2173,7 @@
     {
       "id": 83,
       "name": "红烧鱼块",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "全家",
       "cuisine": "",
       "seasonal": false,
@@ -2198,7 +2199,7 @@
     {
       "id": 84,
       "name": "香煎带鱼",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "全家",
       "cuisine": "",
       "seasonal": false,
@@ -2224,7 +2225,7 @@
     {
       "id": 85,
       "name": "番茄鱼",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "亲子",
       "cuisine": "",
       "seasonal": false,
@@ -2250,7 +2251,7 @@
     {
       "id": 86,
       "name": "蒜蓉生蚝",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "成人",
       "cuisine": "",
       "seasonal": false,
@@ -2276,7 +2277,7 @@
     {
       "id": 87,
       "name": "花甲粉丝煲",
-      "category": "鱼虾与海鲜",
+      "category": "鱼虾蟹与水产",
       "audience": "全家",
       "cuisine": "",
       "seasonal": false,
@@ -3346,7 +3347,7 @@
       "audience": "全家",
       "cuisine": "日式",
       "seasonal": false,
-      "featured": true,
+      "featured": false,
       "image": "/family-flavor/dishes/128.jpg",
       "summary": "日式风味，35分钟完成的牛肉与羊肉家庭做法。",
       "duration": "35分钟",
@@ -3658,7 +3659,7 @@
       "audience": "成人",
       "cuisine": "",
       "seasonal": false,
-      "featured": true,
+      "featured": false,
       "image": "/family-flavor/dishes/140.jpg",
       "summary": "45分钟完成的凉菜与小吃家庭做法。",
       "duration": "45分钟",
@@ -3944,7 +3945,7 @@
       "audience": "全家",
       "cuisine": "",
       "seasonal": true,
-      "featured": true,
+      "featured": false,
       "image": "/family-flavor/dishes/151.jpg",
       "summary": "冬季温补家庭汤，白萝卜清甜，适合一家人围桌分享。",
       "duration": "80分钟",
@@ -3962,6 +3963,541 @@
         "最后加盐和白胡椒，撒香菜。"
       ],
       "tip": "盐最后放，汤更鲜；怕膻可加几粒白胡椒，不建议重香料盖味。"
+    },
+    {
+      "id": 152,
+      "name": "湘味香酥鲫鱼",
+      "category": "鱼虾蟹与水产",
+      "audience": "成人",
+      "cuisine": "湘菜",
+      "seasonal": false,
+      "featured": false,
+      "image": "/family-flavor/dishes/152.jpg",
+      "summary": "鲫鱼炸至外壳香酥，再把蒜末、青红椒和豆豉炒香后淋在鱼身上。",
+      "duration": "45分钟",
+      "difficulty": "进阶",
+      "ingredients": [
+        "鲫鱼 2条",
+        "蒜末 30克",
+        "青红椒各适量",
+        "豆豉、生抽、米酒少量"
+      ],
+      "steps": [
+        "鲫鱼处理干净，擦干水分后划刀并薄薄抹盐。",
+        "油温六成热下鱼，中火炸熟，再升高油温复炸至酥。",
+        "另起锅把蒜末、豆豉和青红椒炒香。",
+        "沿锅边加少量生抽和米酒，趁热淋在鱼身上。"
+      ],
+      "tip": "整鱼细刺多，幼儿不建议自行食用；给孩子尝味时必须由成人彻底挑刺。",
+      "aliases": [
+        "湖南香酥鲫鱼",
+        "油炸鲫鱼"
+      ]
+    },
+    {
+      "id": 153,
+      "name": "蒜香螺丝虾",
+      "category": "鱼虾蟹与水产",
+      "audience": "全家",
+      "cuisine": "",
+      "seasonal": false,
+      "featured": true,
+      "image": "/family-flavor/dishes/153.jpg",
+      "summary": "大只罗氏虾开背煎香，蒜蓉充分裹住虾肉，香而不必重辣。",
+      "duration": "30分钟",
+      "difficulty": "家常",
+      "ingredients": [
+        "罗氏虾 600克",
+        "蒜末 50克",
+        "葱花适量",
+        "生抽、蚝油、糖少量"
+      ],
+      "steps": [
+        "罗氏虾剪须开背，挑出虾线并擦干。",
+        "平底锅少油把虾两面煎至变红。",
+        "加入一半蒜末炒香，再用生抽、蚝油、糖和少量水调味。",
+        "收汁前放剩余蒜末和葱花，翻匀出锅。"
+      ],
+      "tip": "“螺丝虾”常指罗氏虾；幼儿食用需由成人完整去壳，并确认熟透。",
+      "aliases": [
+        "螺蛳虾",
+        "罗氏虾",
+        "罗氏沼虾"
+      ]
+    },
+    {
+      "id": 154,
+      "name": "葱姜帝王蟹",
+      "category": "鱼虾蟹与水产",
+      "audience": "周末",
+      "cuisine": "",
+      "seasonal": false,
+      "featured": true,
+      "image": "/family-flavor/dishes/154.jpg",
+      "summary": "蟹腿先煎后炒，葱姜香气包裹鲜甜蟹肉，适合周末家庭改善餐。",
+      "duration": "35分钟",
+      "difficulty": "进阶",
+      "ingredients": [
+        "帝王蟹腿 1份",
+        "大葱 2根",
+        "姜片 8片",
+        "淀粉、生抽、米酒少量"
+      ],
+      "steps": [
+        "蟹腿剪开关节，露肉处薄薄拍淀粉。",
+        "锅中少油把切面煎定型，盛出。",
+        "原锅炒香姜片和葱白，放回蟹腿。",
+        "烹米酒和少量生抽，焖3分钟后放葱绿翻匀。"
+      ],
+      "tip": "蟹壳尖硬，给孩子食用时由成人取出完整蟹肉，并注意甲壳类过敏。"
+    },
+    {
+      "id": 155,
+      "name": "十三香小龙虾",
+      "category": "鱼虾蟹与水产",
+      "audience": "成人",
+      "cuisine": "",
+      "seasonal": false,
+      "featured": true,
+      "image": "/family-flavor/dishes/155.jpg",
+      "summary": "夏夜热门口味，香料层次足，汁水浓郁，适合拍一桌热闹的家庭宵夜。",
+      "duration": "50分钟",
+      "difficulty": "进阶",
+      "ingredients": [
+        "小龙虾 1千克",
+        "葱姜蒜适量",
+        "十三香调料 1份",
+        "啤酒 1罐"
+      ],
+      "steps": [
+        "逐只刷洗小龙虾，剪去尖端并抽虾线。",
+        "热锅下油，炒香葱姜蒜和十三香。",
+        "放小龙虾大火翻炒至变红，倒入啤酒。",
+        "加盖焖煮15分钟，开盖收汁后静置入味。"
+      ],
+      "tip": "必须充分清洗并彻底熟透；不建议幼儿自行剥食，也不要食用死虾。"
+    },
+    {
+      "id": 156,
+      "name": "紫苏牛蛙",
+      "category": "鱼虾蟹与水产",
+      "audience": "成人",
+      "cuisine": "湘菜",
+      "seasonal": false,
+      "featured": false,
+      "image": "/family-flavor/dishes/156.jpg",
+      "summary": "牛蛙嫩滑，紫苏清香，青红椒和蒜粒带出鲜辣湘味。",
+      "duration": "35分钟",
+      "difficulty": "进阶",
+      "ingredients": [
+        "处理好的牛蛙 700克",
+        "紫苏 1把",
+        "蒜粒 30克",
+        "青红椒适量"
+      ],
+      "steps": [
+        "牛蛙斩块后用盐、白胡椒和淀粉腌10分钟。",
+        "热锅把牛蛙煎炒至表面变色。",
+        "加入蒜粒、姜片和辣椒炒香，再加少量水焖熟。",
+        "确认完全熟透后放紫苏，大火收汁。"
+      ],
+      "tip": "牛蛙必须由正规渠道购买并彻底煮熟；骨头细碎，幼儿不建议食用。"
+    },
+    {
+      "id": 157,
+      "name": "日式蛋包饭",
+      "category": "主食与早餐",
+      "audience": "亲子",
+      "cuisine": "日式",
+      "seasonal": false,
+      "featured": false,
+      "image": "/family-flavor/dishes/157.jpg",
+      "summary": "软嫩蛋皮包住番茄鸡肉炒饭，颜色明亮，适合孩子自己点单。",
+      "duration": "30分钟",
+      "difficulty": "家常",
+      "ingredients": [
+        "米饭 2碗",
+        "鸡蛋 4个",
+        "鸡腿肉 150克",
+        "洋葱、豌豆、番茄酱适量"
+      ],
+      "steps": [
+        "鸡腿肉和洋葱切小丁，先炒熟。",
+        "加入米饭、豌豆和少量番茄酱炒匀。",
+        "鸡蛋打散，小火摊成柔软蛋皮。",
+        "把炒饭放在蛋皮中间包好，淋少量番茄酱。"
+      ],
+      "tip": "孩子版番茄酱少放，蛋液需完全熟透。"
+    },
+    {
+      "id": 158,
+      "name": "芝士焗饭",
+      "category": "主食与早餐",
+      "audience": "亲子",
+      "cuisine": "",
+      "seasonal": false,
+      "featured": false,
+      "image": "/family-flavor/dishes/158.jpg",
+      "summary": "米饭铺上肉酱、蔬菜和芝士，烤到表面金黄拉丝。",
+      "duration": "35分钟",
+      "difficulty": "家常",
+      "ingredients": [
+        "米饭 2碗",
+        "肉末 150克",
+        "玉米、胡萝卜适量",
+        "马苏里拉芝士 120克"
+      ],
+      "steps": [
+        "肉末和蔬菜炒熟，少量调味。",
+        "烤碗铺米饭，再铺炒好的肉酱蔬菜。",
+        "表面均匀撒马苏里拉芝士。",
+        "200℃烤约12分钟，至芝士融化微焦。"
+      ],
+      "tip": "刚出炉的烤碗和芝士很烫，需放温后再给孩子。"
+    },
+    {
+      "id": 159,
+      "name": "奶香玉米烙",
+      "category": "凉菜与小吃",
+      "audience": "亲子",
+      "cuisine": "",
+      "seasonal": false,
+      "featured": false,
+      "image": "/family-flavor/dishes/159.jpg",
+      "summary": "甜玉米粒烙成金黄薄饼，边缘酥、里面软，是孩子容易接受的小点心。",
+      "duration": "20分钟",
+      "difficulty": "家常",
+      "ingredients": [
+        "甜玉米粒 300克",
+        "玉米淀粉 35克",
+        "糯米粉 15克",
+        "奶粉、糖少量"
+      ],
+      "steps": [
+        "玉米粒沥干，保留一点表面水分。",
+        "加入淀粉、糯米粉和少量奶粉拌匀。",
+        "平底锅薄油，把玉米粒压成均匀圆饼。",
+        "小火煎至定型，再沿锅边补少量油煎至金黄。"
+      ],
+      "tip": "整粒玉米不适合小月龄幼儿，食用时需根据咀嚼能力调整。"
+    },
+    {
+      "id": 160,
+      "name": "水果奶油蛋糕",
+      "category": "甜品与水果",
+      "audience": "亲子",
+      "cuisine": "",
+      "seasonal": false,
+      "featured": true,
+      "image": "/family-flavor/dishes/160.jpg",
+      "summary": "轻盈戚风夹层搭配淡奶油和当季水果，适合生日和家庭纪念日。",
+      "duration": "120分钟",
+      "difficulty": "进阶",
+      "ingredients": [
+        "6寸戚风蛋糕 1个",
+        "淡奶油 350克",
+        "细砂糖 25克",
+        "草莓、芒果、蓝莓适量"
+      ],
+      "steps": [
+        "戚风蛋糕完全放凉后横切成三片。",
+        "淡奶油加糖打至能稳定抹面。",
+        "逐层铺奶油和切小的水果。",
+        "完成抹面并装饰，冷藏定型1小时。"
+      ],
+      "tip": "鲜奶油蛋糕需冷藏，并尽量在24小时内吃完。"
+    },
+    {
+      "id": 161,
+      "name": "巴斯克芝士蛋糕",
+      "category": "甜品与水果",
+      "audience": "偶尔",
+      "cuisine": "",
+      "seasonal": false,
+      "featured": false,
+      "image": "/family-flavor/dishes/161.jpg",
+      "summary": "表面焦香、内部绵密，材料不复杂，适合周末一起烘焙。",
+      "duration": "70分钟",
+      "difficulty": "家常",
+      "ingredients": [
+        "奶油奶酪 350克",
+        "淡奶油 180克",
+        "鸡蛋 3个",
+        "细砂糖 70克"
+      ],
+      "steps": [
+        "奶油奶酪软化后加糖搅顺滑。",
+        "分次加入鸡蛋，再倒入淡奶油拌匀。",
+        "过筛后倒入铺油纸的6寸模具。",
+        "220℃烤约25分钟，冷却后冷藏4小时。"
+      ],
+      "tip": "属于高能量甜点，建议切小块与家人分享。"
+    },
+    {
+      "id": 162,
+      "name": "原味纸杯蛋糕",
+      "category": "甜品与水果",
+      "audience": "亲子",
+      "cuisine": "",
+      "seasonal": false,
+      "featured": false,
+      "image": "/family-flavor/dishes/162.jpg",
+      "summary": "小份量、方便拿取，适合亲子烘焙和孩子的下午点心。",
+      "duration": "45分钟",
+      "difficulty": "家常",
+      "ingredients": [
+        "鸡蛋 3个",
+        "低筋面粉 75克",
+        "牛奶 45克",
+        "玉米油 35克",
+        "细砂糖 45克"
+      ],
+      "steps": [
+        "蛋黄、牛奶和玉米油搅匀，筛入低筋面粉。",
+        "蛋白分次加糖打至小弯钩。",
+        "把蛋白霜与蛋黄糊轻柔翻拌。",
+        "装入纸杯七分满，150℃烤约25分钟。"
+      ],
+      "tip": "烤箱由成人操作；纸杯装饰需避免坚硬糖珠。"
+    },
+    {
+      "id": 163,
+      "name": "芋圆烧仙草",
+      "category": "甜品与水果",
+      "audience": "亲子",
+      "cuisine": "",
+      "seasonal": false,
+      "featured": true,
+      "image": "/family-flavor/dishes/163.jpg",
+      "summary": "彩色芋圆、烧仙草、红豆和椰奶组合，口感丰富且不需要搭配奶茶。",
+      "duration": "45分钟",
+      "difficulty": "家常",
+      "ingredients": [
+        "芋圆 250克",
+        "烧仙草 300克",
+        "蜜红豆 80克",
+        "椰奶 300毫升"
+      ],
+      "steps": [
+        "烧仙草切小块，冷藏备用。",
+        "水沸后放芋圆，浮起后再煮2分钟。",
+        "芋圆捞入凉开水，保持弹性。",
+        "碗中放烧仙草、红豆和芋圆，倒入椰奶。"
+      ],
+      "tip": "芋圆有噎食风险，幼儿不建议整颗食用；大童也需坐好慢慢咀嚼。",
+      "aliases": [
+        "芋圆甜品",
+        "烧仙草"
+      ]
+    },
+    {
+      "id": 164,
+      "name": "杨枝甘露",
+      "category": "甜品与水果",
+      "audience": "亲子",
+      "cuisine": "",
+      "seasonal": false,
+      "featured": false,
+      "image": "/family-flavor/dishes/164.jpg",
+      "summary": "芒果、西柚、西米和椰奶组成的清爽甜品，颜色明亮、拍摄效果好。",
+      "duration": "35分钟",
+      "difficulty": "家常",
+      "ingredients": [
+        "芒果 2个",
+        "西柚 半个",
+        "西米 60克",
+        "椰奶 250毫升"
+      ],
+      "steps": [
+        "西米煮至中心只剩小白点，关火焖透后过凉水。",
+        "一半芒果加椰奶打成细腻芒果浆。",
+        "另一半芒果切丁，西柚拆成小粒。",
+        "杯中放西米、芒果浆和水果，冷藏后食用。"
+      ],
+      "tip": "按芒果甜度减糖；对芒果或乳制品过敏者需替换。"
+    },
+    {
+      "id": 165,
+      "name": "双皮奶",
+      "category": "甜品与水果",
+      "audience": "亲子",
+      "cuisine": "",
+      "seasonal": false,
+      "featured": false,
+      "image": "/family-flavor/dishes/165.jpg",
+      "summary": "奶香柔滑、入口细嫩，可搭配少量红豆或水果。",
+      "duration": "45分钟",
+      "difficulty": "家常",
+      "ingredients": [
+        "全脂牛奶 500毫升",
+        "蛋清 3个",
+        "细砂糖 35克",
+        "红豆或水果少量"
+      ],
+      "steps": [
+        "牛奶小火加热后倒入碗中，静置形成奶皮。",
+        "蛋清加糖搅匀，与牛奶轻轻混合并过筛。",
+        "倒回碗中，盖保鲜膜扎孔。",
+        "水开后小火蒸15分钟，关火焖5分钟。"
+      ],
+      "tip": "蛋清需完全蒸熟；一岁以下幼儿不加蜂蜜。"
+    },
+    {
+      "id": 166,
+      "name": "原味蛋挞",
+      "category": "甜品与水果",
+      "audience": "亲子",
+      "cuisine": "",
+      "seasonal": false,
+      "featured": false,
+      "image": "/family-flavor/dishes/166.jpg",
+      "summary": "酥皮金黄、挞心嫩滑，是孩子熟悉的家庭烘焙点心。",
+      "duration": "35分钟",
+      "difficulty": "家常",
+      "ingredients": [
+        "蛋挞皮 10个",
+        "鸡蛋 2个",
+        "牛奶 160克",
+        "淡奶油 80克",
+        "糖 30克"
+      ],
+      "steps": [
+        "牛奶、淡奶油和糖搅匀。",
+        "加入鸡蛋继续搅匀并过筛。",
+        "挞水倒入蛋挞皮八分满。",
+        "200℃烤20分钟左右，表面出现焦糖斑。"
+      ],
+      "tip": "出炉后挞心温度很高，必须充分放温。"
+    },
+    {
+      "id": 167,
+      "name": "芋泥麻薯",
+      "category": "甜品与水果",
+      "audience": "亲子",
+      "cuisine": "",
+      "seasonal": false,
+      "featured": false,
+      "image": "/family-flavor/dishes/167.jpg",
+      "summary": "细腻芋泥包裹柔软麻薯，紫白配色很适合菜单和视频特写。",
+      "duration": "60分钟",
+      "difficulty": "进阶",
+      "ingredients": [
+        "荔浦芋头 400克",
+        "紫薯 80克",
+        "糯米粉 120克",
+        "牛奶、糖适量"
+      ],
+      "steps": [
+        "芋头和紫薯蒸熟，压成细腻芋泥。",
+        "糯米粉加牛奶和少量糖搅匀，蒸熟成麻薯。",
+        "麻薯稍凉后反复拉伸至柔软。",
+        "用芋泥包入小块麻薯，整形成小份。"
+      ],
+      "tip": "麻薯黏性强，有噎食风险，不建议低龄幼儿食用。"
+    },
+    {
+      "id": 168,
+      "name": "红豆小圆子",
+      "category": "甜品与水果",
+      "audience": "全家",
+      "cuisine": "",
+      "seasonal": false,
+      "featured": false,
+      "image": "/family-flavor/dishes/168.jpg",
+      "summary": "红豆沙温润，小圆子软糯，冷热都适合家庭分享。",
+      "duration": "45分钟",
+      "difficulty": "家常",
+      "ingredients": [
+        "红豆 180克",
+        "小圆子 200克",
+        "冰糖适量",
+        "桂花少量"
+      ],
+      "steps": [
+        "红豆提前浸泡，煮至软烂。",
+        "按喜好保留颗粒或打成红豆沙。",
+        "另锅煮小圆子，浮起后再煮1分钟。",
+        "把小圆子放入红豆沙，撒少量桂花。"
+      ],
+      "tip": "小圆子有噎食风险，幼儿需改成更小、更软的版本并由成人看护。"
+    },
+    {
+      "id": 169,
+      "name": "泰式芒果糯米饭",
+      "category": "甜品与水果",
+      "audience": "亲子",
+      "cuisine": "泰式",
+      "seasonal": false,
+      "featured": false,
+      "image": "/family-flavor/dishes/169.jpg",
+      "summary": "椰香糯米配成熟芒果，酸甜清爽，是很有辨识度的泰式甜品。",
+      "duration": "60分钟",
+      "difficulty": "家常",
+      "ingredients": [
+        "糯米 250克",
+        "熟芒果 2个",
+        "椰浆 250毫升",
+        "糖、盐少量"
+      ],
+      "steps": [
+        "糯米提前浸泡4小时后蒸熟。",
+        "椰浆加糖和一小撮盐加热至融化。",
+        "把大部分椰浆拌入热糯米，焖15分钟。",
+        "芒果切片，与糯米饭摆盘并淋余下椰浆。"
+      ],
+      "tip": "糯米不易消化，孩子每次少量食用。"
+    },
+    {
+      "id": 170,
+      "name": "紫薯山药糕",
+      "category": "甜品与水果",
+      "audience": "亲子",
+      "cuisine": "",
+      "seasonal": false,
+      "featured": false,
+      "image": "/family-flavor/dishes/170.jpg",
+      "summary": "紫薯和山药压成双层小方糕，颜色天然、口感软细。",
+      "duration": "45分钟",
+      "difficulty": "家常",
+      "ingredients": [
+        "紫薯 250克",
+        "铁棍山药 300克",
+        "牛奶适量",
+        "桂花少量"
+      ],
+      "steps": [
+        "紫薯和山药分别蒸熟。",
+        "各自加少量牛奶压成细腻泥。",
+        "模具先压山药泥，再压紫薯泥。",
+        "脱模切小块，表面点少量桂花。"
+      ],
+      "tip": "山药去皮时建议戴手套；幼儿份不加整粒坚果。"
+    },
+    {
+      "id": 171,
+      "name": "椰香牛奶小方",
+      "category": "甜品与水果",
+      "audience": "亲子",
+      "cuisine": "",
+      "seasonal": false,
+      "featured": false,
+      "image": "/family-flavor/dishes/171.jpg",
+      "summary": "冰凉柔软的奶冻小方裹满椰蓉，适合夏季家庭甜点。",
+      "duration": "25分钟＋冷藏",
+      "difficulty": "家常",
+      "ingredients": [
+        "牛奶 500毫升",
+        "玉米淀粉 55克",
+        "细砂糖 35克",
+        "椰蓉 60克"
+      ],
+      "steps": [
+        "牛奶、玉米淀粉和糖在锅中充分搅匀。",
+        "开小火持续搅拌，至浓稠顺滑。",
+        "倒入铺椰蓉的容器，冷藏3小时。",
+        "凝固后切小方，四面滚上椰蓉。"
+      ],
+      "tip": "对牛奶过敏者可换成适合的植物奶；切成孩子容易入口的小块。"
     }
   ]
 }
