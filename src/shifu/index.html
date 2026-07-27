@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f3f5f7">
+  <title>寻师录｜全国街舞进修地图 1.0</title>
+  <meta name="description" content="面向进阶舞者的全国寻师地图，采访并推荐值得长期跟随的独立老师与个人工作室。">
+  <meta property="og:title" content="寻师录｜全国街舞进修地图">
+  <meta property="og:description" content="去一座城，找一位真正值得长期跟随的老师。">
+  <meta property="og:url" content="https://www.zmasterpro.com/shifu/">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="/shifu/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://basemaps.cartocdn.com">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    :root {
+      --ink: #151b23;
+      --muted: #6f7884;
+      --line: rgba(21, 27, 35, .10);
+      --paper: #f5f7f8;
+      --glass: rgba(255, 255, 255, .88);
+      --blue: #1977f3;
+      --violet: #7356e8;
+      --green: #1c9a64;
+      --shadow: 0 18px 50px rgba(26, 39, 52, .14);
+      --soft-shadow: 0 8px 28px rgba(26, 39, 52, .10);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; }
+    body {
+      overflow: hidden;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC",
+        "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input { font: inherit; }
+    button { color: inherit; }
+
+    .app { position: relative; width: 100%; height: 100%; min-height: 620px; }
+    #map {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 18% 28%, rgba(126, 195, 255, .23), transparent 26%),
+        radial-gradient(circle at 76% 62%, rgba(161, 226, 187, .24), transparent 32%),
+        linear-gradient(145deg, #eef2f4 0%, #f8f9f8 52%, #edf4f3 100%);
+    }
+    #map::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(70, 87, 102, .14) 1px, transparent 1px);
+      background-size: 26px 26px;
+      opacity: .24;
+    }
+    .leaflet-container { font-family: inherit; background: #edf1f3; }
+    .leaflet-control-attribution {
+      margin: 0 10px 8px 0 !important;
+      padding: 3px 7px !important;
+      border-radius: 7px;
+      color: #7e8791;
+      background: rgba(255,255,255,.72) !important;
+      backdrop-filter: blur(10px);
+    }
+    .leaflet-control-attribution a { color: #66717e; }
+
+    .glass {
+      border: 1px solid rgba(255,255,255,.75);
+      background: var(--glass);
+      box-shadow: var(--soft-shadow);
+      backdrop-filter: blur(22px) saturate(1.25);
+      -webkit-backdrop-filter: blur(22px) saturate(1.25);
+    }
+
+    .topbar {
+      position: absolute;
+      z-index: 500;
+      top: 18px;
+      left: 18px;
+      right: 18px;
+      display: grid;
+      grid-template-columns: minmax(210px, 310px) minmax(260px, 620px) auto;
+      align-items: center;
+      gap: 12px;
+      pointer-events: none;
+    }
+    .topbar > * { pointer-events: auto; }
+
+    .brand {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 10px 13px;
+      border-radius: 18px;
+    }
+    .brand-mark {
+      display: grid;
+      flex: 0 0 42px;
+      height: 42px;
+      place-items: center;
+      border-radius: 13px;
+      color: #fff;
+      font-size: 22px;
+      font-weight: 800;
+      background: linear-gradient(145deg, #3197ff, #1264df);
+      box-shadow: 0 8px 20px rgba(20, 108, 225, .28);
+    }
+    .brand-copy { min-width: 0; }
+    .eyebrow {
+      margin: 0 0 2px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 750;
+      letter-spacing: .12em;
+      white-space: nowrap;
+    }
+    .brand h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.05;
+      letter-spacing: -.03em;
+    }
+    .version {
+      display: inline-flex;
+      margin-left: 5px;
+      padding: 2px 6px;
+      border: 1px solid rgba(25,119,243,.18);
+      border-radius: 999px;
+      color: var(--blue);
+      background: rgba(25,119,243,.08);
+      font-size: 9px;
+      letter-spacing: .02em;
+      vertical-align: 2px;
+    }
+
+    .search {
+      position: relative;
+      display: flex;
+      height: 52px;
+      align-items: center;
+      gap: 10px;
+      padding: 0 15px;
+      border-radius: 18px;
+    }
+    .search-icon {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #84909c;
+      border-radius: 50%;
+      position: relative;
+      flex: 0 0 auto;
+    }
+    .search-icon::after {
+      content: "";
+      position: absolute;
+      right: -5px;
+      bottom: -3px;
+      width: 6px;
+      height: 2px;
+      border-radius: 2px;
+      background: #84909c;
+      transform: rotate(45deg);
+    }
+    .search input {
+      min-width: 0;
+      flex: 1;
+      border: 0;
+      outline: 0;
+      color: var(--ink);
+      background: transparent;
+      font-size: 14px;
+    }
+    .search input::placeholder { color: #929ba4; }
+    .search-count {
+      flex: 0 0 auto;
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: #6f7884;
+      background: rgba(21,27,35,.055);
+      font-size: 11px;
+    }
+
+    .recommend {
+      height: 48px;
+      padding: 0 17px;
+      border: 0;
+      border-radius: 16px;
+      color: #fff;
+      background: var(--ink);
+      box-shadow: 0 10px 24px rgba(21,27,35,.20);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .panel {
+      position: absolute;
+      z-index: 450;
+      top: 88px;
+      bottom: 20px;
+      left: 18px;
+      width: min(388px, calc(100vw - 36px));
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: 24px;
+    }
+    .panel-head { padding: 19px 18px 13px; border-bottom: 1px solid var(--line); }
+    .panel-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+    .panel-title-row h2 { margin: 0 0 4px; font-size: 20px; letter-spacing: -.03em; }
+    .panel-title-row p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .live {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      color: var(--green);
+      background: rgba(28,154,100,.09);
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .live::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 4px rgba(28,154,100,.10);
+    }
+    .city-tabs {
+      display: flex;
+      gap: 7px;
+      margin-top: 15px;
+      padding-bottom: 2px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .city-tabs::-webkit-scrollbar { display: none; }
+    .chip {
+      flex: 0 0 auto;
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #66717d;
+      background: rgba(255,255,255,.58);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 650;
+    }
+    .chip.active {
+      border-color: var(--ink);
+      color: #fff;
+      background: var(--ink);
+    }
+
+    .filters {
+      display: flex;
+      gap: 7px;
+      padding: 11px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .filter {
+      padding: 6px 10px;
+      border: 0;
+      border-radius: 10px;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 650;
+    }
+    .filter.active { color: var(--ink); background: rgba(21,27,35,.07); }
+    .dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-right: 5px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+    .filter[data-kind="studio"] .dot { background: var(--violet); }
+
+    .list {
+      flex: 1;
+      min-height: 0;
+      padding: 7px 9px 12px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+    .resource {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border: 0;
+      border-radius: 16px;
+      text-align: left;
+      background: transparent;
+      cursor: pointer;
+      transition: background .18s ease, transform .18s ease;
+    }
+    .resource:hover, .resource.active { background: rgba(255,255,255,.82); }
+    .resource:active { transform: scale(.985); }
+    .avatar {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 1px solid rgba(25,119,243,.14);
+      border-radius: 14px;
+      color: var(--blue);
+      background: linear-gradient(145deg, rgba(70,158,255,.16), rgba(255,255,255,.86));
+      font-size: 17px;
+      font-weight: 800;
+    }
+    .resource[data-kind="studio"] .avatar {
+      border-color: rgba(115,86,232,.14);
+      color: var(--violet);
+      background: linear-gradient(145deg, rgba(115,86,232,.15), rgba(255,255,255,.86));
+    }
+    .resource-copy { min-width: 0; }
+    .resource h3 {
+      margin: 0 0 3px;
+      overflow: hidden;
+      font-size: 13px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .resource p {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+    .tags { display: flex; gap: 4px; overflow: hidden; }
+    .tag {
+      flex: 0 0 auto;
+      padding: 3px 6px;
+      border-radius: 6px;
+      color: #626c77;
+      background: rgba(21,27,35,.055);
+      font-size: 9px;
+    }
+    .view { color: #8b949d; font-size: 10px; }
+    .empty { padding: 52px 24px; color: var(--muted); text-align: center; font-size: 13px; line-height: 1.7; }
+
+    .panel-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 15px calc(10px + env(safe-area-inset-bottom));
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 9px;
+    }
+    .panel-foot button {
+      border: 0;
+      color: var(--blue);
+      background: none;
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .detail {
+      position: absolute;
+      z-index: 520;
+      right: 18px;
+      bottom: 20px;
+      width: min(350px, calc(100vw - 36px));
+      padding: 17px;
+      border-radius: 22px;
+      transform: translateY(18px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .detail.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .detail-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .detail-kicker { margin: 0 0 4px; color: var(--blue); font-size: 10px; font-weight: 750; letter-spacing: .08em; }
+    .detail h2 { margin: 0; font-size: 20px; letter-spacing: -.03em; }
+    .close {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      color: var(--muted);
+      background: rgba(21,27,35,.06);
+      cursor: pointer;
+    }
+    .summary { margin: 13px 0; color: #57616c; font-size: 12px; line-height: 1.65; }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .detail-item { padding: 10px; border-radius: 12px; background: rgba(21,27,35,.045); }
+    .detail-label { display: block; margin-bottom: 4px; color: #9199a2; font-size: 9px; }
+    .detail-value { color: #3c4651; font-size: 10px; line-height: 1.45; }
+    .demo-note {
+      margin-top: 11px;
+      padding: 9px 10px;
+      border-radius: 10px;
+      color: #866c27;
+      background: rgba(255,196,55,.12);
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+    .map-tools {
+      position: absolute;
+      z-index: 420;
+      right: 18px;
+      top: 90px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .map-tool {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      border-radius: 13px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    .map-tool { border: 1px solid rgba(255,255,255,.78); }
+
+    .marker-shell { position: relative; width: 42px; height: 50px; }
+    .marker-shadow {
+      position: absolute;
+      left: 9px;
+      bottom: 0;
+      width: 24px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(16,28,40,.22);
+      filter: blur(3px);
+    }
+    .marker-pin {
+      position: absolute;
+      top: 0;
+      left: 3px;
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border: 3px solid #fff;
+      border-radius: 50% 50% 50% 8px;
+      color: #fff;
+      background: var(--pin);
+      box-shadow: 0 7px 18px rgba(16,28,40,.26);
+      transform: rotate(-45deg);
+    }
+    .marker-pin span { font-size: 13px; font-weight: 800; transform: rotate(45deg); }
+    .leaflet-div-icon { border: 0; background: transparent; }
+
+    .fallback-markers { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+    .fallback-marker {
+      position: absolute;
+      transform: translate(-50%, -100%);
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .fallback-marker .marker-shell { transform: scale(.92); }
+    .map-ready .fallback-markers { display: none; }
+
+    .modal {
+      position: fixed;
+      z-index: 900;
+      inset: 0;
+      display: grid;
+      padding: 18px;
+      place-items: center;
+      background: rgba(10,17,24,.42);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease;
+    }
+    .modal.show { opacity: 1; pointer-events: auto; }
+    .modal-card {
+      width: min(470px, 100%);
+      padding: 22px;
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .modal-card h2 { margin: 0 0 7px; font-size: 22px; letter-spacing: -.03em; }
+    .modal-card > p { margin: 0 0 15px; color: var(--muted); font-size: 12px; line-height: 1.65; }
+    .checklist {
+      margin: 0;
+      padding: 13px 13px 13px 31px;
+      border-radius: 14px;
+      color: #3f4954;
+      background: #f4f6f7;
+      font-size: 11px;
+      line-height: 1.9;
+    }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 15px; }
+    .modal-actions button {
+      padding: 9px 13px;
+      border: 0;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .cancel { color: #66717d; background: #eef1f3; }
+    .copy { color: #fff; background: var(--blue); }
+    .toast {
+      position: fixed;
+      z-index: 1000;
+      left: 50%;
+      bottom: 28px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(21,27,35,.92);
+      box-shadow: var(--soft-shadow);
+      font-size: 11px;
+      transform: translate(-50%, 20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: .2s ease;
+    }
+    .toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+    @media (max-width: 780px) {
+      body { overflow: auto; background: #eef2f4; }
+      .app { height: 100dvh; min-height: 660px; }
+      .topbar {
+        top: max(10px, env(safe-area-inset-top));
+        left: 10px;
+        right: 10px;
+        grid-template-columns: 1fr auto;
+        gap: 8px;
+      }
+      .brand { padding: 8px 10px; border-radius: 16px; }
+      .brand-mark { flex-basis: 36px; height: 36px; border-radius: 11px; font-size: 18px; }
+      .eyebrow { font-size: 8px; }
+      .brand h1 { font-size: 19px; }
+      .search {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        height: 44px;
+        order: 3;
+        border-radius: 15px;
+      }
+      .recommend { height: 44px; padding: 0 12px; border-radius: 14px; font-size: 11px; }
+      .panel {
+        top: auto;
+        left: 10px;
+        right: 10px;
+        bottom: max(10px, env(safe-area-inset-bottom));
+        width: auto;
+        height: 48%;
+        min-height: 305px;
+        border-radius: 22px;
+      }
+      .panel-head { padding: 14px 14px 10px; }
+      .panel-title-row h2 { font-size: 17px; }
+      .panel-title-row p { font-size: 10px; }
+      .filters { padding: 8px 14px; }
+      .list { padding-top: 4px; }
+      .map-tools { top: 119px; right: 10px; }
+      .map-tool { width: 36px; height: 36px; }
+      .detail {
+        z-index: 650;
+        left: 10px;
+        right: 10px;
+        bottom: max(10px, env(safe-area-inset-bottom));
+        width: auto;
+      }
+      .detail-grid { grid-template-columns: 1fr; }
+      .resource { padding: 8px; }
+      .panel-foot { padding-top: 8px; padding-bottom: calc(8px + env(safe-area-inset-bottom)); }
+    }
+  </style>
+</head>
+<body>
+  <main class="app" id="app">
+    <div id="map" aria-label="全国街舞进修地图"></div>
+    <div class="fallback-markers" id="fallbackMarkers" aria-label="地图坐标"></div>
+
+    <header class="topbar">
+      <div class="brand glass">
+        <div class="brand-mark" aria-hidden="true">寻</div>
+        <div class="brand-copy">
+          <p class="eyebrow">全国街舞进修地图 <span class="version">1.0 模型</span></p>
+          <h1>寻师录</h1>
+        </div>
+      </div>
+
+      <label class="search glass">
+        <span class="search-icon" aria-hidden="true"></span>
+        <input id="searchInput" type="search" placeholder="搜索城市、舞种、老师或个人工作室" aria-label="搜索老师或工作室">
+        <span class="search-count" id="searchCount">11 条</span>
+      </label>
+
+      <button class="recommend" id="recommendTop" type="button">＋ 推荐老师</button>
+    </header>
+
+    <aside class="panel glass" aria-label="寻师线索列表">
+      <div class="panel-head">
+        <div class="panel-title-row">
+          <div>
+            <h2 id="panelTitle">全国进修寻师地图</h2>
+            <p>去一座城，找一位真正值得长期跟随的老师。</p>
+          </div>
+          <span class="live">采访共建中</span>
+        </div>
+        <div class="city-tabs" id="cityTabs" aria-label="选择城市"></div>
+      </div>
+
+      <div class="filters" id="filters" aria-label="推荐对象">
+        <button class="filter active" data-kind="all" type="button">全部</button>
+        <button class="filter" data-kind="teacher" type="button"><span class="dot"></span>独立老师</button>
+        <button class="filter" data-kind="studio" type="button"><span class="dot"></span>个人工作室</button>
+      </div>
+
+      <div class="list" id="resourceList"></div>
+
+      <div class="panel-foot">
+        <span>演示数据 · 采访核验后才正式发布</span>
+        <button id="recommendBottom" type="button">推荐老师 / 工作室 →</button>
+      </div>
+    </aside>
+
+    <section class="detail glass" id="detail" aria-live="polite">
+      <div class="detail-top">
+        <div>
+          <p class="detail-kicker" id="detailKicker"></p>
+          <h2 id="detailName"></h2>
+        </div>
+        <button class="close" id="detailClose" type="button" aria-label="关闭详情">×</button>
+      </div>
+      <p class="summary" id="detailSummary"></p>
+      <div class="detail-grid">
+        <div class="detail-item"><span class="detail-label">城市与区域</span><span class="detail-value" id="detailCity"></span></div>
+        <div class="detail-item"><span class="detail-label">舞种与方向</span><span class="detail-value" id="detailStyles"></span></div>
+        <div class="detail-item"><span class="detail-label">更适合</span><span class="detail-value" id="detailFit"></span></div>
+        <div class="detail-item"><span class="detail-label">进修方式</span><span class="detail-value" id="detailPath"></span></div>
+      </div>
+      <div class="demo-note">当前为产品结构演示。真实老师与工作室必须完成采访、资料核验和口碑确认后才会正式收录。</div>
+    </section>
+
+    <div class="map-tools" aria-label="地图控制">
+      <button class="map-tool glass" id="zoomIn" type="button" aria-label="放大地图">＋</button>
+      <button class="map-tool glass" id="zoomOut" type="button" aria-label="缩小地图">−</button>
+      <button class="map-tool glass" id="locate" type="button" aria-label="定位到我">◎</button>
+    </div>
+  </main>
+
+  <div class="modal" id="recommendModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <h2 id="modalTitle">推荐一位值得长期跟随的老师</h2>
+      <p>1.0 阶段先通过人工采访与核验收集线索。把下面这份信息清单复制后，通过你收到本链接的微信发给项目发起人即可。</p>
+      <ol class="checklist">
+        <li>老师或工作室名称、所在城市与常驻授课区域</li>
+        <li>主要舞种、适合阶段、常规课 / 进阶课 / 私教安排</li>
+        <li>本人介绍、教学视频、授课片段与可公开联系方式</li>
+        <li>推荐理由，以及你与被推荐人的关系</li>
+      </ol>
+      <div class="modal-actions">
+        <button class="cancel" id="modalClose" type="button">暂时关闭</button>
+        <button class="copy" id="copyChecklist" type="button">复制推荐清单</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const cities = [
+      { name: "全国", center: [34.4, 108.9], zoom: 5 },
+      { name: "南昌", center: [28.6829, 115.8582], zoom: 12 },
+      { name: "上海", center: [31.2304, 121.4737], zoom: 11 },
+      { name: "成都", center: [30.5728, 104.0668], zoom: 11 },
+      { name: "广州", center: [23.1291, 113.2644], zoom: 11 },
+      { name: "武汉", center: [30.5928, 114.3055], zoom: 11 },
+      { name: "杭州", center: [30.2741, 120.1551], zoom: 11 },
+      { name: "北京", center: [39.9042, 116.4074], zoom: 10 }
+    ];
+
+    const resources = [
+      { id:"nc-t-01", kind:"teacher", name:"示例｜阿岚老师", identity:"独立 Popping 老师", city:"南昌", district:"东湖区", coordinates:[28.6848,115.8967], styles:["Popping","Freestyle","进阶"], summary:"演示采访型老师档案：呈现老师本人自述、教学方法、近期练习和真实授课点。", fit:"已有基础，希望提高 Freestyle 与音乐理解的学员", path:"8—12 次小班或私教训练周期", state:"已完成采访" },
+      { id:"nc-t-02", kind:"teacher", name:"示例｜北北老师", identity:"独立 Hiphop 老师", city:"南昌", district:"青山湖区", coordinates:[28.6879,115.9401], styles:["Hiphop","Groove","基础重建"], summary:"演示没有自有舞室、但可以稳定接课的优秀独立老师。", fit:"学过一段时间，想重新整理基础和身体感觉的舞者", path:"基础重建、Groove 训练、Freestyle 反馈", state:"待采访" },
+      { id:"nc-s-01", kind:"studio", name:"示例｜红谷滩个人街舞工作室", identity:"主理人制个人工作室", city:"南昌", district:"红谷滩区", coordinates:[28.6904,115.8061], styles:["Hiphop","进阶小班","主理人授课"], summary:"演示由专业老师本人长期授课的小型工作室，而不是少儿连锁机构广告。", fit:"希望固定跟随一位老师长期训练的学员", path:"常规进阶小班、阶段集训、主理人私教", state:"资料核验中" },
+      { id:"nc-s-02", kind:"studio", name:"示例｜西湖区 Freestyle 工作室", identity:"舞者共同主理工作室", city:"南昌", district:"西湖区", coordinates:[28.6611,115.8774], styles:["Popping","Locking","Cypher"], summary:"演示一个工作室如何展示主理人、师资构成和进修氛围。", fit:"想加入稳定练习社群、提高实战交流能力的舞者", path:"常规训练、主题课、开放练习与 Cypher", state:"待采访" },
+      { id:"sh-t-01", kind:"teacher", name:"示例｜Momo 老师", identity:"Waacking 独立老师", city:"上海", district:"黄浦区", coordinates:[31.2185,121.4797], styles:["Waacking","Freestyle","作品表达"], summary:"演示跨城市老师采访和进修路线。", fit:"Waacking 基础以上、希望提高个人表达的学员", path:"主题小班、作品课与短期集训", state:"待采访" },
+      { id:"sh-s-01", kind:"studio", name:"示例｜静安 Freestyle 工作室", identity:"个人工作室", city:"上海", district:"静安区", coordinates:[31.2355,121.4477], styles:["Hiphop","House","Freestyle"], summary:"演示一座城市中的专业训练据点。", fit:"成人基础以上与跨城进修舞者", path:"常规课、周末集训、外地学员短期训练", state:"资料核验中" },
+      { id:"cd-t-01", kind:"teacher", name:"示例｜小北老师", identity:"Breaking 独立老师", city:"成都", district:"武侯区", coordinates:[30.6308,104.0436], styles:["Breaking","Footwork","Battle"], summary:"演示专业舞者个人接课和跨城集训信息。", fit:"青少年及成人 Breaking 进阶", path:"Footwork 专项、体能、Battle 模拟", state:"待采访" },
+      { id:"gz-s-01", kind:"studio", name:"示例｜海珠 Popping 进修工作室", identity:"老师个人工作室", city:"广州", district:"海珠区", coordinates:[23.0944,113.3172], styles:["Popping","Animation","进修"], summary:"演示老师本人主导、以进阶训练为核心的工作室。", fit:"已有 Popping 基础、希望专项提高的舞者", path:"专项主题课、私教、外地学员周末集训", state:"待采访" },
+      { id:"wh-t-01", kind:"teacher", name:"示例｜十一老师", identity:"Hiphop 独立老师", city:"武汉", district:"武昌区", coordinates:[30.5453,114.3416], styles:["Hiphop","Party Dance","Freestyle"], summary:"演示华中城市的老师坐标与进修方向。", fit:"希望提升律动、音乐和 Freestyle 的学员", path:"常规进阶课、主题课与短期 Workshop", state:"待采访" },
+      { id:"hz-s-01", kind:"studio", name:"示例｜杭州 House 个人工作室", identity:"舞者个人工作室", city:"杭州", district:"拱墅区", coordinates:[30.3154,120.1503], styles:["House","Footwork","Club Culture"], summary:"演示细分舞种工作室的全国检索。", fit:"House 基础以上及跨城进修学员", path:"Footwork、音乐、文化与 Freestyle", state:"资料核验中" },
+      { id:"bj-t-01", kind:"teacher", name:"示例｜老林老师", identity:"Locking 独立老师", city:"北京", district:"朝阳区", coordinates:[39.9219,116.4433], styles:["Locking","Soul","文化理解"], summary:"演示资深老师的采访型人物档案。", fit:"希望系统理解 Locking 与音乐文化的进阶舞者", path:"基础重建、Solo、音乐文化与阶段复盘", state:"待采访" }
+    ];
+
+    const state = { city: "全国", kind: "all", query: "", selected: null };
+    let map = null;
+    let layer = null;
+    const markers = new Map();
+    const app = document.getElementById("app");
+    const resourceList = document.getElementById("resourceList");
+    const searchCount = document.getElementById("searchCount");
+    const panelTitle = document.getElementById("panelTitle");
+    const detail = document.getElementById("detail");
+    const toast = document.getElementById("toast");
+    let toastTimer;
+
+    function typeLabel(kind) { return kind === "teacher" ? "独立老师" : "个人工作室"; }
+    function firstName(item) { return item.name.replace("示例｜", "").slice(0, 1); }
+    function color(kind) { return kind === "teacher" ? "#1977f3" : "#7356e8"; }
+    function markerHtml(item) {
+      return `<div class="marker-shell"><div class="marker-shadow"></div><div class="marker-pin" style="--pin:${color(item.kind)}"><span>${firstName(item)}</span></div></div>`;
+    }
+    function currentItems() {
+      const query = state.query.trim().toLowerCase();
+      return resources.filter(item => {
+        const cityOk = state.city === "全国" || item.city === state.city;
+        const kindOk = state.kind === "all" || item.kind === state.kind;
+        const haystack = [item.name, item.identity, item.city, item.district, ...item.styles, item.summary].join(" ").toLowerCase();
+        return cityOk && kindOk && (!query || haystack.includes(query));
+      });
+    }
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+    function selectCity(name) {
+      state.city = name;
+      state.selected = null;
+      detail.classList.remove("show");
+      document.querySelectorAll(".chip").forEach(button => button.classList.toggle("active", button.dataset.city === name));
+      const city = cities.find(item => item.name === name);
+      panelTitle.textContent = name === "全国" ? "全国进修寻师地图" : `${name}寻师线索`;
+      if (map && city) map.flyTo(city.center, city.zoom, { duration: .7 });
+      render();
+    }
+    function selectResource(item) {
+      state.selected = item.id;
+      document.getElementById("detailKicker").textContent = `${typeLabel(item.kind)} · ${item.identity}`;
+      document.getElementById("detailName").textContent = item.name;
+      document.getElementById("detailSummary").textContent = item.summary;
+      document.getElementById("detailCity").textContent = `${item.city} · ${item.district}`;
+      document.getElementById("detailStyles").textContent = item.styles.join(" / ");
+      document.getElementById("detailFit").textContent = item.fit;
+      document.getElementById("detailPath").textContent = item.path;
+      detail.classList.add("show");
+      if (map) map.flyTo(item.coordinates, 14, { duration: .65 });
+      renderList(currentItems());
+    }
+    function renderList(items) {
+      searchCount.textContent = `${items.length} 条`;
+      if (!items.length) {
+        resourceList.innerHTML = `<div class="empty">暂时没有匹配的线索。<br>可以换一个城市、舞种或老师名字试试。</div>`;
+        return;
+      }
+      resourceList.innerHTML = items.map(item => `
+        <button class="resource ${state.selected === item.id ? "active" : ""}" data-id="${item.id}" data-kind="${item.kind}" type="button">
+          <span class="avatar">${firstName(item)}</span>
+          <span class="resource-copy">
+            <h3>${item.name}</h3>
+            <p>${typeLabel(item.kind)} · ${item.city} · ${item.district}</p>
+            <span class="tags">${item.styles.slice(0, 2).map(tag => `<span class="tag">${tag}</span>`).join("")}<span class="tag">${item.state}</span></span>
+          </span>
+          <span class="view">查看</span>
+        </button>
+      `).join("");
+      resourceList.querySelectorAll(".resource").forEach(button => {
+        button.addEventListener("click", () => selectResource(resources.find(item => item.id === button.dataset.id)));
+      });
+    }
+    function renderMarkers(items) {
+      if (!map || !layer || !window.L) return;
+      layer.clearLayers();
+      markers.clear();
+      items.forEach(item => {
+        const icon = L.divIcon({ className: "resource-pin", html: markerHtml(item), iconSize: [42, 50], iconAnchor: [21, 47] });
+        const marker = L.marker(item.coordinates, { icon, keyboard: true, title: item.name }).on("click", () => selectResource(item));
+        marker.addTo(layer);
+        markers.set(item.id, marker);
+      });
+    }
+    function render() {
+      const items = currentItems();
+      renderList(items);
+      renderMarkers(items);
+    }
+    function renderFallbackMarkers() {
+      const fallback = document.getElementById("fallbackMarkers");
+      fallback.innerHTML = resources.map(item => {
+        const left = 22 + ((item.coordinates[1] - 88) / 38) * 62;
+        const top = 22 + ((44 - item.coordinates[0]) / 24) * 54;
+        return `<button class="fallback-marker" data-id="${item.id}" style="left:${left}%;top:${top}%;border:0;background:none;padding:0" type="button" aria-label="${item.name}">${markerHtml(item)}</button>`;
+      }).join("");
+      fallback.querySelectorAll("button").forEach(button => button.addEventListener("click", () => selectResource(resources.find(item => item.id === button.dataset.id))));
+    }
+    function initMap() {
+      if (!window.L) {
+        showToast("地图服务加载较慢，已启用坐标备用展示");
+        return;
+      }
+      map = L.map("map", { zoomControl: false, attributionControl: true, minZoom: 4, maxZoom: 18 }).setView(cities[0].center, cities[0].zoom);
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+        subdomains: "abcd", maxZoom: 20,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; CARTO'
+      }).addTo(map);
+      layer = L.layerGroup().addTo(map);
+      app.classList.add("map-ready");
+      render();
+    }
+
+    document.getElementById("cityTabs").innerHTML = cities.map(city => `<button class="chip ${city.name === "全国" ? "active" : ""}" data-city="${city.name}" type="button">${city.name}</button>`).join("");
+    document.querySelectorAll(".chip").forEach(button => button.addEventListener("click", () => selectCity(button.dataset.city)));
+    document.querySelectorAll(".filter").forEach(button => button.addEventListener("click", () => {
+      state.kind = button.dataset.kind;
+      document.querySelectorAll(".filter").forEach(item => item.classList.toggle("active", item === button));
+      render();
+    }));
+    document.getElementById("searchInput").addEventListener("input", event => { state.query = event.target.value; render(); });
+    document.getElementById("detailClose").addEventListener("click", () => { state.selected = null; detail.classList.remove("show"); renderList(currentItems()); });
+    document.getElementById("zoomIn").addEventListener("click", () => map ? map.zoomIn() : showToast("备用地图模式下，请选择城市查看"));
+    document.getElementById("zoomOut").addEventListener("click", () => map ? map.zoomOut() : showToast("备用地图模式下，请选择城市查看"));
+    document.getElementById("locate").addEventListener("click", () => {
+      if (!navigator.geolocation || !map) return showToast("当前使用备用地图，暂时不能定位");
+      navigator.geolocation.getCurrentPosition(
+        position => { map.flyTo([position.coords.latitude, position.coords.longitude], 13); showToast("已经移动到你的位置"); },
+        () => showToast("没有获得定位权限，可手动选择城市"),
+        { enableHighAccuracy: true, timeout: 8000 }
+      );
+    });
+
+    const modal = document.getElementById("recommendModal");
+    const openModal = () => modal.classList.add("show");
+    const closeModal = () => modal.classList.remove("show");
+    document.getElementById("recommendTop").addEventListener("click", openModal);
+    document.getElementById("recommendBottom").addEventListener("click", openModal);
+    document.getElementById("modalClose").addEventListener("click", closeModal);
+    modal.addEventListener("click", event => { if (event.target === modal) closeModal(); });
+    document.addEventListener("keydown", event => { if (event.key === "Escape") { closeModal(); detail.classList.remove("show"); } });
+    document.getElementById("copyChecklist").addEventListener("click", async () => {
+      const text = "【寻师录推荐线索】\n1. 老师/工作室名称：\n2. 所在城市与常驻授课区域：\n3. 主要舞种与适合阶段：\n4. 常规课/进阶课/私教安排：\n5. 本人介绍与教学视频链接：\n6. 可公开联系方式：\n7. 推荐理由：\n8. 我和被推荐人的关系：";
+      try { await navigator.clipboard.writeText(text); showToast("推荐清单已复制"); }
+      catch { showToast("请长按页面文字手动复制"); }
+      closeModal();
+    });
+
+    renderFallbackMarkers();
+    render();
+    initMap();
+  </script>
+</body>
+</html>
