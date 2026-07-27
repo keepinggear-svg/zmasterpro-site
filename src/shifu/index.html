@@ -608,7 +608,7 @@
       <label class="search glass">
         <span class="search-icon" aria-hidden="true"></span>
         <input id="searchInput" type="search" placeholder="搜索城市、舞种、老师或个人工作室" aria-label="搜索老师或工作室">
-        <span class="search-count" id="searchCount">12 条</span>
+        <span class="search-count" id="searchCount">13 条</span>
       </label>
 
       <button class="recommend" id="recommendTop" type="button">＋ 推荐老师</button>
@@ -635,7 +635,7 @@
       <div class="list" id="resourceList"></div>
 
       <div class="panel-foot">
-        <span>演示数据 · 采访核验后才正式发布</span>
+        <span>真实推荐与演示资料 · 采访核验后正式标注</span>
         <button id="recommendBottom" type="button">推荐老师 / 工作室 →</button>
       </div>
     </aside>
@@ -654,6 +654,7 @@
         <div class="detail-item"><span class="detail-label">舞种与方向</span><span class="detail-value" id="detailStyles"></span></div>
         <div class="detail-item"><span class="detail-label">更适合</span><span class="detail-value" id="detailFit"></span></div>
         <div class="detail-item"><span class="detail-label">进修方式</span><span class="detail-value" id="detailPath"></span></div>
+        <div class="detail-item contact-item"><span class="detail-label">公开履历 / 待核验履历</span><span class="detail-value" id="detailResume"></span></div>
         <div class="detail-item contact-item"><span class="detail-label">公开联系与约课咨询</span><a class="detail-value" id="detailContact" target="_blank" rel="noopener noreferrer"></a></div>
       </div>
       <div class="demo-note" id="detailNote">当前为产品结构演示。真实老师与工作室必须完成采访、资料核验和口碑确认后才会正式收录。</div>
@@ -699,6 +700,7 @@
     ];
 
     const resources = [
+      { id:"nc-t-funkywill", kind:"teacher", name:"FunkyWill 阿威", identity:"Popping 专项老师", city:"南昌", district:"具体授课点需本人确认", coordinates:[28.6829,115.8582], styles:["Popping","基础班","提高班","成人课"], summary:"常驻南昌的 Popping 专项老师。推荐信息显示，他在南昌教授少儿与成人基础班、提高班，也常受全国各地 Popping 工作室邀请授课。", fit:"零基础入门、需要系统整理基础，以及希望提高 Popping 技术与表达的少儿和成人学员", path:"南昌基础班 / 提高班 / 成人课；跨城 Workshop、集训或私教需通过本人渠道确认", resume:"据推荐信息，曾担任中国少儿街舞国家队相关总教练职务；正式称谓、所属组织与任职届次待本人确认", state:"推荐信息待本人确认", real:true, verified:false, contactText:"在抖音搜索 funkywill阿威（主页待核验）", contactUrl:"https://www.douyin.com/search/funkywill%E9%98%BF%E5%A8%81?type=user" },
       { id:"nc-t-01", kind:"teacher", name:"示例｜阿岚老师", identity:"独立 Popping 老师", city:"南昌", district:"东湖区", coordinates:[28.6848,115.8967], styles:["Popping","Freestyle","进阶"], summary:"演示采访型老师档案：呈现老师本人自述、教学方法、近期练习和真实授课点。", fit:"已有基础，希望提高 Freestyle 与音乐理解的学员", path:"8—12 次小班或私教训练周期", state:"已完成采访" },
       { id:"nc-t-02", kind:"teacher", name:"示例｜北北老师", identity:"独立 Hiphop 老师", city:"南昌", district:"青山湖区", coordinates:[28.6879,115.9401], styles:["Hiphop","Groove","基础重建"], summary:"演示没有自有舞室、但可以稳定接课的优秀独立老师。", fit:"学过一段时间，想重新整理基础和身体感觉的舞者", path:"基础重建、Groove 训练、Freestyle 反馈", state:"待采访" },
       { id:"nc-s-01", kind:"studio", name:"示例｜红谷滩个人街舞工作室", identity:"主理人制个人工作室", city:"南昌", district:"红谷滩区", coordinates:[28.6904,115.8061], styles:["Hiphop","进阶小班","主理人授课"], summary:"演示由专业老师本人长期授课的小型工作室，而不是少儿连锁机构广告。", fit:"希望固定跟随一位老师长期训练的学员", path:"常规进阶小班、阶段集训、主理人私教", state:"资料核验中" },
@@ -765,6 +767,7 @@
       document.getElementById("detailStyles").textContent = item.styles.join(" / ");
       document.getElementById("detailFit").textContent = item.fit;
       document.getElementById("detailPath").textContent = item.path;
+      document.getElementById("detailResume").textContent = item.resume || (item.verified ? "公开资料已完成首轮核验" : "演示资料，等待采访后补充");
       const contact = document.getElementById("detailContact");
       if (item.contactUrl) {
         contact.textContent = item.contactText;
@@ -775,7 +778,9 @@
       }
       document.getElementById("detailNote").textContent = item.verified
         ? "公开资料已完成首轮核验；是否接受私教、具体档期、费用与授课地点，仍需通过老师本人公开工作渠道确认。"
-        : "当前为产品结构演示。真实老师与工作室必须完成采访、资料核验和口碑确认后才会正式收录。";
+        : item.real
+          ? "本资料由圈内推荐信息整理。常驻城市、课程范围、公开主页与履历仍需老师本人采访确认；约课前请先核对本人账号与当前档期。"
+          : "当前为产品结构演示。真实老师与工作室必须完成采访、资料核验和口碑确认后才会正式收录。";
       detail.classList.add("show");
       if (map) map.flyTo(item.coordinates, 14, { duration: .65 });
       renderList(currentItems());
