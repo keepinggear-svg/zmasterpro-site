@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f3f5f7">
-  <title>寻师录｜全国街舞进修地图 1.0</title>
-  <meta name="description" content="面向进阶舞者的全国寻师地图，采访并推荐值得长期跟随的老师与个人工作室。">
-  <meta property="og:title" content="寻师录｜全国街舞进修地图">
-  <meta property="og:description" content="去一座城，找一位真正值得长期跟随的老师。">
+  <title>寻师录｜全球街舞进修地图 1.0</title>
+  <meta name="description" content="从中国城市到国际舞者，采访并推荐值得长期跟随的街舞老师、舞者与个人工作室。">
+  <meta property="og:title" content="寻师录｜全球街舞进修地图">
+  <meta property="og:description" content="从一座城出发，找到真正值得长期跟随的老师与世界级舞者。">
   <meta property="og:url" content="https://www.zmasterpro.com/shifu/">
   <meta property="og:type" content="website">
   <link rel="icon" href="/shifu/favicon.svg" type="image/svg+xml">
@@ -24,6 +24,7 @@
       --blue: #1977f3;
       --violet: #7356e8;
       --green: #1c9a64;
+      --gold: #c68a20;
       --shadow: 0 18px 50px rgba(26, 39, 52, .14);
       --soft-shadow: 0 8px 28px rgba(26, 39, 52, .10);
     }
@@ -127,6 +128,14 @@
       font-size: 22px;
       line-height: 1.05;
       letter-spacing: -.03em;
+    }
+    .brand h1 small {
+      margin-left: 6px;
+      color: var(--gold);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      vertical-align: 3px;
     }
     .version {
       display: inline-flex;
@@ -266,6 +275,7 @@
 
     .filters {
       display: flex;
+      flex-wrap: wrap;
       gap: 7px;
       padding: 11px 18px;
       border-bottom: 1px solid var(--line);
@@ -290,6 +300,11 @@
       background: var(--blue);
     }
     .filter[data-kind="studio"] .dot { background: var(--violet); }
+    .filter[data-kind="international"] .dot { background: var(--gold); }
+    .filter[data-kind="international"].active {
+      color: #8d5d0b;
+      background: rgba(198,138,32,.12);
+    }
 
     .list {
       flex: 1;
@@ -330,6 +345,14 @@
       border-color: rgba(115,86,232,.14);
       color: var(--violet);
       background: linear-gradient(145deg, rgba(115,86,232,.15), rgba(255,255,255,.86));
+    }
+    .resource[data-scope="international"] .avatar {
+      border-color: rgba(198,138,32,.23);
+      color: #97650f;
+      background: linear-gradient(145deg, rgba(226,180,89,.24), rgba(255,255,255,.9));
+    }
+    .resource[data-scope="international"].active {
+      box-shadow: inset 3px 0 0 rgba(198,138,32,.78);
     }
     .resource-copy { min-width: 0; }
     .resource h3 {
@@ -593,22 +616,22 @@
 </head>
 <body>
   <main class="app" id="app">
-    <div id="map" aria-label="全国街舞进修地图"></div>
+    <div id="map" aria-label="全球街舞进修地图"></div>
     <div class="fallback-markers" id="fallbackMarkers" aria-label="地图坐标"></div>
 
     <header class="topbar">
       <div class="brand glass">
         <div class="brand-mark" aria-hidden="true">寻</div>
         <div class="brand-copy">
-          <p class="eyebrow">全国街舞进修地图 <span class="version">1.0 模型</span></p>
-          <h1>寻师录</h1>
+          <p class="eyebrow">全球街舞进修地图 <span class="version">1.0 模型</span></p>
+          <h1>寻师录 <small>SHIFU MAP</small></h1>
         </div>
       </div>
 
       <label class="search glass">
         <span class="search-icon" aria-hidden="true"></span>
-        <input id="searchInput" type="search" placeholder="搜索城市、舞种、老师或个人工作室" aria-label="搜索老师或工作室">
-        <span class="search-count" id="searchCount">14 条</span>
+        <input id="searchInput" type="search" placeholder="搜索国家、城市、舞种、老师或工作室" aria-label="搜索老师、舞者或工作室">
+        <span class="search-count" id="searchCount">24 条</span>
       </label>
 
       <button class="recommend" id="recommendTop" type="button">＋ 推荐老师</button>
@@ -618,8 +641,8 @@
       <div class="panel-head">
         <div class="panel-title-row">
           <div>
-            <h2 id="panelTitle">全国进修寻师地图</h2>
-            <p>去一座城，找一位真正值得长期跟随的老师。</p>
+            <h2 id="panelTitle">全球进修寻师地图</h2>
+            <p>从中国城市出发，连接值得长期跟随的老师与国际舞者。</p>
           </div>
           <span class="live">采访共建中</span>
         </div>
@@ -630,12 +653,13 @@
         <button class="filter active" data-kind="all" type="button">全部</button>
         <button class="filter" data-kind="teacher" type="button"><span class="dot"></span>老师</button>
         <button class="filter" data-kind="studio" type="button"><span class="dot"></span>个人工作室</button>
+        <button class="filter" data-kind="international" type="button"><span class="dot"></span>国际舞者</button>
       </div>
 
       <div class="list" id="resourceList"></div>
 
       <div class="panel-foot">
-        <span>真实推荐与演示资料 · 采访核验后正式标注</span>
+        <span>国内寻师 × 国际合作 · 资料持续核验中</span>
         <button id="recommendBottom" type="button">推荐老师 / 工作室 →</button>
       </div>
     </aside>
@@ -655,7 +679,7 @@
         <div class="detail-item"><span class="detail-label">更适合</span><span class="detail-value" id="detailFit"></span></div>
         <div class="detail-item"><span class="detail-label">进修方式</span><span class="detail-value" id="detailPath"></span></div>
         <div class="detail-item contact-item"><span class="detail-label">公开履历 / 待核验履历</span><span class="detail-value" id="detailResume"></span></div>
-        <div class="detail-item contact-item"><span class="detail-label">公开主页 / 课程信息</span><a class="detail-value" id="detailContact" target="_blank" rel="noopener noreferrer"></a></div>
+        <div class="detail-item contact-item"><span class="detail-label">公开主页 / 合作信息</span><a class="detail-value" id="detailContact" target="_blank" rel="noopener noreferrer"></a></div>
       </div>
       <div class="demo-note" id="detailNote">当前为产品结构演示。真实老师与工作室必须完成采访、资料核验和口碑确认后才会正式收录。</div>
     </section>
@@ -689,7 +713,8 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     const cities = [
-      { name: "全国", center: [34.4, 108.9], zoom: 5 },
+      { name: "全球", center: [28, 62], zoom: 2 },
+      { name: "国际", center: [28, 18], zoom: 2 },
       { name: "南昌", center: [28.6829, 115.8582], zoom: 12 },
       { name: "上海", center: [31.2304, 121.4737], zoom: 11 },
       { name: "西安", center: [34.3416, 108.9398], zoom: 11 },
@@ -701,6 +726,16 @@
     ];
 
     const resources = [
+      { id:"intl-poppinc", kind:"teacher", scope:"international", country:"瑞士", name:"Poppin'C", identity:"International Popping Artist / 老师", city:"瑞士", district:"洛桑成长 · 当前常驻地待本人确认", coordinates:[46.5197,6.6323], styles:["Popping","Freestyle","Workshop","Battle"], summary:"来自瑞士的国际 Popping 舞者与老师，也是平台过往合作、目前可以继续联系的国际资源之一。", fit:"已有 Popping 基础，希望提高控制、音乐表达、Freestyle 与国际赛事视野的舞者", path:"可提交中国 Workshop、大师课、裁判或品牌活动合作意向；具体城市、日期、费用与档期由本人或代表确认", resume:"Red Bull 公开资料显示，他在瑞士洛桑成长，曾赢得 150 余场 Battle，并获得 Juste Debout 世界冠军等成绩", state:"INTERNATIONAL · 公开资料已核验", real:true, verified:true, contactText:"查看 Red Bull 官方人物资料", contactUrl:"https://www.redbull.com/us-en/get-to-know-poppin-c" },
+      { id:"intl-ness", kind:"teacher", scope:"international", country:"法国", name:"Ness", identity:"French Popping Artist / 老师", city:"法国", district:"常驻城市待本人确认", coordinates:[46.2276,2.2137], styles:["Popping","Freestyle","Workshop","Battle"], summary:"来自法国的 Popping 舞者与老师，曾与项目团队合作，目前可联系。首版先建立国际合作资源档案。", fit:"Popping 进阶学员、专业舞者，以及需要国际 Workshop 或赛事交流的机构", path:"可提交大师课、Workshop、裁判或短期交流合作意向；具体内容、档期与费用以本人确认为准", resume:"法国及国际赛事、教学与合作履历待本人提供最新版资料后补充", state:"INTERNATIONAL · 履历待本人确认", real:true, contactText:"合作联系由平台对接 · 档期待确认" },
+      { id:"intl-nelson", kind:"teacher", scope:"international", country:"法国", name:"Nelson", identity:"French Popping Artist / 编舞 / 老师", city:"法国", district:"巴黎", coordinates:[48.8566,2.3522], styles:["Popping","Freestyle","Choreography","Workshop"], summary:"来自法国的舞者、编舞与艺术创作者，也是平台过往合作、目前可以继续联系的国际资源之一。", fit:"希望提升 Popping、Freestyle、舞台表达与创作能力的进阶舞者或专业团队", path:"可提交大师课、创作交流、赛事裁判或品牌活动合作意向；档期和费用由本人或代表确认", resume:"公开人物资料显示，Nelson Ewande 在巴黎出生长大，长期从事 Popping 表演、教学、创作与国际赛事评审", state:"INTERNATIONAL · 公开资料已核验", real:true, verified:true, contactText:"查看公开人物资料", contactUrl:"https://www.dansenshus.com/en/article/nelson" },
+      { id:"intl-slimboogie", kind:"teacher", scope:"international", country:"美国", name:"Slim Boogie", identity:"US Popping Artist / Educator", city:"美国", district:"洛杉矶", coordinates:[34.0522,-118.2437], styles:["Popping","Freestyle","Education","Workshop"], summary:"来自美国洛杉矶的国际 Popping 舞者与教育者，也是平台过往合作、目前可以继续联系的国际资源之一。", fit:"希望深入理解 Popping 技术、音乐、Freestyle 与风格形成的进阶舞者", path:"可提交中国 Workshop、大师课、裁判或项目合作意向；入境、城市、日期、费用与档期以本人或代表确认为准", resume:"STEEZY 公开资料将其介绍为国际 Popping Freestyler、Battle 舞者与教育者，长期活跃于洛杉矶街舞社区", state:"INTERNATIONAL · 公开资料已核验", real:true, verified:true, contactText:"查看 STEEZY 官方讲师资料", contactUrl:"https://www.steezy.co/instructors/slim-boogie" },
+      { id:"intl-dokyun", kind:"teacher", scope:"international", country:"韩国", name:"Dokyun", identity:"Korean Popping Artist / 老师", city:"韩国", district:"常驻城市待本人确认", coordinates:[36.5,127.8], styles:["Popping","Freestyle","Workshop","Battle"], summary:"来自韩国的 Popping 舞者与老师，曾与项目团队合作，目前可联系。首版先建立国际合作资源档案。", fit:"Popping 进阶学员、专业舞者，以及希望引入韩国训练体系与交流内容的机构", path:"可提交大师课、Workshop、裁判或交流合作意向；具体内容、档期与费用以本人确认为准", resume:"韩国及国际赛事、教学与合作履历待本人提供最新版资料后补充", state:"INTERNATIONAL · 履历待本人确认", real:true, contactText:"合作联系由平台对接 · 档期待确认" },
+      { id:"intl-batalla", kind:"teacher", scope:"international", country:"待确认", name:"Batalla", identity:"International Popping Artist / 老师", city:"国际", district:"国籍与常驻城市待本人确认", coordinates:null, styles:["Popping","Freestyle","Workshop","Battle"], summary:"平台过往合作、目前可以继续联系的国际 Popping 舞者之一。为避免误写，首版暂不标注未经本人确认的国家与常驻地。", fit:"Popping 进阶学员、专业舞者，以及需要国际 Workshop 或赛事交流的机构", path:"可提交大师课、Workshop、裁判或交流合作意向；身份资料、档期与费用以本人确认为准", resume:"公开身份、国籍、常驻城市及最新赛事与教学履历待本人确认后补充", state:"INTERNATIONAL · 身份资料待确认", real:true, contactText:"合作联系由平台对接 · 资料待确认" },
+      { id:"intl-dandy", kind:"teacher", scope:"international", country:"韩国", name:"Dandy", identity:"Korean Popping Artist / 老师", city:"韩国", district:"首尔", coordinates:[37.5665,126.9780], styles:["Popping","Freestyle","Battle","Workshop"], summary:"来自韩国的国际 Popping 舞者与老师，也是平台过往合作、目前可以继续联系的国际资源之一。", fit:"希望强化 Popping 技术、Freestyle 与 Battle 实战能力的进阶舞者", path:"可提交大师课、Workshop、赛事裁判或交流合作意向；具体内容、档期与费用以本人或代表确认为准", resume:"ArtOne 公开资料列出其多项韩国及国际 Popping Battle 成绩，并标注其担任 ArtOne Academy 讲师", state:"INTERNATIONAL · 公开资料已核验", real:true, verified:true, contactText:"查看 ArtOne 官方人物资料", contactUrl:"https://artonecompany.com/Dandy" },
+      { id:"intl-nikkipop", kind:"teacher", scope:"international", country:"乌克兰", name:"Nikkipop", identity:"Ukrainian Popping Artist / 老师", city:"乌克兰", district:"当前常驻城市待本人确认", coordinates:[49.0,31.0], styles:["Popping","Freestyle","Battle","Workshop"], summary:"来自乌克兰的 Popping 舞者与老师，也是平台过往合作、目前可以继续联系的国际资源之一。", fit:"Popping 进阶学员、专业舞者，以及希望参与国际训练与赛事交流的机构", path:"可提交大师课、Workshop、裁判或交流合作意向；常驻地、档期与费用仍需本人确认", resume:"公开资料以 Nikkipop 介绍乌克兰舞者 Nikita Dudkin；最新获奖、教学及在华常驻信息待本人复核", state:"INTERNATIONAL · 首轮资料已整理", real:true, contactText:"合作联系由平台对接 · 档期待确认" },
+      { id:"intl-future", kind:"teacher", scope:"international", country:"美国", name:"Future", identity:"US Electric Boogie / Popping Artist", city:"美国", district:"纽约", coordinates:[40.7128,-74.0060], styles:["Electric Boogie","Popping","Hiphop","House"], summary:"来自美国纽约的资深街舞舞者与老师，也是平台过往合作、目前可以继续联系的国际资源之一。", fit:"希望理解纽约 Electric Boogie、Popping、Hiphop 与 Freestyle 文化脉络的进阶舞者", path:"可提交大师课、文化分享、Workshop、裁判或交流合作意向；档期和费用由本人或代表确认", resume:"PJM Dance NYC 公开资料显示，他在纽约 Bronx 成长，自 1979—1980 年起接触 Hip-Hop 文化，并长期研习 Electric Boogie、Hip-Hop 与 House", state:"INTERNATIONAL · 公开资料已核验", real:true, verified:true, contactText:"查看 PJM Dance NYC 人物资料", contactUrl:"https://www.pjmdancenyc.com/future" },
+      { id:"intl-sonia", kind:"teacher", scope:"international", country:"法国", name:"Sonia / SonYa", identity:"French Popping & Waacking Artist", city:"法国", district:"巴黎地区", coordinates:[48.9278,2.3965], styles:["Popping","Waacking","Freestyle","Workshop"], summary:"来自法国的 Popping 与 Waacking 舞者、表演者与老师，也是平台过往合作、目前可以继续联系的国际资源之一。", fit:"希望提升 Popping、Waacking、Freestyle 与舞台表达的进阶舞者", path:"可提交大师课、Workshop、舞台交流或赛事合作意向；具体内容、档期与费用以本人或代表确认为准", resume:"Compagnie par Terre 公开资料显示，Sonia Bel Hadj Brahim 来自法国 La Courneuve，长期活跃于 Popping、Waacking、舞台作品与 Battle", state:"INTERNATIONAL · 公开资料已核验", real:true, verified:true, contactText:"查看公开人物资料", contactUrl:"https://www.compagnieparterre.fr/?page_id=378" },
       { id:"nc-t-funkywill", kind:"teacher", name:"FunkyWill 阿威", identity:"Popping 专项老师", city:"南昌", district:"具体授课点需本人确认", coordinates:[28.6829,115.8582], styles:["Popping","基础班","提高班","成人课"], summary:"常驻南昌的 Popping 专项老师。推荐信息显示，他在南昌教授少儿与成人基础班、提高班，也常受全国各地 Popping 工作室邀请授课。", fit:"零基础入门、需要系统整理基础，以及希望提高 Popping 技术与表达的少儿和成人学员", path:"南昌基础班 / 提高班 / 成人课；跨城 Workshop、集训或私教需通过本人渠道确认", resume:"据推荐信息，曾担任中国少儿街舞国家队相关总教练职务；正式称谓、所属组织与任职届次待本人确认", state:"本人主页已确认 · 履历待核验", real:true, profileVerified:true, verified:false, douyinId:"funkywill400", contactText:"打开本人抖音主页 · funkywill400", contactUrl:"https://v.douyin.com/SoMVgLvhpQA/" },
       { id:"nc-t-01", kind:"teacher", independent:true, name:"示例｜阿岚老师", identity:"独立 Popping 老师", city:"南昌", district:"东湖区", coordinates:[28.6848,115.8967], styles:["Popping","Freestyle","进阶"], summary:"演示采访型老师档案：呈现老师本人自述、教学方法、近期练习和真实授课点。", fit:"已有基础，希望提高 Freestyle 与音乐理解的学员", path:"8—12 次小班或私教训练周期", state:"已完成采访" },
       { id:"nc-t-02", kind:"teacher", independent:true, name:"示例｜北北老师", identity:"独立 Hiphop 老师", city:"南昌", district:"青山湖区", coordinates:[28.6879,115.9401], styles:["Hiphop","Groove","基础重建"], summary:"演示没有自有舞室、但可以稳定接课的优秀独立老师。", fit:"学过一段时间，想重新整理基础和身体感觉的舞者", path:"基础重建、Groove 训练、Freestyle 反馈", state:"待采访" },
@@ -717,7 +752,7 @@
       { id:"bj-t-01", kind:"teacher", independent:true, name:"示例｜老林老师", identity:"Locking 独立老师", city:"北京", district:"朝阳区", coordinates:[39.9219,116.4433], styles:["Locking","Soul","文化理解"], summary:"演示资深老师的采访型人物档案。", fit:"希望系统理解 Locking 与音乐文化的进阶舞者", path:"基础重建、Solo、音乐文化与阶段复盘", state:"待采访" }
     ];
 
-    const state = { city: "全国", kind: "all", query: "", selected: null };
+    const state = { city: "全球", kind: "all", query: "", selected: null };
     let map = null;
     let layer = null;
     const markers = new Map();
@@ -730,20 +765,26 @@
     let toastTimer;
 
     function typeLabel(item) {
+      if (item.scope === "international") return "国际舞者";
       if (item.kind !== "teacher") return "个人工作室";
       return item.independent ? "独立老师" : "老师";
     }
     function firstName(item) { return item.name.replace("示例｜", "").slice(0, 1); }
-    function color(kind) { return kind === "teacher" ? "#1977f3" : "#7356e8"; }
+    function color(item) {
+      if (item.scope === "international") return "#c68a20";
+      return item.kind === "teacher" ? "#1977f3" : "#7356e8";
+    }
     function markerHtml(item) {
-      return `<div class="marker-shell"><div class="marker-shadow"></div><div class="marker-pin" style="--pin:${color(item.kind)}"><span>${firstName(item)}</span></div></div>`;
+      return `<div class="marker-shell"><div class="marker-shadow"></div><div class="marker-pin" style="--pin:${color(item)}"><span>${firstName(item)}</span></div></div>`;
     }
     function currentItems() {
       const query = state.query.trim().toLowerCase();
       return resources.filter(item => {
-        const cityOk = state.city === "全国" || item.city === state.city;
-        const kindOk = state.kind === "all" || item.kind === state.kind;
-        const haystack = [item.name, item.identity, item.city, item.district, ...item.styles, item.summary, item.douyinId || "", item.resume || ""].join(" ").toLowerCase();
+        const cityOk = state.city === "全球"
+          || (state.city === "国际" ? item.scope === "international" : item.city === state.city);
+        const kindOk = state.kind === "all"
+          || (state.kind === "international" ? item.scope === "international" : item.kind === state.kind);
+        const haystack = [item.name, item.identity, item.country || "", item.city, item.district, ...item.styles, item.summary, item.douyinId || "", item.resume || ""].join(" ").toLowerCase();
         return cityOk && kindOk && (!query || haystack.includes(query));
       });
     }
@@ -759,7 +800,11 @@
       detail.classList.remove("show");
       document.querySelectorAll(".chip").forEach(button => button.classList.toggle("active", button.dataset.city === name));
       const city = cities.find(item => item.name === name);
-      panelTitle.textContent = name === "全国" ? "全国进修寻师地图" : `${name}寻师线索`;
+      panelTitle.textContent = name === "全球"
+        ? "全球进修寻师地图"
+        : name === "国际"
+          ? "International Roster"
+          : `${name}寻师线索`;
       if (map && city) map.flyTo(city.center, city.zoom, { duration: .7 });
       render();
     }
@@ -778,18 +823,22 @@
         contact.textContent = item.contactText;
         contact.href = item.contactUrl;
       } else {
-        contact.textContent = "演示资料，无真实联系方式";
+        contact.textContent = item.real
+          ? (item.contactText || "合作渠道待本人或代表确认")
+          : "演示资料，无真实联系方式";
         contact.removeAttribute("href");
       }
-      document.getElementById("detailNote").textContent = item.verified
-        ? "公开资料已完成首轮核验；具体课程、档期、费用、授课地点与报名方式，仍需通过老师本人或所属机构的公开渠道确认。"
-        : item.profileVerified
-          ? "本人抖音主页与抖音号已确认；课程、具体档期、费用、授课地点及履历头衔仍需老师本人或所属机构确认。"
-          : item.real
-            ? "本资料由圈内推荐信息整理。常驻城市、课程范围、公开主页与履历仍需老师本人或所属机构确认；报名与约课前请先核对公开渠道。"
-            : "当前为产品结构演示。真实老师与工作室必须完成采访、资料核验和口碑确认后才会正式收录。";
+      document.getElementById("detailNote").textContent = item.scope === "international"
+        ? "本条为项目团队过往合作、目前可联系资源的首版档案。页面不代表老师已开放预约；合作形式、城市、日期、档期和费用均需由本人或代表最终确认。"
+        : item.verified
+          ? "公开资料已完成首轮核验；具体课程、档期、费用、授课地点与报名方式，仍需通过老师本人或所属机构的公开渠道确认。"
+          : item.profileVerified
+            ? "本人抖音主页与抖音号已确认；课程、具体档期、费用、授课地点及履历头衔仍需老师本人或所属机构确认。"
+            : item.real
+              ? "本资料由圈内推荐信息整理。常驻城市、课程范围、公开主页与履历仍需老师本人或所属机构确认；报名与约课前请先核对公开渠道。"
+              : "当前为产品结构演示。真实老师与工作室必须完成采访、资料核验和口碑确认后才会正式收录。";
       detail.classList.add("show");
-      if (map) map.flyTo(item.coordinates, 14, { duration: .65 });
+      if (map && item.coordinates) map.flyTo(item.coordinates, item.scope === "international" ? 6 : 14, { duration: .65 });
       renderList(currentItems());
     }
     function renderList(items) {
@@ -799,7 +848,7 @@
         return;
       }
       resourceList.innerHTML = items.map(item => `
-        <button class="resource ${state.selected === item.id ? "active" : ""}" data-id="${item.id}" data-kind="${item.kind}" type="button">
+        <button class="resource ${state.selected === item.id ? "active" : ""}" data-id="${item.id}" data-kind="${item.kind}" data-scope="${item.scope || "domestic"}" type="button">
           <span class="avatar">${firstName(item)}</span>
           <span class="resource-copy">
             <h3>${item.name}</h3>
@@ -817,7 +866,7 @@
       if (!map || !layer || !window.L) return;
       layer.clearLayers();
       markers.clear();
-      items.forEach(item => {
+      items.filter(item => item.coordinates).forEach(item => {
         const icon = L.divIcon({ className: "resource-pin", html: markerHtml(item), iconSize: [42, 50], iconAnchor: [21, 47] });
         const marker = L.marker(item.coordinates, { icon, keyboard: true, title: item.name }).on("click", () => selectResource(item));
         marker.addTo(layer);
@@ -831,9 +880,9 @@
     }
     function renderFallbackMarkers() {
       const fallback = document.getElementById("fallbackMarkers");
-      fallback.innerHTML = resources.map(item => {
-        const left = 22 + ((item.coordinates[1] - 88) / 38) * 62;
-        const top = 22 + ((44 - item.coordinates[0]) / 24) * 54;
+      fallback.innerHTML = resources.filter(item => item.coordinates).map(item => {
+        const left = Math.max(3, Math.min(97, ((item.coordinates[1] + 180) / 360) * 100));
+        const top = Math.max(5, Math.min(95, ((90 - item.coordinates[0]) / 180) * 100));
         return `<button class="fallback-marker" data-id="${item.id}" style="left:${left}%;top:${top}%;border:0;background:none;padding:0" type="button" aria-label="${item.name}">${markerHtml(item)}</button>`;
       }).join("");
       fallback.querySelectorAll("button").forEach(button => button.addEventListener("click", () => selectResource(resources.find(item => item.id === button.dataset.id))));
@@ -843,7 +892,7 @@
         showToast("地图服务加载较慢，已启用坐标备用展示");
         return;
       }
-      map = L.map("map", { zoomControl: false, attributionControl: true, minZoom: 4, maxZoom: 18 }).setView(cities[0].center, cities[0].zoom);
+      map = L.map("map", { zoomControl: false, attributionControl: true, minZoom: 2, maxZoom: 18 }).setView(cities[0].center, cities[0].zoom);
       L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
         subdomains: "abcd", maxZoom: 20,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; CARTO'
@@ -853,12 +902,20 @@
       render();
     }
 
-    document.getElementById("cityTabs").innerHTML = cities.map(city => `<button class="chip ${city.name === "全国" ? "active" : ""}" data-city="${city.name}" type="button">${city.name}</button>`).join("");
-    document.querySelectorAll(".chip").forEach(button => button.addEventListener("click", () => selectCity(button.dataset.city)));
+    document.getElementById("cityTabs").innerHTML = cities.map(city => `<button class="chip ${city.name === "全球" ? "active" : ""}" data-city="${city.name}" type="button">${city.name}</button>`).join("");
+    document.querySelectorAll(".chip").forEach(button => button.addEventListener("click", () => {
+      const name = button.dataset.city;
+      if (name !== "国际" && state.kind === "international") {
+        state.kind = "all";
+        document.querySelectorAll(".filter").forEach(item => item.classList.toggle("active", item.dataset.kind === "all"));
+      }
+      selectCity(name);
+    }));
     document.querySelectorAll(".filter").forEach(button => button.addEventListener("click", () => {
       state.kind = button.dataset.kind;
       document.querySelectorAll(".filter").forEach(item => item.classList.toggle("active", item === button));
-      render();
+      if (state.kind === "international") selectCity("国际");
+      else render();
     }));
     document.getElementById("searchInput").addEventListener("input", event => { state.query = event.target.value; render(); });
     document.getElementById("detailClose").addEventListener("click", () => { state.selected = null; detail.classList.remove("show"); renderList(currentItems()); });
