@@ -20,8 +20,8 @@
   <title>词语星球 - 宠物听写</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-  <link rel="stylesheet" href="kid-game.css?v=28">
-  <link rel="stylesheet" href="word-packs.css?v=28">
+  <link rel="stylesheet" href="kid-game.css?v=29">
+  <link rel="stylesheet" href="word-packs.css?v=29">
   <style>
     :root {
       --bg: #f5f7f8;
@@ -1071,6 +1071,62 @@
         </div>
       </section>
 
+      <section class="kid-screen" id="kitchenScreen" data-screen="kitchen">
+        <header class="screen-heading kitchen-heading">
+          <div><span>TINY KITCHEN</span><h2>鼠鼠厨房</h2><p>完成今日听写后，用一点积分做小吃，慢慢装满专属零食柜。</p></div>
+          <div class="kitchen-counter"><span>已做小吃</span><strong id="kitchenDishCount">0</strong></div>
+        </header>
+        <div class="kitchen-layout">
+          <div class="kitchen-scene" id="kitchenScene">
+            <div class="kitchen-pet-stage room-pet" id="kitchenPetStage" role="button" tabindex="0" aria-label="拖动小伙伴在厨房里走动">
+              <span class="pet-ground-shadow" aria-hidden="true"></span>
+              <img id="kitchenPetImage" src="assets/pets-v2/hamster.png" alt="厨房里的小伙伴" draggable="false">
+              <span class="pet-wear pet-outfit" id="kitchenPetOutfit" aria-hidden="true"></span>
+              <span class="pet-wear pet-headwear" id="kitchenPetHeadwear" aria-hidden="true"></span>
+              <span class="pet-wear pet-facewear" id="kitchenPetFacewear" aria-hidden="true"></span>
+              <span class="pet-wear pet-neckwear" id="kitchenPetNeckwear" aria-hidden="true"></span>
+              <span class="pet-wear pet-shoes" id="kitchenPetShoes" aria-hidden="true"></span>
+            </div>
+            <div class="kitchen-talk" id="kitchenTalk" aria-live="polite">今天想做哪一种小吃？</div>
+            <div class="cooking-pot" id="cookingPot" aria-hidden="true"><span></span><i></i><i></i><i></i></div>
+          </div>
+          <div class="kitchen-workbench">
+            <div class="kitchen-section-title"><div><span>今日菜单</span><h3>选一种开始做</h3></div><small>每份只要 1-2 积分</small></div>
+            <div class="recipe-grid" id="recipeGrid"></div>
+            <div class="snack-cabinet">
+              <div class="kitchen-section-title"><div><span>我的收藏</span><h3>零食柜</h3></div><small id="snackCabinetCopy">还空着，先做第一份吧</small></div>
+              <div class="snack-shelf" id="snackShelf"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="kid-screen" id="townScreen" data-screen="town">
+        <header class="screen-heading town-heading">
+          <div><span>FRIENDS' TOWN</span><h2>好友小镇</h2><p>只有完成今日任务，并经过双方家长同意，才能互相串门。</p></div>
+          <span class="guardian-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.6 2.8 8.1 7 10 4.2-1.9 7-5.4 7-10V6Z"></path><path d="m9 12 2 2 4-5"></path></svg>家长守护</span>
+        </header>
+        <div class="town-layout">
+          <section class="town-neighborhood" aria-labelledby="townNeighborhoodTitle">
+            <div class="town-sky" aria-hidden="true"><span></span><i></i><i></i></div>
+            <div class="town-copy"><span>LEARNING NEIGHBORHOOD</span><h3 id="townNeighborhoodTitle">背完单词，再去朋友家玩</h3><p id="townStatusText">今天的小镇大门还没有打开。</p></div>
+            <div class="town-houses" id="townHouses"></div>
+          </section>
+          <section class="town-friends" aria-labelledby="friendRequestTitle">
+            <div class="friend-request-head"><div><span>申请函</span><h3 id="friendRequestTitle">新的串门邀请</h3></div><strong id="friendCount">0 位好友</strong></div>
+            <div class="friend-code-entry">
+              <label for="friendInviteCode">家庭邀请码</label>
+              <div><input id="friendInviteCode" type="text" maxlength="8" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="输入对方发来的号码"><button id="friendInviteButton" type="button">交给家长确认</button></div>
+            </div>
+            <div class="friend-request-list" id="friendRequestList"></div>
+            <div class="identity-note">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.6 2.8 8.1 7 10 4.2-1.9 7-5.4 7-10V6Z"></path><path d="M9 11h6M9 15h4"></path></svg>
+              <div><strong>身份信息由家长管理</strong><p>正式联网时使用合规身份核验服务，平台只保留核验结果，不保存孩子的人脸视频或身份证照片。</p></div>
+            </div>
+          </section>
+        </div>
+      </section>
+
       <section class="kid-screen" id="travelScreen" data-screen="travel">
         <header class="screen-heading">
           <div><span>POSTCARD JOURNEY</span><h2>小伙伴去旅行</h2><p>每掌握 10 个不同的新词得到 1 块小饼干，旅行回来会带回明信片。</p></div>
@@ -1124,7 +1180,9 @@
       <button class="is-active" type="button" data-nav="home"><span aria-hidden="true">⌂</span><strong>今日</strong></button>
       <button type="button" data-nav="pet"><span aria-hidden="true">♡</span><strong>小屋</strong></button>
       <button class="kid-nav-import" id="navImportWordsButton" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></span><strong>加词</strong></button>
+      <button type="button" data-nav="kitchen"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 10h14l-1 9H6Z"></path><path d="M8 10c0-3 2-5 4-5s4 2 4 5M9 4l1 2M15 4l-1 2"></path></svg></span><strong>厨房</strong></button>
       <button type="button" data-nav="travel"><span aria-hidden="true">✈</span><strong>旅行</strong></button>
+      <button type="button" data-nav="town"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20v-8l8-6 8 6v8"></path><path d="M9 20v-5h6v5M7 7V4h4"></path></svg></span><strong>小镇</strong></button>
       <button type="button" data-nav="growth"><span aria-hidden="true">▣</span><strong>足迹</strong></button>
     </nav>
   </div>
@@ -2610,8 +2668,8 @@
       });
     }
   </script>
-  <script src="word-packs.js?v=28"></script>
-  <script src="kid-game.js?v=28"></script>
-  <script src="pwa-install.js?v=28"></script>
+  <script src="word-packs.js?v=29"></script>
+  <script src="kid-game.js?v=29"></script>
+  <script src="pwa-install.js?v=29"></script>
 </body>
 </html>

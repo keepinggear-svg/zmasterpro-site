@@ -83,6 +83,17 @@
     { id: "space", name: "北京天文馆", icon: "✦", color: "#e5e5f5" }
   ];
 
+  const kitchenRecipes = [
+    { id: "takoyaki", name: "章鱼小丸子", icon: "●", price: 1, color: "#ffe0c7", message: "小丸子翻个面，马上就香啦！" },
+    { id: "taiyaki", name: "鲷鱼冰淇淋", icon: "◇", price: 2, color: "#dff1fb", message: "脆脆鲷鱼壳，装进一朵冰淇淋。" },
+    { id: "silkworm", name: "香香烤蚕蛹", icon: "≈", price: 2, color: "#e6efcf", message: "撒一点点香料，勇敢的新口味完成啦！" },
+    { id: "star-cookie", name: "星星黄油曲奇", icon: "★", price: 1, color: "#fff0bd", message: "烤到金黄，星星曲奇出炉！" }
+  ];
+
+  const friendNames = ["米粒", "小满", "果果", "阿布", "桃子", "乐乐"];
+  const friendPetNames = ["栗栗", "团子", "奶盖", "泡芙", "芝麻", "布丁"];
+  const friendPetIds = ["hamster", "rabbit", "kitten", "puppy", "redpanda", "penguin"];
+
   const $ = (id) => document.getElementById(id);
   const dom = {
     app: $("kidApp"),
@@ -158,6 +169,26 @@
     friendshipValue: $("friendshipValue"),
     shopGrid: $("shopGrid"),
     chooseAnotherPetButton: $("chooseAnotherPetButton"),
+    kitchenScene: $("kitchenScene"),
+    kitchenPetStage: $("kitchenPetStage"),
+    kitchenPet: $("kitchenPetImage"),
+    kitchenOutfit: $("kitchenPetOutfit"),
+    kitchenHeadwear: $("kitchenPetHeadwear"),
+    kitchenFacewear: $("kitchenPetFacewear"),
+    kitchenNeckwear: $("kitchenPetNeckwear"),
+    kitchenShoes: $("kitchenPetShoes"),
+    kitchenTalk: $("kitchenTalk"),
+    cookingPot: $("cookingPot"),
+    kitchenDishCount: $("kitchenDishCount"),
+    recipeGrid: $("recipeGrid"),
+    snackShelf: $("snackShelf"),
+    snackCabinetCopy: $("snackCabinetCopy"),
+    townStatusText: $("townStatusText"),
+    townHouses: $("townHouses"),
+    friendCount: $("friendCount"),
+    friendRequestList: $("friendRequestList"),
+    friendInviteCode: $("friendInviteCode"),
+    friendInviteButton: $("friendInviteButton"),
     travelPet: $("travelPetImage"),
     travelPetWrap: $("travelPetWrap"),
     travelIdle: $("travelIdle"),
@@ -249,6 +280,8 @@
   let tentChatIndex = 0;
   let parentSessionUnlocked = false;
   let pendingParentAction = "panel";
+  let pendingFriendInvite = "";
+  let isCooking = false;
   let swipeStartX = null;
   let swipeOffsetX = 0;
 
@@ -286,6 +319,8 @@
       wordProgress: {},
       masteryCookieMilestone: 0,
       lastTentSnackDate: null,
+      kitchenInventory: {},
+      friends: [],
       daily: null,
       records: [],
       postcards: [],
@@ -312,6 +347,8 @@
       cookies: Math.max(0, Number(saved.cookies) || 0),
       totalDictations: Math.max(0, Number(saved.totalDictations) || 0),
       friendship: Math.max(0, Number(saved.friendship) || 0),
+      kitchenInventory: saved.kitchenInventory && typeof saved.kitchenInventory === "object" ? saved.kitchenInventory : {},
+      friends: Array.isArray(saved.friends) ? saved.friends.slice(0, 12) : [],
       ownedItems,
       placedFurniture: Array.isArray(saved.placedFurniture)
         ? saved.placedFurniture.filter((id) => getItem(id)?.type === "furniture")
@@ -594,9 +631,9 @@
   }
 
   function navigate(screen, options = {}) {
-    const lockedFeature = screen === "pet" || screen === "travel";
+    const lockedFeature = ["pet", "kitchen", "travel", "town"].includes(screen);
     if (lockedFeature && (!state.daily || !state.daily.finished) && !options.ignoreLock) {
-      showToast("先完成今天的听写，小屋和旅行就会解锁。", true);
+      showToast("先完成今天的听写，小屋、厨房和好友小镇就会解锁。", true);
       screen = "home";
     }
     currentScreen = screen;
@@ -610,7 +647,9 @@
     dom.app.querySelector(".kid-main").scrollTop = 0;
     if (screen === "dictation") renderDictation();
     if (screen === "pet") renderShop();
+    if (screen === "kitchen") renderKitchen();
     if (screen === "travel") renderTravel();
+    if (screen === "town") renderTown();
     if (screen === "growth") renderGrowth();
     schedulePetWalk();
   }
@@ -652,18 +691,18 @@
 
   function renderPetEverywhere() {
     const pet = getPet();
-    [dom.homePet, dom.dictationPet, dom.shopPet, dom.travelPet, dom.rewardPetImage, dom.tentPet].forEach((image) => {
+    [dom.homePet, dom.dictationPet, dom.shopPet, dom.kitchenPet, dom.travelPet, dom.rewardPetImage, dom.tentPet].forEach((image) => {
       image.src = pet.image;
       image.alt = state.petName ? `${state.petName}，${pet.name}` : pet.name;
     });
-    [dom.homePetStage, dom.shopPetStage].forEach((stage) => { stage.dataset.pet = pet.id; });
+    [dom.homePetStage, dom.shopPetStage, dom.kitchenPetStage].forEach((stage) => { stage.dataset.pet = pet.id; });
     dom.tentPetStage.dataset.pet = pet.id;
     dom.dictationPet.parentElement.dataset.pet = pet.id;
-    [dom.homeOutfit, dom.shopOutfit, dom.dictationOutfit, dom.tentOutfit].forEach((element) => setWear(element, "outfit"));
-    [dom.homeHeadwear, dom.shopHeadwear, dom.dictationHeadwear, dom.tentHeadwear].forEach((element) => setWear(element, "head"));
-    [dom.homeFacewear, dom.shopFacewear, dom.tentFacewear].forEach((element) => setWear(element, "face"));
-    [dom.homeNeckwear, dom.shopNeckwear, dom.tentNeckwear].forEach((element) => setWear(element, "neck"));
-    [dom.homeShoes, dom.shopShoes, dom.dictationShoes, dom.tentShoes].forEach((element) => setWear(element, "shoes"));
+    [dom.homeOutfit, dom.shopOutfit, dom.kitchenOutfit, dom.dictationOutfit, dom.tentOutfit].forEach((element) => setWear(element, "outfit"));
+    [dom.homeHeadwear, dom.shopHeadwear, dom.kitchenHeadwear, dom.dictationHeadwear, dom.tentHeadwear].forEach((element) => setWear(element, "head"));
+    [dom.homeFacewear, dom.shopFacewear, dom.kitchenFacewear, dom.tentFacewear].forEach((element) => setWear(element, "face"));
+    [dom.homeNeckwear, dom.shopNeckwear, dom.kitchenNeckwear, dom.tentNeckwear].forEach((element) => setWear(element, "neck"));
+    [dom.homeShoes, dom.shopShoes, dom.kitchenShoes, dom.dictationShoes, dom.tentShoes].forEach((element) => setWear(element, "shoes"));
     renderRoom(dom.petRoom, dom.homeRoomWindow, dom.homeRoomRug, dom.homeRoomDecor);
     renderRoom(dom.shopRoom, dom.shopRoomWindow, dom.shopRoomRug, dom.shopRoomDecor);
     const tentIsPlaced = state.placedFurniture.includes("star-tent");
@@ -671,6 +710,7 @@
     dom.shopTentButton.hidden = !tentIsPlaced;
     setPetPosition(dom.homePetStage, state.petPosition, false);
     setPetPosition(dom.shopPetStage, state.petPosition, false);
+    setPetPosition(dom.kitchenPetStage, state.petPosition, false);
     const name = state.petName || pet.name;
     dom.greeting.textContent = `${name} 正等着和你一起完成挑战`;
     dom.petSpeech.textContent = state.daily && state.daily.finished ? `${name}：来追我呀！` : `${name}：我先在小屋等你完成任务。`;
@@ -749,6 +789,7 @@
   function activeRoomPet() {
     if (currentScreen === "pet") return { stage: dom.shopPetStage, room: dom.shopRoom };
     if (currentScreen === "home") return { stage: dom.homePetStage, room: dom.petRoom };
+    if (currentScreen === "kitchen") return { stage: dom.kitchenPetStage, room: dom.kitchenScene };
     return null;
   }
 
@@ -763,8 +804,9 @@
     active.stage.classList.add("is-walking");
     state.petPosition = next;
     setPetPosition(active.stage, next, true);
-    const mirrorStage = active.stage === dom.homePetStage ? dom.shopPetStage : dom.homePetStage;
-    setPetPosition(mirrorStage, next, false);
+    [dom.homePetStage, dom.shopPetStage, dom.kitchenPetStage]
+      .filter((stage) => stage !== active.stage)
+      .forEach((stage) => setPetPosition(stage, next, false));
     window.setTimeout(() => {
       active.stage.classList.remove("is-walking");
       if (save) saveState();
@@ -815,6 +857,7 @@
     petDrag.stage.classList.remove("is-dragging");
     setPetPosition(dom.homePetStage, state.petPosition, false);
     setPetPosition(dom.shopPetStage, state.petPosition, false);
+    setPetPosition(dom.kitchenPetStage, state.petPosition, false);
     petDrag = null;
     saveState();
     schedulePetWalk();
@@ -1369,6 +1412,191 @@
     showToast(`${state.petName} 已经成为你的学习伙伴！`);
   }
 
+  function getKitchenDishCount() {
+    return Object.values(state.kitchenInventory).reduce((total, count) => total + Math.max(0, Number(count) || 0), 0);
+  }
+
+  function renderKitchen() {
+    renderPetEverywhere();
+    const dishCount = getKitchenDishCount();
+    dom.kitchenDishCount.textContent = String(dishCount);
+    dom.kitchenTalk.textContent = dishCount
+      ? `${state.petName || getPet().name}：零食柜里已经有 ${dishCount} 份小吃啦！`
+      : `${state.petName || getPet().name}：今天想做哪一种小吃？`;
+    dom.recipeGrid.replaceChildren();
+    kitchenRecipes.forEach((recipe) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "recipe-card";
+      button.disabled = isCooking;
+      button.style.setProperty("--recipe-color", recipe.color);
+      button.innerHTML = `<span aria-hidden="true">${recipe.icon}</span><div><strong>${recipe.name}</strong><small>做好后收进零食柜</small></div><em>★ ${recipe.price}</em>`;
+      button.addEventListener("click", () => cookRecipe(recipe));
+      dom.recipeGrid.append(button);
+    });
+
+    dom.snackShelf.replaceChildren();
+    const collected = kitchenRecipes.filter((recipe) => Number(state.kitchenInventory[recipe.id]) > 0);
+    if (!collected.length) {
+      const empty = document.createElement("div");
+      empty.className = "snack-empty";
+      empty.textContent = "第一只小罐子正在等你装满";
+      dom.snackShelf.append(empty);
+      dom.snackCabinetCopy.textContent = "还空着，先做第一份吧";
+      return;
+    }
+    collected.forEach((recipe) => {
+      const jar = document.createElement("div");
+      jar.className = "snack-jar";
+      jar.style.background = recipe.color;
+      jar.innerHTML = `<span aria-hidden="true">${recipe.icon}</span><strong>${recipe.name} ×${Number(state.kitchenInventory[recipe.id])}</strong>`;
+      dom.snackShelf.append(jar);
+    });
+    dom.snackCabinetCopy.textContent = `收藏了 ${collected.length} 种味道`;
+  }
+
+  function cookRecipe(recipe) {
+    if (isCooking) return;
+    if (!state.daily || !state.daily.finished) {
+      showToast("完成今日听写后，厨房才会开火。", true);
+      return;
+    }
+    if (state.points < recipe.price) {
+      showToast("积分还不够，再认真掌握几个新词吧。", true);
+      return;
+    }
+    isCooking = true;
+    state.points -= recipe.price;
+    state.friendship += 1;
+    state.kitchenInventory[recipe.id] = (Number(state.kitchenInventory[recipe.id]) || 0) + 1;
+    saveState();
+    dom.points.textContent = String(state.points);
+    dom.kitchenPetStage.classList.add("is-cooking");
+    dom.cookingPot.classList.add("is-active");
+    dom.kitchenTalk.textContent = `${state.petName || getPet().name}：${recipe.message}`;
+    dom.recipeGrid.querySelectorAll("button").forEach((button) => { button.disabled = true; });
+    playTone("right");
+    window.setTimeout(() => {
+      isCooking = false;
+      dom.kitchenPetStage.classList.remove("is-cooking");
+      dom.cookingPot.classList.remove("is-active");
+      renderKitchen();
+      showToast(`${recipe.name}已经收进零食柜，亲密值 +1。`);
+    }, 1900);
+  }
+
+  function friendProfileFromCode(code) {
+    let seed = 0;
+    for (const character of code) seed = (seed * 31 + character.charCodeAt(0)) >>> 0;
+    const index = seed % friendNames.length;
+    return {
+      id: code,
+      childName: friendNames[index],
+      petName: friendPetNames[index],
+      petId: friendPetIds[index],
+      joinedAt: Date.now()
+    };
+  }
+
+  function renderTown() {
+    const unlocked = Boolean(state.daily?.finished);
+    dom.townStatusText.textContent = unlocked
+      ? `${state.petName || getPet().name}今天已经完成任务，可以安心串门。`
+      : "完成今天的听写后，小镇大门才会打开。";
+    dom.friendCount.textContent = `${state.friends.length} 位好友`;
+    dom.townHouses.replaceChildren();
+
+    const ownHouse = document.createElement("article");
+    ownHouse.className = "friend-house";
+    ownHouse.style.setProperty("--house-color", "#fff2c7");
+    ownHouse.style.setProperty("--roof-color", "#ed7868");
+    ownHouse.innerHTML = `<img src="${getPet().image}" alt="${escapeHtml(state.petName || getPet().name)}的家"><strong>我的家 · ${escapeHtml(state.petName || getPet().name)}</strong><small>今天的学习基地</small><button type="button">回家看看</button>`;
+    ownHouse.querySelector("button").addEventListener("click", () => navigate("pet", { ignoreLock: true }));
+    dom.townHouses.append(ownHouse);
+
+    state.friends.slice(0, 2).forEach((friend, index) => {
+      const pet = pets.find((entry) => entry.id === friend.petId) || pets[6];
+      const house = document.createElement("article");
+      house.className = "friend-house";
+      house.style.setProperty("--house-color", index % 2 ? "#e4f2df" : "#e3effb");
+      house.style.setProperty("--roof-color", index % 2 ? "#e5a95e" : "#6ca8c8");
+      house.innerHTML = `<img src="${pet.image}" alt="${escapeHtml(friend.petName)}的家"><strong>${escapeHtml(friend.childName)}家 · ${escapeHtml(friend.petName)}</strong><small>家长已同意的好友</small><button type="button">去串门</button>`;
+      house.querySelector("button").addEventListener("click", () => visitFriend(friend));
+      dom.townHouses.append(house);
+    });
+
+    while (dom.townHouses.children.length < 3) {
+      const emptyHouse = document.createElement("div");
+      emptyHouse.className = "town-empty-house";
+      emptyHouse.textContent = "等待一封新的申请函";
+      dom.townHouses.append(emptyHouse);
+    }
+
+    dom.friendRequestList.replaceChildren();
+    if (!state.friends.length) {
+      const empty = document.createElement("div");
+      empty.className = "empty-kid-state";
+      empty.textContent = "收到对方家庭的邀请码后，交给家长确认就可以成为好友。";
+      dom.friendRequestList.append(empty);
+      return;
+    }
+    state.friends.forEach((friend) => {
+      const pet = pets.find((entry) => entry.id === friend.petId) || pets[6];
+      const row = document.createElement("article");
+      row.className = "friend-request";
+      row.innerHTML = `<img src="${pet.image}" alt="${escapeHtml(friend.petName)}"><div><strong>${escapeHtml(friend.childName)}和${escapeHtml(friend.petName)}</strong><small>双方家长已经同意，可以在完成任务后互相串门。</small><div class="friend-request-actions"><button type="button" data-friend-action="visit">去它家</button><button type="button" data-friend-action="invite">邀请来我家</button></div></div>`;
+      row.querySelector('[data-friend-action="visit"]').addEventListener("click", () => visitFriend(friend));
+      row.querySelector('[data-friend-action="invite"]').addEventListener("click", () => inviteFriendHome(friend));
+      dom.friendRequestList.append(row);
+    });
+  }
+
+  function requestFriendApproval() {
+    const code = dom.friendInviteCode.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8);
+    dom.friendInviteCode.value = code;
+    if (code.length < 4) {
+      showToast("请输入至少四位家庭邀请码。", true);
+      dom.friendInviteCode.focus();
+      return;
+    }
+    if (state.friends.some((friend) => friend.id === code)) {
+      showToast("这位朋友已经住进好友小镇啦。", true);
+      return;
+    }
+    pendingFriendInvite = code;
+    openParent("friend");
+  }
+
+  function approvePendingFriend() {
+    if (!pendingFriendInvite) return;
+    const friend = friendProfileFromCode(pendingFriendInvite);
+    state.friends.push(friend);
+    pendingFriendInvite = "";
+    dom.friendInviteCode.value = "";
+    saveState();
+    renderTown();
+    navigate("town", { ignoreLock: true });
+    showToast(`家长已同意，${friend.childName}和${friend.petName}成为好友啦。`);
+  }
+
+  function visitFriend(friend) {
+    if (!state.daily?.finished) {
+      showToast("先完成今天的听写，再去朋友家玩。", true);
+      return;
+    }
+    dom.townStatusText.textContent = `${state.petName || getPet().name}正在${friend.childName}家的小屋里和${friend.petName}玩。`;
+    showToast(`到${friend.childName}家串门啦！`);
+  }
+
+  function inviteFriendHome(friend) {
+    if (!state.daily?.finished) {
+      showToast("先完成今天的听写，再邀请朋友来玩。", true);
+      return;
+    }
+    dom.townStatusText.textContent = `${friend.childName}家的${friend.petName}正在来你家的路上。`;
+    showToast(`申请函已经放进${friend.childName}家的信箱。`);
+  }
+
   function renderShop() {
     renderPetEverywhere();
     const friendship = Math.min(100, state.friendship);
@@ -1612,15 +1840,19 @@
     pendingParentAction = action;
     if (parentSessionUnlocked) {
       if (pendingParentAction === "import" && window.WordPacks) window.WordPacks.openImport();
+      else if (pendingParentAction === "friend") approvePendingFriend();
       else openParentPanel();
       return;
     }
     const isSetup = !state.parentPinHash;
-    dom.parentGateTitle.textContent = isSetup ? "设置家长密码" : "家长验证";
+    const isFriendApproval = pendingParentAction === "friend";
+    dom.parentGateTitle.textContent = isSetup ? "设置家长密码" : isFriendApproval ? "家长确认好友" : "家长验证";
     dom.parentGateCopy.textContent = isSetup
       ? "请设置一个孩子不知道的四位数字。以后修改每日单词数，都需要先输入它。"
-      : "输入四位家长密码，才能修改每日任务和词库。";
-    dom.confirmParentGateButton.textContent = isSetup ? "设置密码并进入" : "验证并进入";
+      : isFriendApproval
+        ? "请家长核对对方家庭后输入密码。同意后，两个孩子完成各自任务才能互相串门。"
+        : "输入四位家长密码，才能修改每日任务和词库。";
+    dom.confirmParentGateButton.textContent = isSetup ? "设置密码并继续" : isFriendApproval ? "同意这位好友" : "验证并进入";
     dom.parentPinInput.value = "";
     dom.parentGateMessage.textContent = "";
     dom.parentGateMessage.classList.remove("is-error");
@@ -1647,6 +1879,7 @@
     parentSessionUnlocked = true;
     dom.parentGateModal.hidden = true;
     if (pendingParentAction === "import" && window.WordPacks) window.WordPacks.openImport();
+    else if (pendingParentAction === "friend") approvePendingFriend();
     else openParentPanel();
   }
 
@@ -1788,7 +2021,9 @@
     renderHome();
     renderPetEverywhere();
     renderShop();
+    renderKitchen();
     renderTravel();
+    renderTown();
     renderGrowth();
     renderParentReport();
   }
@@ -1804,11 +2039,11 @@
     dom.chooseAnotherPetButton.addEventListener("click", openPetPicker);
     dom.homeTentButton.addEventListener("click", openTent);
     dom.shopTentButton.addEventListener("click", openTent);
-    [dom.homePetStage, dom.shopPetStage].forEach((stage) => stage.addEventListener("pointerdown", beginPetDrag));
+    [dom.homePetStage, dom.shopPetStage, dom.kitchenPetStage].forEach((stage) => stage.addEventListener("pointerdown", beginPetDrag));
     window.addEventListener("pointermove", movePetDrag);
     window.addEventListener("pointerup", endPetDrag);
     window.addEventListener("pointercancel", endPetDrag);
-    [dom.petRoom, dom.shopRoom].forEach((room) => room.addEventListener("click", movePetFromRoomTap));
+    [dom.petRoom, dom.shopRoom, dom.kitchenScene].forEach((room) => room.addEventListener("click", movePetFromRoomTap));
     [dom.homeRoomDecor, dom.shopRoomDecor].forEach((layer) => layer.addEventListener("click", handleRoomDecorClick));
     dom.startMissionButton.addEventListener("click", startOrResumeMission);
     dom.leaveMissionButton.addEventListener("click", () => {
@@ -1835,6 +2070,13 @@
     dom.claimPostcardButton.addEventListener("click", claimPostcard);
     dom.openNotebookFromKidButton.addEventListener("click", () => {
       if (typeof openNotebook === "function") openNotebook();
+    });
+    dom.friendInviteButton.addEventListener("click", requestFriendApproval);
+    dom.friendInviteCode.addEventListener("input", () => {
+      dom.friendInviteCode.value = dom.friendInviteCode.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8);
+    });
+    dom.friendInviteCode.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") requestFriendApproval();
     });
     dom.confirmPetButton.addEventListener("click", confirmPet);
     dom.petNameInput.addEventListener("input", () => {

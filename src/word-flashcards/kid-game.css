@@ -4046,3 +4046,612 @@ body:not(.legacy-mode) {
   .dictation-letter-row { gap: 5px; }
   .dictation-letter-slot { width: 28px; height: 46px; flex-basis: 28px; font-size: 23px; }
 }
+
+/* Tiny kitchen and guardian-approved friends town. */
+.kid-nav {
+  grid-template-columns: repeat(7, 62px);
+}
+
+.kid-nav button span svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.kitchen-heading,
+.town-heading {
+  align-items: center;
+}
+
+.kitchen-counter {
+  min-width: 92px;
+  padding: 10px 14px;
+  border: 1px solid #e6d4b1;
+  border-radius: 8px;
+  background: #fff5d8;
+  text-align: center;
+}
+
+.kitchen-counter span,
+.kitchen-counter strong {
+  display: block;
+}
+
+.kitchen-counter span {
+  color: #8c6c38;
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.kitchen-counter strong {
+  margin-top: 2px;
+  color: #533f48;
+  font-size: 25px;
+}
+
+.kitchen-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.48fr) minmax(330px, 0.72fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.kitchen-scene {
+  position: relative;
+  min-height: 590px;
+  overflow: hidden;
+  border: 1px solid #d7c6aa;
+  border-radius: 8px;
+  background: #f7e7c7 url("assets/hamster-kitchen-v1.jpg") center / cover no-repeat;
+  box-shadow: 0 18px 40px rgba(74, 57, 42, 0.12);
+  cursor: crosshair;
+  touch-action: pan-y;
+}
+
+.kitchen-scene::after {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 37%;
+  background: rgba(255, 255, 255, 0.01);
+  content: "";
+  pointer-events: none;
+}
+
+.kitchen-pet-stage {
+  position: absolute;
+  z-index: 7;
+  top: var(--pet-y, 72%);
+  left: var(--pet-x, 63%);
+  width: 145px;
+  aspect-ratio: 1;
+  transform: translate(-50%, -78%) scale(var(--pet-scale, 0.95));
+  transform-origin: center bottom;
+  cursor: grab;
+  touch-action: none;
+  transition: top 1.8s ease, left 1.8s ease, transform 1.8s ease;
+}
+
+.kitchen-pet-stage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 5px rgba(66, 48, 34, 0.24));
+  pointer-events: none;
+}
+
+.kitchen-pet-stage.is-dragging {
+  cursor: grabbing;
+  transition: none;
+}
+
+.kitchen-pet-stage.is-walking img {
+  animation: kitchen-walk 520ms ease-in-out infinite alternate;
+}
+
+.kitchen-pet-stage.is-cooking img {
+  animation: kitchen-cook 360ms ease-in-out 5 alternate;
+}
+
+@keyframes kitchen-walk {
+  to { transform: translateY(-5px) rotate(2deg); }
+}
+
+@keyframes kitchen-cook {
+  to { transform: translateY(-7px) rotate(-3deg) scale(1.03); }
+}
+
+.kitchen-talk {
+  position: absolute;
+  z-index: 10;
+  right: 22px;
+  top: 22px;
+  max-width: 260px;
+  padding: 10px 13px;
+  border: 2px solid #8b655a;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 4px 5px 0 rgba(95, 68, 60, 0.14);
+  color: #533f48;
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.5;
+}
+
+.cooking-pot {
+  position: absolute;
+  z-index: 6;
+  top: 41%;
+  left: 40%;
+  width: 52px;
+  height: 30px;
+  border: 3px solid #7d5a4d;
+  border-radius: 4px 4px 16px 16px;
+  background: #ffd66c;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.7);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.cooking-pot span {
+  position: absolute;
+  right: 7px;
+  left: 7px;
+  top: -9px;
+  height: 7px;
+  border: 3px solid #7d5a4d;
+  border-radius: 50%;
+  background: #ffedaf;
+}
+
+.cooking-pot i {
+  position: absolute;
+  top: -24px;
+  width: 5px;
+  height: 15px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.88);
+  animation: kitchen-steam 700ms ease-in-out infinite;
+}
+
+.cooking-pot i:nth-child(2) { left: 9px; }
+.cooking-pot i:nth-child(3) { left: 22px; animation-delay: 170ms; }
+.cooking-pot i:nth-child(4) { left: 35px; animation-delay: 340ms; }
+.cooking-pot.is-active { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+@keyframes kitchen-steam {
+  to { opacity: 0; transform: translateY(-12px); }
+}
+
+.kitchen-workbench {
+  padding: 20px;
+  border: 1px solid #dfe7e7;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgba(49, 79, 100, 0.09);
+}
+
+.kitchen-section-title,
+.friend-request-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.kitchen-section-title span,
+.friend-request-head span {
+  color: #d45848;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.kitchen-section-title h3,
+.friend-request-head h3 {
+  margin: 3px 0 0;
+  font-size: 20px;
+}
+
+.kitchen-section-title small,
+.friend-request-head > strong {
+  color: #71818b;
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin-top: 14px;
+}
+
+.recipe-card {
+  display: grid;
+  min-height: 132px;
+  align-content: space-between;
+  justify-items: start;
+  padding: 13px;
+  border: 1px solid #e0e7e8;
+  border-radius: 8px;
+  background: var(--recipe-color, #f8fbfb);
+  text-align: left;
+  cursor: pointer;
+}
+
+.recipe-card:hover,
+.recipe-card:focus-visible {
+  border-color: #4d9a78;
+  outline: 0;
+  box-shadow: 0 0 0 4px rgba(77, 154, 120, 0.12);
+}
+
+.recipe-card:disabled { opacity: 0.72; cursor: wait; }
+
+.recipe-card span {
+  font-size: 29px;
+  line-height: 1;
+}
+
+.recipe-card strong,
+.recipe-card small {
+  display: block;
+}
+
+.recipe-card strong { margin-top: 10px; font-size: 13px; }
+.recipe-card small { margin-top: 3px; color: #75858f; font-size: 10px; }
+.recipe-card em { color: #c95142; font-size: 10px; font-style: normal; font-weight: 900; }
+
+.snack-cabinet {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #e3e9ea;
+}
+
+.snack-shelf {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  min-height: 72px;
+  margin-top: 12px;
+}
+
+.snack-jar,
+.snack-empty {
+  display: grid;
+  min-height: 70px;
+  place-items: center;
+  border: 1px solid #ddcda9;
+  border-radius: 8px 8px 13px 13px;
+  background: #fff8e8;
+  color: #765b37;
+  text-align: center;
+}
+
+.snack-jar span { font-size: 23px; }
+.snack-jar strong { font-size: 10px; }
+.snack-empty { grid-column: 1 / -1; color: #89969d; font-size: 11px; }
+
+.guardian-badge {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 11px;
+  border: 1px solid #b9dccd;
+  border-radius: 8px;
+  background: #e9f7ef;
+  color: #35775c;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.guardian-badge svg,
+.identity-note svg {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.town-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(330px, 0.75fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.town-neighborhood {
+  position: relative;
+  min-height: 590px;
+  overflow: hidden;
+  border: 1px solid #bfd8de;
+  border-radius: 8px;
+  background: #dff3f8;
+}
+
+.town-neighborhood::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 38%;
+  background: #9acb95;
+  content: "";
+}
+
+.town-sky span,
+.town-sky i {
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 20px 5px 0 #ffffff, 40px 0 0 #ffffff;
+}
+
+.town-sky span { top: 70px; left: 11%; width: 42px; height: 24px; }
+.town-sky i:nth-child(2) { top: 118px; right: 18%; width: 34px; height: 19px; transform: scale(0.8); }
+.town-sky i:nth-child(3) { display: none; }
+
+.town-copy {
+  position: relative;
+  z-index: 3;
+  max-width: 520px;
+  padding: 36px;
+}
+
+.town-copy > span { color: #3a8066; font-size: 10px; font-weight: 900; }
+.town-copy h3 { margin: 8px 0; font-size: 32px; }
+.town-copy p { margin: 0; color: #60757f; font-size: 13px; }
+
+.town-houses {
+  position: absolute;
+  z-index: 4;
+  right: 22px;
+  bottom: 28px;
+  left: 22px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.friend-house {
+  position: relative;
+  min-height: 215px;
+  padding: 15px;
+  border: 3px solid #ffffff;
+  border-radius: 8px;
+  background: var(--house-color, #fff2c7);
+  box-shadow: 0 10px 0 rgba(61, 91, 78, 0.12);
+  text-align: center;
+}
+
+.friend-house::before {
+  position: absolute;
+  right: 13px;
+  left: 13px;
+  top: -28px;
+  height: 38px;
+  border: 3px solid #ffffff;
+  border-radius: 8px 8px 3px 3px;
+  background: var(--roof-color, #eb7868);
+  content: "";
+  transform: skewY(-5deg);
+}
+
+.friend-house img {
+  position: relative;
+  z-index: 2;
+  width: 104px;
+  height: 104px;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 3px rgba(53, 72, 63, 0.18));
+}
+
+.friend-house strong,
+.friend-house small { display: block; }
+.friend-house strong { margin-top: -5px; font-size: 13px; }
+.friend-house small { margin-top: 2px; color: #62747c; font-size: 10px; }
+.friend-house button { margin-top: 9px; border: 0; border-radius: 6px; background: #ffffff; padding: 7px 9px; color: #3b6d5a; font-size: 10px; font-weight: 900; cursor: pointer; }
+
+.town-empty-house {
+  display: grid;
+  min-height: 215px;
+  place-items: center;
+  border: 2px dashed rgba(64, 103, 84, 0.32);
+  border-radius: 8px;
+  color: #557a68;
+  font-size: 11px;
+  font-weight: 850;
+  text-align: center;
+}
+
+.town-friends {
+  padding: 20px;
+  border: 1px solid #dfe7e7;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgba(49, 79, 100, 0.09);
+}
+
+.friend-request-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.friend-code-entry {
+  margin-top: 16px;
+  padding: 13px;
+  border: 1px solid #dfe7e7;
+  border-radius: 8px;
+  background: #f8fbfb;
+}
+
+.friend-code-entry label {
+  display: block;
+  margin-bottom: 7px;
+  color: #61737c;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.friend-code-entry > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 7px;
+}
+
+.friend-code-entry input {
+  min-width: 0;
+  height: 40px;
+  border: 2px solid #cfdcdf;
+  border-radius: 7px;
+  outline: 0;
+  background: #ffffff;
+  padding: 0 10px;
+  color: #32444e;
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.friend-code-entry input:focus { border-color: #4b9a77; box-shadow: 0 0 0 4px rgba(75, 154, 119, 0.12); }
+
+.friend-code-entry button {
+  min-height: 40px;
+  border: 0;
+  border-radius: 7px;
+  background: #4b9a77;
+  padding: 7px 10px;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.friend-request {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 11px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #e0e7e8;
+  border-radius: 8px;
+  background: #f8fbfb;
+}
+
+.friend-request img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+}
+
+.friend-request strong,
+.friend-request small { display: block; }
+.friend-request strong { font-size: 13px; }
+.friend-request small { margin-top: 3px; color: #74848e; font-size: 10px; line-height: 1.45; }
+
+.friend-request-actions {
+  display: flex;
+  gap: 7px;
+  margin-top: 9px;
+}
+
+.friend-request-actions button {
+  min-height: 32px;
+  border: 1px solid #c8d8d5;
+  border-radius: 6px;
+  background: #ffffff;
+  padding: 6px 9px;
+  color: #52666f;
+  font-size: 10px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.friend-request-actions button[data-friend-action="approve"] {
+  border-color: #4b9a77;
+  background: #4b9a77;
+  color: #ffffff;
+}
+
+.identity-note {
+  display: flex;
+  gap: 11px;
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid #d8e7e0;
+  border-radius: 8px;
+  background: #eef8f2;
+  color: #3b725c;
+}
+
+.identity-note strong { font-size: 12px; }
+.identity-note p { margin: 4px 0 0; color: #5d746a; font-size: 10px; line-height: 1.55; }
+
+@media (max-width: 920px) {
+  .kitchen-layout,
+  .town-layout { grid-template-columns: 1fr; }
+  .kitchen-scene,
+  .town-neighborhood { min-height: 520px; }
+  .kitchen-workbench,
+  .town-friends { width: 100%; }
+}
+
+@media (max-width: 620px) {
+  .kid-nav { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .kid-nav button { min-width: 0; }
+  .kid-nav button span { font-size: 18px; }
+  .kid-nav button span svg { width: 19px; height: 19px; }
+  .kid-nav button strong { font-size: 9px; }
+  .kitchen-heading,
+  .town-heading { align-items: flex-start; }
+  .kitchen-counter { min-width: 72px; padding: 8px; }
+  .kitchen-counter strong { font-size: 20px; }
+  .kitchen-layout,
+  .town-layout { gap: 12px; }
+  .kitchen-scene { min-height: 330px; background-position: center; }
+  .kitchen-pet-stage { width: 88px; }
+  .kitchen-talk { top: 12px; right: 12px; max-width: 180px; padding: 8px 10px; font-size: 10px; }
+  .cooking-pot { top: 39%; left: 40%; transform-origin: center; }
+  .kitchen-workbench,
+  .town-friends { padding: 16px; }
+  .recipe-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .recipe-card { min-height: 115px; padding: 11px; }
+  .recipe-card span { font-size: 25px; }
+  .snack-shelf { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .town-neighborhood { min-height: 500px; }
+  .town-copy { padding: 24px 20px; }
+  .town-copy h3 { max-width: 260px; font-size: 25px; }
+  .town-houses { right: 12px; bottom: 18px; left: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .friend-house,
+  .town-empty-house { min-height: 172px; padding: 9px; }
+  .friend-house img { width: 78px; height: 78px; }
+  .friend-house::before { right: 8px; left: 8px; top: -20px; height: 29px; }
+  .identity-note { align-items: flex-start; }
+  .friend-code-entry > div { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 360px) {
+  .kid-nav { right: 5px; left: 5px; gap: 1px; padding: 4px; }
+  .kid-nav button strong { font-size: 8px; }
+  .kitchen-scene { min-height: 286px; }
+  .kitchen-pet-stage { width: 74px; }
+  .recipe-card strong { font-size: 11px; }
+  .town-houses { grid-template-columns: 1fr 1fr; }
+  .friend-house:nth-child(n + 3),
+  .town-empty-house:nth-child(n + 3) { display: none; }
+}
